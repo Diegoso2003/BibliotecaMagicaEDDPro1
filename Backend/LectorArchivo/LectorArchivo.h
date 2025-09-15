@@ -6,13 +6,15 @@
 #define BIBLIOTECAMAGICAEDDPRO1_LECTORLINEA_H
 #include <string>
 
+#include "../EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada/ListaSimpleEnlazada.h"
+
 
 class LectorArchivo {
 private:
     bool existeArchivo(std::string& ruta);
     bool esLegible(std::string& ruta);
 public:
-    std::string leerArchivo(std::string& ruta);
+    ListaSimpleEnlazada<std::string> leerArchivo(std::string& ruta);
 };
 
 

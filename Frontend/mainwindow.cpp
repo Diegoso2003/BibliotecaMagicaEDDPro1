@@ -11,8 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    biblioteca = new Biblioteca();
     auto *carga = new CargaArchivo(this);
+    carga->setBiblioteca(biblioteca);
     auto *agregarLibro = new FormAgregarLibro(this);
+    agregarLibro->setBiblioteca(biblioteca);
     ui->stackedWidget->addWidget(carga);
     ui->stackedWidget->addWidget(agregarLibro);
     ui->stackedWidget->setCurrentIndex(0);
@@ -21,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete biblioteca;
 }
 
 void MainWindow::on_actionCargar_archivo_csv_triggered()

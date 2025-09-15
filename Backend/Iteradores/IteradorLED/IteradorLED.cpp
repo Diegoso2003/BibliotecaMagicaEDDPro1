@@ -5,15 +5,16 @@
 #ifndef PRACTICA1EDD_ITERADORLED_CPP
 #define PRACTICA1EDD_ITERADORLED_CPP
 #include "IteradorLED.h"
+#include "../../EstructurasDeDatos/ListaSimple/NodoSimple.h"
 
 template<typename T>
-IteradorLED<T>::IteradorLED(NodoDoble<T> *actual) {
+IteradorLED<T>::IteradorLED(NodoSimple<T> *actual) {
     this->actual = actual;
 }
 
 template<typename T>
 T *IteradorLED<T>::getActual() {
-    NodoDoble<T> *nodo = actual;
+    NodoSimple<T> *nodo = actual;
     actual = actual->getSiguiente();
     return nodo->getElemento();
 }

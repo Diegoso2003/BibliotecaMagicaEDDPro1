@@ -3,20 +3,19 @@
 //
 #ifndef PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_CPP
 #define PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_CPP
-#include "ListaDobleEnlazada.h"
+#include "ListaSimpleEnlazada.h"
 #include <iostream>
 
 template<typename T>
-ListaDobleEnlazada<T>::ListaDobleEnlazada() {
+ListaSimpleEnlazada<T>::ListaSimpleEnlazada() {
     this->tamaño = 0;
     this->primero = nullptr;
-    this->ultimo = nullptr;
 }
 
 template<typename T>
-ListaDobleEnlazada<T>::~ListaDobleEnlazada() {
+ListaSimpleEnlazada<T>::~ListaSimpleEnlazada() {
     if (!estaVacia()) {
-        NodoDoble<T>* pivote = nullptr;
+        NodoSimple<T>* pivote = nullptr;
         do {
             pivote = primero->getSiguiente();
             T* elemento = primero->getElemento();
@@ -29,27 +28,26 @@ ListaDobleEnlazada<T>::~ListaDobleEnlazada() {
 }
 
 template<typename T>
-bool ListaDobleEnlazada<T>::estaVacia() const {
+bool ListaSimpleEnlazada<T>::estaVacia() const {
     return tamaño == 0;
 }
 
 template<typename T>
-void ListaDobleEnlazada<T>::agregar(T *elemento) {
-    NodoDoble<T>* nuevoNodo = new NodoDoble<T>(elemento);
+void ListaSimpleEnlazada<T>::agregar(T *elemento) {
+    NodoSimple<T>* nuevoNodo = new NodoSimple<T>(elemento);
     if (estaVacia()) {
         primero = nuevoNodo;
         ultimo = nuevoNodo;
     } else {
         ultimo->setSiguiente(nuevoNodo);
-        nuevoNodo->setAnterior(ultimo);
         ultimo = nuevoNodo;
     }
     tamaño++;
 }
 
 template<typename T>
-NodoDoble<T> *ListaDobleEnlazada<T>::obtenerDesdePrimero(int posicion) {
-    NodoDoble<T>* pivote = primero;
+NodoSimple<T> *ListaSimpleEnlazada<T>::obtenerDesdePrimero(int posicion) {
+    NodoSimple<T>* pivote = primero;
     for (int i = 1; i < posicion; i++) {
         pivote = pivote->getSiguiente();
     }
@@ -57,20 +55,9 @@ NodoDoble<T> *ListaDobleEnlazada<T>::obtenerDesdePrimero(int posicion) {
 }
 
 template<typename T>
-NodoDoble<T> *ListaDobleEnlazada<T>::obtenerDesdeUltimo(int posicion) {
-    NodoDoble<T>* pivote = ultimo;
-    for (int i = tamaño; i > posicion; i--) {
-        pivote = pivote->getAnterior();
-    }
-    return pivote;
-}
-
-template<typename T>
-NodoDoble<T> *ListaDobleEnlazada<T>::obtenerNodo(int posicion) {
+NodoSimple<T> *ListaSimpleEnlazada<T>::obtenerNodo(int posicion) {
     if (!estaVacia() && posicion > 0 && posicion <= tamaño) {
-        int mitadTamaño = tamaño / 2;
-        NodoDoble<T> *nodo = posicion > mitadTamaño ? obtenerDesdeUltimo(posicion) :
-        obtenerDesdePrimero(posicion);
+        NodoSimple<T> *nodo = obtenerDesdePrimero(posicion);
         return nodo;
     }
     std::cout << "indice fuera de rango" << std::endl;
@@ -78,17 +65,17 @@ NodoDoble<T> *ListaDobleEnlazada<T>::obtenerNodo(int posicion) {
 }
 
 template<typename T>
-T *ListaDobleEnlazada<T>::obtener(int posicion) {
-    NodoDoble<T>* nodo = obtenerNodo(posicion);
+T *ListaSimpleEnlazada<T>::obtener(int posicion) {
+    NodoSimple<T>* nodo = obtenerNodo(posicion);
     return nodo == nullptr ? nullptr : nodo->getElemento();
 }
 
 template<typename T>
-T *ListaDobleEnlazada<T>::eliminar(int posicion) {
-    NodoDoble<T>* nodo = obtenerNodo(posicion);
+T *ListaSimpleEnlazada<T>::eliminar(int posicion) {
+    NodoSimple<T>* nodo = obtenerNodo(posicion);
     if (nodo != nullptr) {
-        NodoDoble<T>* anterior = nodo->getAnterior();
-        NodoDoble<T>* siguiente = nodo->getSiguiente();
+        NodoSimple<T>* anterior = obtenerNodo(posicion - 1);
+        NodoSimple<T>* siguiente = nodo->getSiguiente();
         if (posicion == 1) {
             primero = siguiente;
         }
@@ -97,9 +84,6 @@ T *ListaDobleEnlazada<T>::eliminar(int posicion) {
         }
         if (anterior != nullptr) {
             anterior->setSiguiente(siguiente);
-        }
-        if (siguiente != nullptr) {
-            siguiente->setAnterior(anterior);
         }
         T* elemento = nodo->getElemento();
         delete nodo;
@@ -111,24 +95,12 @@ T *ListaDobleEnlazada<T>::eliminar(int posicion) {
 }
 
 template<typename T>
-int ListaDobleEnlazada<T>::getTamaño() const {
+int ListaSimpleEnlazada<T>::getTamaño() const {
     return tamaño;
 }
 
 template<typename T>
-IteradorLED<T> *ListaDobleEnlazada<T>::getIterador() {
+IteradorLED<T> *ListaSimpleEnlazada<T>::getIterador() {
     return new IteradorLED<T>(primero);
 }
-
-template<typename T>
-void ListaDobleEnlazada<T>::agregarPrimero(T *elemento) {
-    NodoDoble<T> *nodo = new NodoDoble<T>(elemento);
-    if (!estaVacia()) {
-        primero -> setAnterior(nodo);
-        nodo->setSiguiente(primero);
-    }
-    primero = nodo;
-}
-
-
 #endif

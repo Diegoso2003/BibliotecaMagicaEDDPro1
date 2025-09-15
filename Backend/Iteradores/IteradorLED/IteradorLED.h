@@ -4,14 +4,15 @@
 
 #ifndef PRACTICA1EDD_ITERADORLED_H
 #define PRACTICA1EDD_ITERADORLED_H
-#include "../../estructuras_de_datos/ListaEnlazadaDoble/NodoDoble.h"
+template<typename T>
+class NodoSimple;
 
 template<typename T>
 class IteradorLED {
 private:
-    NodoDoble<T> *actual;
+    NodoSimple<T> *actual;
 public:
-    IteradorLED(NodoDoble<T> *actual);
+    IteradorLED(NodoSimple<T> *actual);
     bool haySiguiente(){return actual != nullptr;}
     T *getActual();
 };

@@ -5,10 +5,9 @@
 #include "LectorArchivo.h"
 
 #include <filesystem>
-#include <iostream>
 #include <fstream>
 
-#include "../EntradaUsuarioException/EntradaUsuarioException.h"
+#include "../Excepciones/EntradaUsuarioException.h"
 
 
 bool LectorArchivo::existeArchivo(std::string &ruta) {
@@ -24,6 +23,28 @@ bool LectorArchivo::esLegible(std::string &ruta) {
     return (status.permissions() & std::filesystem::perms::owner_read) != std::filesystem::perms::none;
 }
 
-std::string LectorArchivo::leerArchivo(std::string &ruta) {
+ListaSimpleEnlazada<std::string> LectorArchivo::leerArchivo(std::string &ruta) {
+    if (ruta.empty()) {
+        throw EntradaUsuarioException("ingresar ruta valida");
+    }
+    if (!existeArchivo(ruta)) {
+        throw EntradaUsuarioException("El archivo ingresado no existe");
+    }
+    if (!esLegible(ruta)) {
+        throw EntradaUsuarioException("El archivo ingresado no es legible");
+    }
+    std::ifstream archivo;
+    ListaSimpleEnlazada<std::string> lista;
+    archivo.open(ruta.c_str(), std::ios::in);
+    if (archivo.fail()) {
+        throw EntradaUsuarioException("Error al abrir el archivo, intente de nuevo");
+    }
 
+    while (!archivo.eof()) {
+        std::string linea;
+        std::getline(archivo, linea);
+        lista.agregar(new std::string(linea));
+    }
+    archivo.close();
+    return lista;
 }

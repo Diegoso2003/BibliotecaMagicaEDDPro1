@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "../Backend/Biblioteca/Biblioteca.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -22,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    Biblioteca *biblioteca;
 };
 
 #endif // MAINWINDOW_H

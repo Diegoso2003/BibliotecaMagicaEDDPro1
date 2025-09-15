@@ -4,29 +4,27 @@
 
 #ifndef PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_H
 #define PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_H
-#include "../NodoDoble.h"
+#include "../NodoSimple.h"
 #include "../../../Iteradores/IteradorLED/IteradorLED.h"
 
 template<typename T>
-class ListaDobleEnlazada {
+class ListaSimpleEnlazada {
 private:
     int tamaño;
-    NodoDoble<T>* primero;
-    NodoDoble<T>* ultimo;
-    NodoDoble<T>* obtenerDesdePrimero(int posicion);
-    NodoDoble<T>* obtenerDesdeUltimo(int posicion);
-    NodoDoble<T>* obtenerNodo(int posicion);
+    NodoSimple<T>* primero;
+    NodoSimple<T>* ultimo;
+    NodoSimple<T>* obtenerDesdePrimero(int posicion);
+    NodoSimple<T>* obtenerNodo(int posicion);
 public:
-    ListaDobleEnlazada();
-    ~ListaDobleEnlazada();
+    ListaSimpleEnlazada();
+    ~ListaSimpleEnlazada();
     bool estaVacia() const;
     void agregar(T* elemento);
-    void agregarPrimero(T* elemento);
     T* obtener(int posicion);
     T* eliminar(int posicion);
     int getTamaño() const;
     IteradorLED<T> *getIterador();
 };
 
-#include "ListaDobleEnlazada.cpp"
+#include "ListaSimpleEnlazada.cpp"
 #endif //PRACTICA1EDD_LISTADOBLEENLAZADA_H
