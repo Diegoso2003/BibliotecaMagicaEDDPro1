@@ -1,0 +1,13 @@
+//
+// Created by rafael-cayax on 14/9/25.
+//
+
+#ifndef BIBLIOTECAMAGICAEDDPRO1_LIBRO_H
+#define BIBLIOTECAMAGICAEDDPRO1_LIBRO_H
+
+
+class Libro {
+};
+
+
+#endif //BIBLIOTECAMAGICAEDDPRO1_LIBRO_H

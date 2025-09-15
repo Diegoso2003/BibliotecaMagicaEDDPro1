@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuhola">
+    <property name="title">
+     <string>Cargar archivo</string>
+    </property>
+    <addaction name="actionCargar_archivo_csv"/>
+   </widget>
+   <widget class="QMenu" name="menuLibro">
+    <property name="title">
+     <string>Libro</string>
+    </property>
+    <widget class="QMenu" name="menuBuscar_libro">
+     <property name="title">
+      <string>Buscar libro</string>
+     </property>
+     <addaction name="actionpor_titulo"/>
+     <addaction name="actionpor_ISBN"/>
+     <addaction name="actionpor_genero"/>
+     <addaction name="actionpor_fecha"/>
+    </widget>
+    <addaction name="actionAgregar_libro"/>
+    <addaction name="actionEliminar_libro"/>
+    <addaction name="menuBuscar_libro"/>
+    <addaction name="actionListar_por_titulo"/>
+   </widget>
+   <addaction name="menuhola"/>
+   <addaction name="menuLibro"/>
+  </widget>
+  <action name="actionCargar_archivo_csv">
+   <property name="text">
+    <string>Cargar archivo csv</string>
+   </property>
+   <property name="toolTip">
+    <string>Cargar nuevo archivo csv con info de libros</string>
+   </property>
+  </action>
+  <action name="actionAgregar_libro">
+   <property name="text">
+    <string>Agregar libro</string>
+   </property>
+  </action>
+  <action name="actionEliminar_libro">
+   <property name="text">
+    <string>Eliminar libro</string>
+   </property>
+  </action>
+  <action name="actionpor_titulo">
+   <property name="text">
+    <string>por titulo</string>
+   </property>
+  </action>
+  <action name="actionpor_ISBN">
+   <property name="text">
+    <string>por ISBN</string>
+   </property>
+  </action>
+  <action name="actionpor_genero">
+   <property name="text">
+    <string>por genero</string>
+   </property>
+  </action>
+  <action name="actionpor_fecha">
+   <property name="text">
+    <string>por fecha</string>
+   </property>
+  </action>
+  <action name="actionListar_por_titulo">
+   <property name="text">
+    <string>Listar por titulo</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
