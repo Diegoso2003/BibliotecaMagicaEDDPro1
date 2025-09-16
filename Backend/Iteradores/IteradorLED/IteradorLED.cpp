@@ -5,7 +5,7 @@
 #ifndef PRACTICA1EDD_ITERADORLED_CPP
 #define PRACTICA1EDD_ITERADORLED_CPP
 #include "IteradorLED.h"
-#include "../../EstructurasDeDatos/ListaSimple/NodoSimple.h"
+#include "../../EstructurasDeDatos/ListaSimple/NodoSimple/NodoSimple.h"
 
 template<typename T>
 IteradorLED<T>::IteradorLED(NodoSimple<T> *actual) {
@@ -13,10 +13,14 @@ IteradorLED<T>::IteradorLED(NodoSimple<T> *actual) {
 }
 
 template<typename T>
-T *IteradorLED<T>::getActual() {
-    NodoSimple<T> *nodo = actual;
+bool IteradorLED<T>::haySiguiente() {
     actual = actual->getSiguiente();
-    return nodo->getElemento();
+    return actual != nullptr;
+}
+
+template<typename T>
+T *IteradorLED<T>::getActual() {
+    return actual != nullptr ? actual->getElemento(): nullptr;
 }
 
 

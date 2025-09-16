@@ -4,6 +4,8 @@
 #include <QMessageBox>
 
 #include "../../Backend/Biblioteca/Biblioteca.h"
+#include "../../Backend/Excepciones/ArchivoInvalidoException.h"
+#include "../MensajeArchivoError/dialogerrorarchivo.h"
 
 CargaArchivo::CargaArchivo(QWidget *parent)
     : QWidget(parent)
@@ -43,10 +45,14 @@ void CargaArchivo::on_botonAnalizar_clicked()
     try {
         QString archivo = ui->rutaArchivo->text();
         std::string ruta = archivo.toStdString();
-        biblioteca->analizarArchivo(ruta);
-        QMessageBox::information(this, "exito", "libros agregados exitosamente");
+        biblioteca->obtenerLibros(ruta);
+        QMessageBox::information(this, "carga de archivo exita", "Todos los libros del archivo fueron agregados exitosamente");
+    } catch (const ArchivoInvalidoException& e) {
+        QMessageBox::critical(this, "Error                     ", e.what());
     } catch (const std::exception& e) {
-        QMessageBox::critical(this, "error", e.what());
+        DialogErrorArchivo errorArchivo(this, e.what());
+        errorArchivo.setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+        errorArchivo.exec();
     }
 }
 

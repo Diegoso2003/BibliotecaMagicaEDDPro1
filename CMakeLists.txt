@@ -21,8 +21,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Frontend/FormAgregarLibro/formagregarlibro.cpp
         Backend/LectorArchivo/LectorArchivo.cpp
         Backend/Excepciones/EntradaUsuarioException.h
-        Backend/EstructurasDeDatos/ListaSimple/NodoSimple.cpp
-        Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada/ListaSimpleEnlazada.cpp
+        Backend/EstructurasDeDatos/ListaSimple/NodoSimple/NodoSimple.cpp
+        Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.cpp
         Backend/Biblioteca/Biblioteca.cpp
         Backend/Biblioteca/Biblioteca.h
         Backend/Biblioteca/Biblioteca.h
@@ -30,8 +30,16 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/Iteradores/IteradorLED/IteradorLED.cpp
         Backend/AnalizadorArchivo/AnalizadorArchivo.cpp
         Backend/AnalizadorArchivo/AnalizadorArchivo.h
-        Backend/Excepciones/LibroDuplicadoException.h
+        Backend/Excepciones/ElementoDuplicadoException.h
         Backend/AnalizadorArchivo/AnalizadorArchivo.cpp
+        Backend/Auxiliar/Auxiliar.cpp
+        Backend/Auxiliar/Auxiliar.h
+        Frontend/MensajeArchivoError/dialogerrorarchivo.cpp
+        Backend/Excepciones/ArchivoInvalidoException.h
+        Backend/EstructurasDeDatos/ArbolAVL/ArbolAVL.cpp
+        Backend/EstructurasDeDatos/ArbolAVL/ArbolAVL.h
+        Backend/EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.cpp
+        Backend/EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

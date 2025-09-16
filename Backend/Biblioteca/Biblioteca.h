@@ -8,7 +8,7 @@
 
 class Biblioteca {
 public:
-    void analizarArchivo(std::string& ruta);
+    void obtenerLibros(std::string& ruta);
 };
 
 

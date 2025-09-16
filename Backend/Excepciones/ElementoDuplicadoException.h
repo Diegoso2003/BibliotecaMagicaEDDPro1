@@ -7,11 +7,11 @@
 #include <string>
 #include <utility>
 
-class LibroDuplicadoException : public std::exception {
+class ElementoDuplicadoException : public std::exception {
 private:
     std::string mensaje;
 public:
-    explicit LibroDuplicadoException(std::string  msg) : mensaje(std::move(msg)) {}
+    explicit ElementoDuplicadoException(std::string  msg) : mensaje(std::move(msg)) {}
     [[nodiscard]] const char* what() const noexcept override {
         return mensaje.c_str();
     }

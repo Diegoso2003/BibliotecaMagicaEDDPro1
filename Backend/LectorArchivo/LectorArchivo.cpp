@@ -6,9 +6,9 @@
 
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 
-#include "../Excepciones/EntradaUsuarioException.h"
-
+#include "../Excepciones/ArchivoInvalidoException.h"
 
 bool LectorArchivo::existeArchivo(std::string &ruta) {
     return std::filesystem::exists(ruta);
@@ -25,26 +25,27 @@ bool LectorArchivo::esLegible(std::string &ruta) {
 
 ListaSimpleEnlazada<std::string> LectorArchivo::leerArchivo(std::string &ruta) {
     if (ruta.empty()) {
-        throw EntradaUsuarioException("ingresar ruta valida");
+        throw ArchivoInvalidoException("ingresar ruta valida");
     }
     if (!existeArchivo(ruta)) {
-        throw EntradaUsuarioException("El archivo ingresado no existe");
+        throw ArchivoInvalidoException("El archivo ingresado no existe");
     }
     if (!esLegible(ruta)) {
-        throw EntradaUsuarioException("El archivo ingresado no es legible");
+        throw ArchivoInvalidoException("El archivo ingresado no es legible");
     }
     std::ifstream archivo;
     ListaSimpleEnlazada<std::string> lista;
     archivo.open(ruta.c_str(), std::ios::in);
     if (archivo.fail()) {
-        throw EntradaUsuarioException("Error al abrir el archivo, intente de nuevo");
+        throw ArchivoInvalidoException("Error al abrir el archivo, intente de nuevo");
     }
-
+    std::cout<<"analisis del archivo empezando"<<std::endl;
     while (!archivo.eof()) {
         std::string linea;
         std::getline(archivo, linea);
         lista.agregar(new std::string(linea));
     }
+    std::cout<<"analisis del archivo final"<<std::endl;
     archivo.close();
     return lista;
 }

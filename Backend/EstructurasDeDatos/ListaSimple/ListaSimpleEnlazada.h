@@ -4,8 +4,8 @@
 
 #ifndef PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_H
 #define PRACTICA1EDD_LISTA_DOBLE_ENLAZADA_H
-#include "../NodoSimple.h"
-#include "../../../Iteradores/IteradorLED/IteradorLED.h"
+#include "NodoSimple/NodoSimple.h"
+#include "../../Iteradores/IteradorLED/IteradorLED.h"
 
 template<typename T>
 class ListaSimpleEnlazada {
