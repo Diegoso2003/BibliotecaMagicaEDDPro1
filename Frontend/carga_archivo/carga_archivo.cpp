@@ -45,7 +45,7 @@ void CargaArchivo::on_botonAnalizar_clicked()
     try {
         QString archivo = ui->rutaArchivo->text();
         std::string ruta = archivo.toStdString();
-        biblioteca->obtenerLibros(ruta);
+        biblioteca->extraerLibrosArchivo(ruta);
         QMessageBox::information(this, "carga de archivo exita", "Todos los libros del archivo fueron agregados exitosamente");
     } catch (const ArchivoInvalidoException& e) {
         QMessageBox::critical(this, "Error                     ", e.what());

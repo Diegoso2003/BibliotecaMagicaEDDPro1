@@ -57,8 +57,15 @@
     <addaction name="menuBuscar_libro"/>
     <addaction name="actionListar_por_titulo"/>
    </widget>
+   <widget class="QMenu" name="menuGraficas">
+    <property name="title">
+     <string>Graficas</string>
+    </property>
+    <addaction name="actionGrafico_de_arbol_AVL_ordenado_por_ISBN"/>
+   </widget>
    <addaction name="menuhola"/>
    <addaction name="menuLibro"/>
+   <addaction name="menuGraficas"/>
   </widget>
   <action name="actionCargar_archivo_csv">
    <property name="text">
@@ -101,6 +108,11 @@
   <action name="actionListar_por_titulo">
    <property name="text">
     <string>Listar por titulo</string>
+   </property>
+  </action>
+  <action name="actionGrafico_de_arbol_AVL_ordenado_por_ISBN">
+   <property name="text">
+    <string>Grafico de arbol AVL ordenado por ISBN</string>
    </property>
   </action>
  </widget>

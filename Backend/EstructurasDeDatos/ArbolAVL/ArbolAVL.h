@@ -17,11 +17,15 @@ private:
     NodoArbol<T>* raiz;
     const bool duplicados;
     int elementos = 0;
-    bool estaVacia(){return elementos == 0;}
-    void agregarNuevoNodo(NodoArbol<T>*& nodo, NodoArbol<T>*& nuevoNodo);
+    void reorganizarArbolDerecho(NodoArbol<T> *&nodo);
+    void reorganizarArbolIzquierdo(NodoArbol<T> *&nodo);
+    void agregarNuevoNodo(NodoArbol<T>*& nodo, T*& nuevoElemento, bool &cambioAlturaArbol);
 public:
     explicit ArbolAVL(bool duplicados);
+    bool estaVacia(){return elementos == 0;}
+    int getNumElementos(){return elementos;}
     void agregarElemento(T* elemento);
+    NodoArbol<T>* getRaiz(){return raiz;}
 };
 
 #include "ArbolAVL.cpp"

@@ -8,7 +8,10 @@
 #include <fstream>
 #include <iostream>
 
+#include "../AnalizadorLinea/AnalizadorLinea.h"
+#include "../Biblioteca/Biblioteca.h"
 #include "../Excepciones/ArchivoInvalidoException.h"
+#include "../Excepciones/EntradaUsuarioException.h"
 
 bool LectorArchivo::existeArchivo(std::string &ruta) {
     return std::filesystem::exists(ruta);
@@ -23,7 +26,7 @@ bool LectorArchivo::esLegible(std::string &ruta) {
     return (status.permissions() & std::filesystem::perms::owner_read) != std::filesystem::perms::none;
 }
 
-ListaSimpleEnlazada<std::string> LectorArchivo::leerArchivo(std::string &ruta) {
+void LectorArchivo::leerArchivo(std::string &ruta, Biblioteca *biblioteca) {
     if (ruta.empty()) {
         throw ArchivoInvalidoException("ingresar ruta valida");
     }
@@ -34,18 +37,20 @@ ListaSimpleEnlazada<std::string> LectorArchivo::leerArchivo(std::string &ruta) {
         throw ArchivoInvalidoException("El archivo ingresado no es legible");
     }
     std::ifstream archivo;
-    ListaSimpleEnlazada<std::string> lista;
     archivo.open(ruta.c_str(), std::ios::in);
     if (archivo.fail()) {
         throw ArchivoInvalidoException("Error al abrir el archivo, intente de nuevo");
     }
+    AnalizadorLinea analizador;
     std::cout<<"analisis del archivo empezando"<<std::endl;
     while (!archivo.eof()) {
         std::string linea;
         std::getline(archivo, linea);
-        lista.agregar(new std::string(linea));
+        analizador.analizarLinea(linea, biblioteca);
+    }
+    if (analizador.harError()) {
+        throw EntradaUsuarioException(analizador.getMensajeError());
     }
     std::cout<<"analisis del archivo final"<<std::endl;
     archivo.close();
-    return lista;
 }

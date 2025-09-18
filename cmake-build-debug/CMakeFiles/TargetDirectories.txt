@@ -1,0 +1,5 @@
+/home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/cmake-build-debug/CMakeFiles/BibliotecaMagicaEDDPro1.dir
+/home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/cmake-build-debug/CMakeFiles/BibliotecaMagicaEDDPro1_autogen_timestamp_deps.dir
+/home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/cmake-build-debug/CMakeFiles/BibliotecaMagicaEDDPro1_autogen.dir

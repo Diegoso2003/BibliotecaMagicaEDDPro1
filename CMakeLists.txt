@@ -25,13 +25,10 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.cpp
         Backend/Biblioteca/Biblioteca.cpp
         Backend/Biblioteca/Biblioteca.h
-        Backend/Biblioteca/Biblioteca.h
-        Backend/Biblioteca/Biblioteca.cpp
         Backend/Iteradores/IteradorLED/IteradorLED.cpp
-        Backend/AnalizadorArchivo/AnalizadorArchivo.cpp
-        Backend/AnalizadorArchivo/AnalizadorArchivo.h
+        Backend/AnalizadorLinea/AnalizadorLinea.h
         Backend/Excepciones/ElementoDuplicadoException.h
-        Backend/AnalizadorArchivo/AnalizadorArchivo.cpp
+        Backend/AnalizadorLinea/AnalizadorLinea.cpp
         Backend/Auxiliar/Auxiliar.cpp
         Backend/Auxiliar/Auxiliar.h
         Frontend/MensajeArchivoError/dialogerrorarchivo.cpp
@@ -40,6 +37,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ArbolAVL/ArbolAVL.h
         Backend/EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.cpp
         Backend/EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.h
+        Backend/CreadorSVG/CreadorSvg.cpp
+        Backend/CreadorSVG/CreadorSvg.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

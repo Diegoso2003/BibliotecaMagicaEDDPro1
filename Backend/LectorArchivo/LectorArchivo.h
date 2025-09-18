@@ -9,12 +9,14 @@
 #include "../EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.h"
 
 
+class Biblioteca;
+
 class LectorArchivo {
 private:
     bool existeArchivo(std::string& ruta);
     bool esLegible(std::string& ruta);
 public:
-    ListaSimpleEnlazada<std::string> leerArchivo(std::string& ruta);
+    void leerArchivo(std::string& ruta, Biblioteca *biblioteca);
 };
 
 

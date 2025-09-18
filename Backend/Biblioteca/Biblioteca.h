@@ -6,9 +6,19 @@
 #define BIBLIOTECAMAGICAEDDPRO1_BIBLIOTECA_H
 #include <string>
 
+#include "../EstructurasDeDatos/ArbolAVL/ArbolAVL.h"
+#include "../Libro/Libro.h"
+
 class Biblioteca {
+private:
+    ArbolAVL<Libro> *librosPorIsbn;
+    void agregarLibros(std::string &libros, NodoArbol<Libro> *nodo);
 public:
-    void obtenerLibros(std::string& ruta);
+    Biblioteca();
+    ~Biblioteca();
+    void extraerLibrosArchivo(std::string& ruta);
+    void ingresarNuevoLibro(Libro *nuevoLibro);
+    std::string obtenerDotArbolAVLPorISBN();
 };
 
 

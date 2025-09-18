@@ -7,9 +7,10 @@
 #include "../EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.h"
 #include <string>
 
+class Biblioteca;
 class Libro;
 
-class AnalizadorArchivo {
+class AnalizadorLinea {
 private:
     std::string titulo;
     std::string isbn;
@@ -19,10 +20,11 @@ private:
     bool hayError = false;
     int lineaActual = 0;
     std::string mensajeError;
-    void extraerCampos(std::string* linea);
+    void extraerCampos(const std::string& linea);
     void validarCampos();
+    Libro* crearLibro();
 public:
-    void analizarArchivo(std::string& rutaArchivo);
+    void analizarLinea(const std::string &linea, Biblioteca *biblioteca);
     [[nodiscard]] bool harError() const {return hayError;}
     [[nodiscard]] std::string getMensajeError() const {return mensajeError;}
 };

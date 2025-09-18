@@ -16,8 +16,8 @@ public:
     explicit NodoArbol(T* elemento);
     void setDerecha(NodoArbol<T>* der);
     void setIzquierda(NodoArbol<T>* izq);
-    NodoArbol<T>* getDerecha(){return derecha;}
-    NodoArbol<T>* getIzquierda(){return izquierda;}
+    NodoArbol<T>*& getDerecha(){return derecha;}
+    NodoArbol<T>*& getIzquierda(){return izquierda;}
     T* getElemento(){return elemento;}
     [[nodiscard]] int getFe() const {return Fe;}
     void setFe(int fe){this->Fe = fe;}
