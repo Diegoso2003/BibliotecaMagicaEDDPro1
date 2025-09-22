@@ -18,26 +18,17 @@ private:
     std::string año;
     std::string autor;
 public:
-    static void ordenarPorISBN();
-    static void ordenarTitulo();
-    bool operator ==(const Libro &other) const;
-    bool operator !=(const Libro &other) const;
-    bool operator <(const Libro &other) const;
-    bool operator >(const Libro& other) const;
-    bool operator >=(const Libro& other) const;
-    bool operator <=(const Libro& other) const;
-    void ordenarPorTitulo();
     void setTitulo(const std::string &nuevoTitulo){this-> titulo = nuevoTitulo;}
     void setIsbn(const std::string &nuevoIsbn);
     void setGenero(const std::string &nuevoGenero){this->genero = nuevoGenero;}
     void setAutor(const std::string &nuevoAutor){this->autor = nuevoAutor;}
     void setAño(const std::string &nuevoAño){this->año = nuevoAño;}
-    std::string getTitulo(){return this->titulo;}
-    std::string getIsbn(){return this->isbn;}
-    std::string getGenero(){return this->genero;}
-    std::string getAutor(){return this->autor;}
-    std::string getAño(){return this->año;}
-    std::string getSinGuiones(){return this->isbnSinGuiones;}
+    [[nodiscard]] std::string getTitulo() const {return this->titulo;}
+    [[nodiscard]] std::string getIsbn() const {return this->isbn;}
+    [[nodiscard]] std::string getGenero() const {return this->genero;}
+    [[nodiscard]] std::string getAutor() const {return this->autor;}
+    [[nodiscard]] std::string getAño() const {return this->año;}
+    [[nodiscard]] std::string getSinGuiones() const {return this->isbnSinGuiones;}
 };
 
 

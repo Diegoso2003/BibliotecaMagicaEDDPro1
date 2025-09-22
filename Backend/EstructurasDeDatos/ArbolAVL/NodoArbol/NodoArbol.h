@@ -5,23 +5,23 @@
 #ifndef BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H
 
-template<typename T>
+class Libro;
+
 class NodoArbol {
 private:
-    NodoArbol<T>* izquierda;
-    NodoArbol<T>* derecha;
-    T* elemento;
+    NodoArbol* izquierda;
+    NodoArbol* derecha;
+    Libro* libro;
     int Fe = 0;
 public:
-    explicit NodoArbol(T* elemento);
-    void setDerecha(NodoArbol<T>* der);
-    void setIzquierda(NodoArbol<T>* izq);
-    NodoArbol<T>*& getDerecha(){return derecha;}
-    NodoArbol<T>*& getIzquierda(){return izquierda;}
-    T* getElemento(){return elemento;}
+    explicit NodoArbol(Libro* libro);
+    void setDerecha(NodoArbol* der);
+    void setIzquierda(NodoArbol* izq);
+    NodoArbol*& getDerecha(){return derecha;}
+    NodoArbol*& getIzquierda(){return izquierda;}
+    Libro* getLibro() const { return libro; }
     [[nodiscard]] int getFe() const {return Fe;}
     void setFe(int fe){this->Fe = fe;}
 };
 
-#include "NodoArbol.cpp"
 #endif //BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H

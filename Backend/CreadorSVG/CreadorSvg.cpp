@@ -13,16 +13,15 @@
 
 void CreadorSvg::crearSvg(const std::string &grafica, bool reemplazar, std::string nombreArchivo) {
     std::filesystem::create_directories(carpeta);
+    std::string archivoSvg = carpeta + "/" + nombreArchivo + ".svg";
+    if (std::filesystem::exists(archivoSvg) && !reemplazar) {
+        throw ElementoDuplicadoException("¿Desea reemplazar la grafica actual?");
+    }
 
     std::string tempDotFile = carpeta + "/temp.dot";
     std::ofstream dotFile(tempDotFile);
     dotFile << grafica;
     dotFile.close();
-
-    std::string archivoSvg = carpeta + "/" + nombreArchivo + ".svg";
-    if (std::filesystem::exists(nombreArchivo) && !reemplazar) {
-        throw ElementoDuplicadoException("¿Desea reemplazar la grafica actual?");
-    }
     std::string command = "dot -Tsvg " + tempDotFile + " -o " + archivoSvg;
 
     int result = system(command.c_str());
@@ -30,6 +29,5 @@ void CreadorSvg::crearSvg(const std::string &grafica, bool reemplazar, std::stri
     if (result != 0) {
         throw ArchivoInvalidoException("Error al crear la imagen");
     }
-
     std::filesystem::remove(tempDotFile);
 }

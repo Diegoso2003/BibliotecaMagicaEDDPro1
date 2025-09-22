@@ -62,6 +62,7 @@
      <string>Graficas</string>
     </property>
     <addaction name="actionGrafico_de_arbol_AVL_ordenado_por_ISBN"/>
+    <addaction name="actionGrafico_de_arbol_AVl_ordenado_por_titulo"/>
    </widget>
    <addaction name="menuhola"/>
    <addaction name="menuLibro"/>
@@ -113,6 +114,11 @@
   <action name="actionGrafico_de_arbol_AVL_ordenado_por_ISBN">
    <property name="text">
     <string>Grafico de arbol AVL ordenado por ISBN</string>
+   </property>
+  </action>
+  <action name="actionGrafico_de_arbol_AVl_ordenado_por_titulo">
+   <property name="text">
+    <string>Grafico de arbol AVl ordenado por titulo</string>
    </property>
   </action>
  </widget>

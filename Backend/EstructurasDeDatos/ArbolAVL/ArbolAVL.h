@@ -6,27 +6,25 @@
 #define BIBLIOTECAMAGICAEDDPRO1_ARBOLAVL_H
 #include "NodoArbol/NodoArbol.h"
 
-/**
- *
- * @tparam T tipo de dato que se almacenara, para clases personalizadas
- * sobrecargar los operadores de comparacion <, >, <=, >= e ==
- */
-template<typename T>
+class Libro;
+
 class ArbolAVL {
 private:
-    NodoArbol<T>* raiz;
-    const bool duplicados;
+    NodoArbol *raiz;
     int elementos = 0;
-    void reorganizarArbolDerecho(NodoArbol<T> *&nodo);
-    void reorganizarArbolIzquierdo(NodoArbol<T> *&nodo);
-    void agregarNuevoNodo(NodoArbol<T>*& nodo, T*& nuevoElemento, bool &cambioAlturaArbol);
+    void eliminarArbol(NodoArbol *actual);
+    void reorganizarArbolDerecho(NodoArbol *&nodo);
+    void reorganizarArbolIzquierdo(NodoArbol *&nodo);
+    virtual bool agregarSubArbolDerecho(NodoArbol *&actual,Libro *&libro) = 0;
+    virtual bool agregarSubArbolIzquierdo(NodoArbol *&actual,Libro *&libro) = 0;
+    void agregarNuevoNodo(NodoArbol*& nodo,Libro*& Libro, bool &cambioAlturaArbol);
 public:
-    explicit ArbolAVL(bool duplicados);
-    bool estaVacia(){return elementos == 0;}
+    ArbolAVL();
+    virtual ~ArbolAVL();
+    bool estaVacia(){return this->elementos == 0;}
     int getNumElementos(){return elementos;}
-    void agregarElemento(T* elemento);
-    NodoArbol<T>* getRaiz(){return raiz;}
+    void agregarLibro(Libro* nuevoLibro);
+    NodoArbol* getRaiz(){return raiz;}
 };
 
-#include "ArbolAVL.cpp"
 #endif //BIBLIOTECAMAGICAEDDPRO1_ARBOLAVL_H

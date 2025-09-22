@@ -1,16 +1,24 @@
 //
 // Created by rafael-cayax on 15/9/25.
 //
-#ifndef BIBLIOTECAMAGICAEDDPRO1_ARBOLAVL_CPP
-#define BIBLIOTECAMAGICAEDDPRO1_ARBOLAVL_CPP
 #include "ArbolAVL.h"
+#include "../../Libro/Libro.h"
 
 #include "../../Excepciones/ElementoDuplicadoException.h"
 
-template<typename T>
-void ArbolAVL<T>::reorganizarArbolDerecho(NodoArbol<T> *&nodo) {
-    NodoArbol<T>* nodo1 = nodo->getDerecha();
-    NodoArbol<T>* nodo2 = nullptr;
+void ArbolAVL::eliminarArbol(NodoArbol *actual) {
+    if (actual != nullptr) {
+        eliminarArbol(actual->getIzquierda());
+        eliminarArbol(actual->getDerecha());
+        Libro *libro = actual->getLibro();
+        delete libro;
+        delete actual;
+    }
+}
+
+void ArbolAVL::reorganizarArbolDerecho(NodoArbol *&nodo) {
+    NodoArbol* nodo1 = nodo->getDerecha();
+    NodoArbol* nodo2 = nullptr;
     if (nodo1->getFe() >= 0) {
         nodo->setDerecha(nodo1->getIzquierda());
         nodo1->setIzquierda(nodo);
@@ -34,12 +42,12 @@ void ArbolAVL<T>::reorganizarArbolDerecho(NodoArbol<T> *&nodo) {
         }
         nodo = nodo2;
     }
+    nodo->setFe(0);
 }
 
-template<typename T>
-void ArbolAVL<T>::reorganizarArbolIzquierdo(NodoArbol<T> *&nodo) {
-    NodoArbol<T>* nodo1 = nodo->getIzquierda();
-    NodoArbol<T>* nodo2 = nullptr;
+void ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *&nodo) {
+    NodoArbol* nodo1 = nodo->getIzquierda();
+    NodoArbol* nodo2 = nullptr;
     if (nodo1->getFe() <= 0) {
         nodo->setIzquierda(nodo1->getDerecha());
         nodo1->setDerecha(nodo);
@@ -63,13 +71,13 @@ void ArbolAVL<T>::reorganizarArbolIzquierdo(NodoArbol<T> *&nodo) {
         }
         nodo = nodo2;
     }
+    nodo->setFe(0);
 }
 
-template<typename T>
-void ArbolAVL<T>::agregarNuevoNodo(NodoArbol<T> *&nodo,T *&nuevoElemento, bool &cambioAlturaArbol) {
+void ArbolAVL::agregarNuevoNodo(NodoArbol *&nodo,Libro *&nuevoLibro, bool &cambioAlturaArbol) {
     if (nodo != nullptr) {
-        if (*nuevoElemento < *nodo->getElemento()) {
-            agregarNuevoNodo(nodo->getIzquierda(), nuevoElemento, cambioAlturaArbol);
+        if (agregarSubArbolIzquierdo(nodo, nuevoLibro)) {
+            agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, cambioAlturaArbol);
             if (cambioAlturaArbol) {
                 switch (nodo->getFe()) {
                     case 1:
@@ -81,23 +89,22 @@ void ArbolAVL<T>::agregarNuevoNodo(NodoArbol<T> *&nodo,T *&nuevoElemento, bool &
                         break;
                     default:
                         reorganizarArbolIzquierdo(nodo);
-                        nodo->setFe(0);
                         cambioAlturaArbol = false;
                 }
             }
-        } else if (*nuevoElemento > *nodo->getElemento()) {
-            agregarNuevoNodo(nodo->getDerecha(), nuevoElemento, cambioAlturaArbol);
+        } else if (agregarSubArbolDerecho(nodo, nuevoLibro)) {
+            agregarNuevoNodo(nodo->getDerecha(), nuevoLibro, cambioAlturaArbol);
             if (cambioAlturaArbol) {
                 switch (nodo->getFe()) {
                     case -1:
                         nodo->setFe(0);
+                        cambioAlturaArbol = false;
                         break;
                     case 0:
                         nodo->setFe(1);
                         break;
                     default:
                         reorganizarArbolDerecho(nodo);
-                        nodo->setFe(0);
                         cambioAlturaArbol = false;
                 }
             }
@@ -105,25 +112,19 @@ void ArbolAVL<T>::agregarNuevoNodo(NodoArbol<T> *&nodo,T *&nuevoElemento, bool &
             throw ElementoDuplicadoException("libro con isbn duplicado");
         }
     } else {
-        nodo = new NodoArbol<T>(nuevoElemento);
+        nodo = new NodoArbol(nuevoLibro);
         cambioAlturaArbol = true;
     }
 }
 
-template<typename T>
-ArbolAVL<T>::ArbolAVL(bool duplicados) : duplicados(duplicados), raiz(nullptr) {
+ArbolAVL::ArbolAVL() :  raiz(nullptr) {}
+
+ArbolAVL::~ArbolAVL() {
+    eliminarArbol(raiz);
 }
 
-template<typename T>
-void ArbolAVL<T>::agregarElemento(T *elemento) {
-    if (this->estaVacia()) {
-        auto* nuevoNodo = new NodoArbol<T>(elemento);
-        raiz = nuevoNodo;
-        elementos++;
-        return;
-    }
+void ArbolAVL::agregarLibro(Libro *libro) {
     bool cambioAlturaArbol = false;
-    agregarNuevoNodo(raiz, elemento, cambioAlturaArbol);
+    agregarNuevoNodo(raiz, libro, cambioAlturaArbol);
     elementos++;
 }
-#endif

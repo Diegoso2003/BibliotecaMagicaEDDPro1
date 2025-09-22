@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include "ui_mainwindow.h"
 #include "../Backend/CreadorSVG/CreadorSvg.h"
-#include "../Backend/Excepciones/EntradaUsuarioException.h"
+#include "../Backend/Excepciones/ElementoDuplicadoException.h"
 #include "carga_archivo/carga_archivo.h"
 #include "FormAgregarLibro/formagregarlibro.h"
 
@@ -34,15 +34,13 @@ void MainWindow::on_actionAgregar_libro_triggered() {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::crearGrafica(const std::string& grafica, bool r, std::string nombre) {
-    std::string grafica2;
+void MainWindow::crearGrafica(std::string &nombre,const std::string& grafica, bool r) {
     try {
         CreadorSvg creador;
-        grafica2 = grafica.empty() ? biblioteca->obtenerDotArbolAVLPorISBN() : grafica;
-        creador.crearSvg(grafica2, r, "arbol_avl_isbn");
+        creador.crearSvg(grafica, r, nombre);
         QMessageBox::information(this, "Exito",
             "grafica creada en la carpeta: " + QString::fromStdString(CreadorSvg::carpeta)
-            + "/ con el nombre de: arbol_avl_isbn.svg");
+            + "/ con el nombre de: " + QString::fromStdString(nombre));
     } catch (const ElementoDuplicadoException &e) {
         std::string mensaje = e.what();
         QMessageBox::StandardButton respuesta = QMessageBox::question(
@@ -53,7 +51,7 @@ void MainWindow::crearGrafica(const std::string& grafica, bool r, std::string no
             QMessageBox::No // Botón por defecto
         );
         if (respuesta == QMessageBox::Yes) {
-            crearGrafica(grafica2, true, "arbol_avl_isbn");
+            crearGrafica(nombre, grafica, true);
         }
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error", e.what());
@@ -61,5 +59,23 @@ void MainWindow::crearGrafica(const std::string& grafica, bool r, std::string no
 }
 
 void MainWindow::on_actionGrafico_de_arbol_AVL_ordenado_por_ISBN_triggered() {
-    crearGrafica();
+    try {
+        std::string nombre = "arbol_isbn";
+        std::string grafica = biblioteca->obtenerDotArbolAVLPorISBN();
+        crearGrafica(nombre, grafica);
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Error", e.what());
+    }
 }
+
+void MainWindow::on_actionGrafico_de_arbol_AVl_ordenado_por_titulo_triggered()
+{
+    try {
+        std::string nombre = "arbol_titulo";
+        std::string grafica = biblioteca->obtenerDotArbolAVLPorTitulo();
+        crearGrafica(nombre, grafica);
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+

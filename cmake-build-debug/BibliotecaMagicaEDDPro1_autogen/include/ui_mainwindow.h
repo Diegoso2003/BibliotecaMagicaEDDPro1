@@ -33,6 +33,7 @@ public:
     QAction *actionpor_fecha;
     QAction *actionListar_por_titulo;
     QAction *actionGrafico_de_arbol_AVL_ordenado_por_ISBN;
+    QAction *actionGrafico_de_arbol_AVl_ordenado_por_titulo;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QStackedWidget *stackedWidget;
@@ -65,6 +66,8 @@ public:
         actionListar_por_titulo->setObjectName("actionListar_por_titulo");
         actionGrafico_de_arbol_AVL_ordenado_por_ISBN = new QAction(MainWindow);
         actionGrafico_de_arbol_AVL_ordenado_por_ISBN->setObjectName("actionGrafico_de_arbol_AVL_ordenado_por_ISBN");
+        actionGrafico_de_arbol_AVl_ordenado_por_titulo = new QAction(MainWindow);
+        actionGrafico_de_arbol_AVl_ordenado_por_titulo->setObjectName("actionGrafico_de_arbol_AVl_ordenado_por_titulo");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -101,6 +104,7 @@ public:
         menuBuscar_libro->addAction(actionpor_genero);
         menuBuscar_libro->addAction(actionpor_fecha);
         menuGraficas->addAction(actionGrafico_de_arbol_AVL_ordenado_por_ISBN);
+        menuGraficas->addAction(actionGrafico_de_arbol_AVl_ordenado_por_titulo);
 
         retranslateUi(MainWindow);
 
@@ -125,6 +129,7 @@ public:
         actionpor_fecha->setText(QCoreApplication::translate("MainWindow", "por fecha", nullptr));
         actionListar_por_titulo->setText(QCoreApplication::translate("MainWindow", "Listar por titulo", nullptr));
         actionGrafico_de_arbol_AVL_ordenado_por_ISBN->setText(QCoreApplication::translate("MainWindow", "Grafico de arbol AVL ordenado por ISBN", nullptr));
+        actionGrafico_de_arbol_AVl_ordenado_por_titulo->setText(QCoreApplication::translate("MainWindow", "Grafico de arbol AVl ordenado por titulo", nullptr));
         menuhola->setTitle(QCoreApplication::translate("MainWindow", "Cargar archivo", nullptr));
         menuLibro->setTitle(QCoreApplication::translate("MainWindow", "Libro", nullptr));
         menuBuscar_libro->setTitle(QCoreApplication::translate("MainWindow", "Buscar libro", nullptr));

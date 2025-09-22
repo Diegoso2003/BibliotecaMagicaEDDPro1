@@ -23,10 +23,12 @@ private slots:
 
     void on_actionGrafico_de_arbol_AVL_ordenado_por_ISBN_triggered();
 
+    void on_actionGrafico_de_arbol_AVl_ordenado_por_titulo_triggered();
+
 private:
     Ui::MainWindow *ui;
     Biblioteca *biblioteca;
-    void crearGrafica(const std::string& grafica = "", bool r = false, std::string nombre = "");
+    void crearGrafica(std::string &nombre,const std::string& grafica, bool r = false);
 };
 
 #endif // MAINWINDOW_H
