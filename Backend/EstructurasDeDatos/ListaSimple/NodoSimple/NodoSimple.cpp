@@ -1,30 +1,24 @@
 //
 // Created by rafael-cayax on 17/8/25.
 //
-#ifndef NODO_DOBLE_CPP
-#define NODO_DOBLE_CPP
-
 #include "NodoSimple.h"
-
-template<typename T>
-NodoSimple<T>::NodoSimple(T* elemento) {
-    this->elemento = elemento;
+NodoSimple::NodoSimple(Libro* libro) {
+    this->libro = libro;
     this->siguiente = nullptr;
 }
 
-template<typename T>
-void NodoSimple<T>::setSiguiente(NodoSimple<T> *siguiente) {
+NodoSimple::~NodoSimple() {
+    delete siguiente;
+}
+
+void NodoSimple::setSiguiente(NodoSimple *siguiente) {
     this->siguiente = siguiente;
 }
 
-template<typename T>
-NodoSimple<T> *NodoSimple<T>::getSiguiente() {
+NodoSimple *NodoSimple::getSiguiente() {
     return this->siguiente;
 }
 
-template<typename T>
-T* NodoSimple<T>::getElemento() {
-    return this->elemento;
+Libro* NodoSimple::getLibro() {
+    return this->libro;
 }
-
-#endif

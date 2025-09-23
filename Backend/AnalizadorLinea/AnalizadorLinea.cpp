@@ -115,6 +115,6 @@ Libro *AnalizadorLinea::crearLibro() {
     libro->setIsbn(isbn);
     libro->setGenero(genero);
     libro->setTitulo(titulo);
-    libro->setAño(fecha);
+    libro->setAño(std::stoi(fecha));
     return libro;
 }

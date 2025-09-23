@@ -5,17 +5,18 @@
 #ifndef NODO_DOBLE_H
 #define NODO_DOBLE_H
 
-template <typename T>
+class Libro;
+
 class NodoSimple {
 private:
-    T* elemento;
-    NodoSimple<T>* siguiente;
+    Libro *libro;
+    NodoSimple* siguiente;
 public:
-    explicit NodoSimple(T* elemento);
-    NodoSimple<T>* getSiguiente();
-    void setSiguiente(NodoSimple<T>* siguiente);
-    T* getElemento();
+    explicit NodoSimple(Libro* libro);
+    ~NodoSimple();
+    NodoSimple* getSiguiente();
+    void setSiguiente(NodoSimple* siguiente);
+    Libro* getLibro();
 };
 
-#include "NodoSimple.cpp"
 #endif //PRACTICA1EDD_NODODOBLE_H
