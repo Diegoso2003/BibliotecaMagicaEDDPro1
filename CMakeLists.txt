@@ -25,7 +25,6 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.cpp
         Backend/Biblioteca/Biblioteca.cpp
         Backend/Biblioteca/Biblioteca.h
-        Backend/Iteradores/IteradorLED/IteradorLED.cpp
         Backend/AnalizadorLinea/AnalizadorLinea.h
         Backend/Excepciones/ElementoDuplicadoException.h
         Backend/AnalizadorLinea/AnalizadorLinea.cpp
@@ -47,6 +46,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ArbolBFecha/ArbolBFecha.h
         Backend/EstructurasDeDatos/ArbolBFecha/NodoArbolB/NodoArbolB.cpp
         Backend/EstructurasDeDatos/ArbolBFecha/NodoArbolB/NodoArbolB.h
+        Backend/CreadorTextoDot/CreadorTextoDot.cpp
+        Backend/CreadorTextoDot/CreadorTextoDot.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

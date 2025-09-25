@@ -8,12 +8,14 @@
 
 #include "../EstructurasDeDatos/ArbolAVLPorIsbn/ArbolAVLPorIsbn.h"
 #include "../EstructurasDeDatos/ArbolAVLTitulo/ArbolAVLTitulo.h"
+#include "../EstructurasDeDatos/ArbolBFecha/ArbolBFecha.h"
 #include "../Libro/Libro.h"
 
 class Biblioteca {
 private:
     ArbolAVLPorIsbn *librosPorIsbn;
     ArbolAVLTitulo *librosPorTitulo;
+    ArbolBFecha *librosPorFecha;
     void agregarLibros(std::string &libros, NodoArbol *nodo);
     std::string obtenerDotArbolAVL(ArbolAVL *arbol);
 public:
@@ -23,6 +25,7 @@ public:
     void ingresarNuevoLibro(Libro *nuevoLibro);
     std::string obtenerDotArbolAVLPorISBN();
     std::string obtenerDotArbolAVLPorTitulo();
+    std::string obtenerDotArbolBFecha();
 };
 
 

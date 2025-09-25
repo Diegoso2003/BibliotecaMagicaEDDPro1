@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include "../CreadorSVG/CreadorSvg.h"
+#include "../CreadorTextoDot/CreadorTextoDot.h"
 #include "../LectorArchivo/LectorArchivo.h"
 
 void Biblioteca::agregarLibros(std::string &libros, NodoArbol *nodo) {
@@ -21,7 +22,7 @@ void Biblioteca::agregarLibros(std::string &libros, NodoArbol *nodo) {
     libros += R"(Fe: )" +std::to_string( nodo->getFe() )+ R"(\n)";
     libros += "Autor: " + libro->getAutor() + R"(\n)";
     libros += "Genero: " + libro->getGenero() + R"(\n)";
-    libros += "Año Publicacion: " + libro->getAño() + R"(\n)";
+    libros += "Año Publicacion: " + std::to_string(libro->getAño()) + R"(\n)";
     libros += R"("];)"; libros += "\n";
     if (nodo->getDerecha()!= nullptr || nodo->getIzquierda()!= nullptr) {
         std::string auxiliar2 = pl + libro->getSinGuiones() + " -> {";
@@ -59,6 +60,7 @@ std::string Biblioteca::obtenerDotArbolAVL(ArbolAVL *arbol) {
 Biblioteca::Biblioteca() {
     librosPorIsbn = new ArbolAVLPorIsbn();
     librosPorTitulo = new ArbolAVLTitulo();
+    librosPorFecha = new ArbolBFecha();
 }
 
 Biblioteca::~Biblioteca() {
@@ -74,8 +76,9 @@ void Biblioteca::extraerLibrosArchivo(std::string &ruta) {
 void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorIsbn->agregarLibro(nuevoLibro);
     librosPorTitulo->agregarLibro(nuevoLibro);
+    librosPorFecha->agregarLibro(nuevoLibro);
     /**CreadorSvg creeador;
-    creeador.crearSvg(obtenerDotArbolAVLPorISBN(), true,
+    creeador.crearSvg(obtenerDotArbolBFecha(), true,
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
 }
 
@@ -85,4 +88,9 @@ std::string Biblioteca::obtenerDotArbolAVLPorISBN() {
 
 std::string Biblioteca::obtenerDotArbolAVLPorTitulo() {
     return obtenerDotArbolAVL(librosPorTitulo);
+}
+
+std::string Biblioteca::obtenerDotArbolBFecha() {
+    CreadorTextoDot creador;
+    return creador.obtenerDotPorAño(librosPorFecha->getRaiz());
 }

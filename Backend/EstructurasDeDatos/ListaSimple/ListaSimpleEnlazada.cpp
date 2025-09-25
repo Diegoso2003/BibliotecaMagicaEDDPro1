@@ -21,6 +21,11 @@ bool ListaSimpleEnlazada::estaVacia() const {
 
 void ListaSimpleEnlazada::agregar(Libro *libro) {
     auto *nuevo = new NodoSimple(libro);
+    if (estaVacia()) {
+        primero = nuevo;
+        tamaño++;
+        return;
+    }
     NodoSimple *aux = primero;
     while (aux->getSiguiente() != nullptr &&
            aux->getSiguiente()->getLibro()->getSinGuiones() < libro->getSinGuiones()) {

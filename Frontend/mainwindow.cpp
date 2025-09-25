@@ -79,3 +79,15 @@ void MainWindow::on_actionGrafico_de_arbol_AVl_ordenado_por_titulo_triggered()
     }
 }
 
+
+void MainWindow::on_actionGrafico_arbol_B_ordenado_por_a_o_triggered()
+{
+    try {
+        std::string nombre = "arbol_fecha";
+        std::string grafica = biblioteca->obtenerDotArbolBFecha();
+        crearGrafica(nombre, grafica);
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+
