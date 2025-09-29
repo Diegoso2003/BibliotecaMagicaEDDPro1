@@ -5,7 +5,7 @@
 #include "Auxiliar.h"
 
 #include <algorithm>
-#include <regex>
+#include <cctype>
 
 void Auxiliar::trim(std::string &entrada) {
     if (entrada.empty()) return;
@@ -46,4 +46,10 @@ std::string Auxiliar::obtenerISBNSinGuion(const std::string &isbn) {
         }
     }
     return isbnSinGuiones;
+}
+
+std::string Auxiliar::textoMinuscula(std::string texto) {
+    std::transform(texto.begin(), texto.end(), texto.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+    return texto;
 }

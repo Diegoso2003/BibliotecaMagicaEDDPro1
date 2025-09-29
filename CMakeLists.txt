@@ -48,6 +48,14 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ArbolBFecha/NodoArbolB/NodoArbolB.h
         Backend/CreadorTextoDot/CreadorTextoDot.cpp
         Backend/CreadorTextoDot/CreadorTextoDot.h
+        Backend/EstructurasDeDatos/ArbolBGenero/ArbolBGenero.cpp
+        Backend/EstructurasDeDatos/ArbolBGenero/ArbolBGenero.h
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMas/NodoArbolBMas.cpp
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMas/NodoArbolBMas.h
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasHoja/NodoArbolBMasHoja.cpp
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasHoja/NodoArbolBMasHoja.h
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasInterno/NodoArbolBMasInterno.cpp
+        Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasInterno/NodoArbolBMasInterno.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

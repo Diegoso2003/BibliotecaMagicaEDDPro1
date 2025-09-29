@@ -14,22 +14,22 @@ class NodoArbolB {
 private:
     ListaSimpleEnlazada **claves;
     NodoArbolB **hijos;
-    int numeroHijos = 0;
+    bool esHoja = true;
     int numeroClaves = 0;
     int max;
     int ordenArbol;
     void cambiarHijos(NodoArbolB *&nuevo, NodoArbolB *&viejo);
     void cambiarClaves(ListaSimpleEnlazada *& nuevo, ListaSimpleEnlazada *&viejo);
+    explicit NodoArbolB(NodoArbolB *otro);
 public:
     explicit NodoArbolB(int ordenArbol);
     ~NodoArbolB();
-    void setNumeroHijos(int numHijos){this->numeroHijos = numHijos;}
     void setNumeroLibros(int numLibros){this->numeroClaves = numLibros;}
-    int getNumeroHijos() const {return this->numeroHijos;}
     int getNumeroLibros() const {return this->numeroClaves;}
     void agregarClave(Libro *libro);
-    void agregarClaveDelHijo(ListaSimpleEnlazada *libros, NodoArbolB *der, int posicion);
-    bool esNodoHoja() const {return numeroHijos == 0;}
+    void dividirNodoHijo(int posicion);
+    bool esNodoHoja() const {return esHoja;}
+    void setEsHoja(bool esNodoHoja) {this->esHoja = esNodoHoja;}
     ListaSimpleEnlazada **getClaves() const {return claves;}
     NodoArbolB **getHijos() const {return hijos;}
     ListaSimpleEnlazada *getMedio();

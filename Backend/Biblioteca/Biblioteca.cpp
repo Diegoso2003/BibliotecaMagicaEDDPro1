@@ -61,6 +61,7 @@ Biblioteca::Biblioteca() {
     librosPorIsbn = new ArbolAVLPorIsbn();
     librosPorTitulo = new ArbolAVLTitulo();
     librosPorFecha = new ArbolBFecha();
+    librosPorGenero = new ArbolBGenero();
 }
 
 Biblioteca::~Biblioteca() {
@@ -77,6 +78,7 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorIsbn->agregarLibro(nuevoLibro);
     librosPorTitulo->agregarLibro(nuevoLibro);
     librosPorFecha->agregarLibro(nuevoLibro);
+    librosPorGenero->agregarLibro(nuevoLibro);
     /**CreadorSvg creeador;
     creeador.crearSvg(obtenerDotArbolBFecha(), true,
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
@@ -91,6 +93,5 @@ std::string Biblioteca::obtenerDotArbolAVLPorTitulo() {
 }
 
 std::string Biblioteca::obtenerDotArbolBFecha() {
-    CreadorTextoDot creador;
-    return creador.obtenerDotPorAño(librosPorFecha->getRaiz());
+    return librosPorFecha->obtenerDotArbol();
 }

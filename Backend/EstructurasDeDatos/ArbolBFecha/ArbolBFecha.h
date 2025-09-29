@@ -11,19 +11,16 @@ class Libro;
 class ArbolBFecha {
 private:
     NodoArbolB *raiz;
-    int const ordenArbol = 2;
+    int const ordenArbol = 3;
     int const maxElemNodo = 2 * ordenArbol;
-    int const minElemNodo = ordenArbol;
-    int const maxHijosNodo = maxElemNodo + 1;
-    int const minHijosNodo = minElemNodo + 1;
     void agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro);
-    void verificarDesborde(NodoArbolB *nodo,  bool esRaiz, int posicion = 0);
+    void DividirRaiz();
 public:
     ArbolBFecha();
     ~ArbolBFecha();
     void agregarLibro(Libro *nuevoLibro);
     Libro** librosPorAño(int año);
-    NodoArbolB *getRaiz(){return raiz;}
+    std::string obtenerDotArbol();
 };
 
 

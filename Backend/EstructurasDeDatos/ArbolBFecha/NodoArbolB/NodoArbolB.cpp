@@ -4,6 +4,9 @@
 
 #include "NodoArbolB.h"
 
+#include <iostream>
+#include <ostream>
+
 #include "../../../Libro/Libro.h"
 #include "../../ListaSimple/ListaSimpleEnlazada.h"
 
@@ -17,6 +20,30 @@ void NodoArbolB::cambiarClaves(ListaSimpleEnlazada *&nuevo, ListaSimpleEnlazada 
     ListaSimpleEnlazada *aux = viejo;
     viejo = nuevo;
     nuevo = aux;
+}
+
+NodoArbolB::NodoArbolB(NodoArbolB *otro) {
+    this->ordenArbol = otro->ordenArbol;
+    this->max = 2*ordenArbol+1;
+    claves = new ListaSimpleEnlazada *[max];
+    hijos = new NodoArbolB *[max+1];
+    this->numeroClaves = ordenArbol;
+    this->esHoja = otro->esHoja;
+    for (int i = 0; i < max; i++) {
+        if (i < ordenArbol) {
+            this->claves[i] = otro->claves[ordenArbol+i+1];
+            otro->claves[ordenArbol+i+1] = nullptr;
+        } else {
+            this->claves[i] = nullptr;
+        }
+        if (i <= ordenArbol) {
+            this->hijos[i] = otro->hijos[ordenArbol+i+1];
+            otro->hijos[ordenArbol+i+1] = nullptr;
+        } else {
+            this->hijos[i] = nullptr;
+        }
+    }
+    this->hijos[max] = nullptr;
 }
 
 NodoArbolB::NodoArbolB(int ordenArbol) {
@@ -33,7 +60,7 @@ NodoArbolB::NodoArbolB(int ordenArbol) {
 
 NodoArbolB::~NodoArbolB() {
     delete hijos[0];
-    for (int i = 1; i < max; i++) {
+    for (int i = 0; i < max; i++) {
         delete hijos[i+1];
         delete claves[i];
     }
@@ -44,45 +71,31 @@ NodoArbolB::~NodoArbolB() {
 void NodoArbolB::agregarClave(Libro *libro) {
     ListaSimpleEnlazada *aux = nullptr;
     bool agregado = false;
-    if (numeroClaves == 0) {
-        claves[0] = new ListaSimpleEnlazada();
-        claves[0]->agregar(libro);
-        numeroClaves++;
-        return;
-    }
+    numeroClaves++;
     for (int i = 0; i < numeroClaves; i++) {
         if (agregado) {
-            ListaSimpleEnlazada *aux2 = claves[i];
-            claves[i] = aux;
-            aux = aux2;
+            cambiarClaves(aux, claves[i]);
         } else {
-            if (claves[i]->getPrimero()->getAño() == libro->getAño()) {
-                claves[i]->agregar(libro);
-                return;
-            }
-            if (claves[i]->getPrimero()->getAño() > libro->getAño()) {
+            if (claves[i] == nullptr || claves[i]->getPrimero()->getAño() > libro->getAño()) {
                 aux = claves[i];
                 claves[i] = new ListaSimpleEnlazada();
                 claves[i]->agregar(libro);
-                numeroClaves++;
                 agregado = true;
+            } else if (claves[i]->getPrimero()->getAño() == libro->getAño()) {
+                claves[i]->agregar(libro);
+                numeroClaves--;
+                return;
             }
         }
     }
-    if (!agregado) {
-        claves[numeroClaves] = new ListaSimpleEnlazada();
-        claves[numeroClaves]->agregar(libro);
-        numeroClaves++;
-    }
 }
 
-void NodoArbolB::agregarClaveDelHijo(ListaSimpleEnlazada *nuevaClave, NodoArbolB *der, int posicion) {
+void NodoArbolB::dividirNodoHijo(int posicion) {
     NodoArbolB *aux = hijos[posicion+1];
-    hijos[posicion+1] = der;
+    hijos[posicion+1] = hijos[posicion]->getNuevoDer();
     ListaSimpleEnlazada *listaAux = claves[posicion];
-    claves[posicion] = nuevaClave;
+    claves[posicion] = hijos[posicion]->getMedio();
     numeroClaves++;
-    numeroHijos++;
     for (int i = posicion+1; i < numeroClaves; i++) {
         cambiarHijos(aux, hijos[i+1]);
         cambiarClaves(listaAux, claves[i]);
@@ -90,31 +103,13 @@ void NodoArbolB::agregarClaveDelHijo(ListaSimpleEnlazada *nuevaClave, NodoArbolB
 }
 
 ListaSimpleEnlazada * NodoArbolB::getMedio() {
-    ListaSimpleEnlazada* mitad = claves[max/2];
-    claves[max/2] = nullptr;
+    ListaSimpleEnlazada* mitad = claves[ordenArbol];
+    claves[ordenArbol] = nullptr;
     return mitad;
 }
 
 NodoArbolB * NodoArbolB::getNuevoDer() {
-    auto *aux = new NodoArbolB(ordenArbol);
-    aux->numeroClaves = (this->numeroClaves-1)/2;
-    aux->numeroHijos = (this->numeroHijos)/2;
-    int mitad = (max-1)/2;
-    for (int i = 0; i < max; i++) {
-        if (i < mitad) {
-            aux->claves[i] = this->claves[mitad+i+1];
-            this->claves[mitad+i+1] = nullptr;
-        } else {
-            aux->claves[i] = nullptr;
-        }
-        if (i <= mitad) {
-            aux->hijos[i] = this->hijos[mitad+i+1];
-            this->hijos[mitad+i+1] = nullptr;
-        } else {
-            aux->hijos[i] = nullptr;
-        }
-    }
-    this->numeroClaves = (numeroClaves-1)/2;
-    this->numeroHijos /= 2;
+    auto *aux = new NodoArbolB(this);
+    this->numeroClaves = ordenArbol;
     return aux;
 }

@@ -11,6 +11,7 @@ public:
     static void trim(std::string &entrada);
     static void eliminarEspaciosIntermedio(std::string &entrada);
     static std::string obtenerISBNSinGuion(const std::string &isbn);
+    static std::string textoMinuscula(std::string texto);
 };
 
 

@@ -4,51 +4,43 @@
 
 #include "ArbolBFecha.h"
 
-#include <iostream>
 
+#include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Libro/Libro.h"
 #include "../ListaSimple/ListaSimpleEnlazada.h"
 
 void ArbolBFecha::agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro) {
     if (nodo->esNodoHoja()) {
         nodo->agregarClave(nuevoLibro);
-        std::cout << "libro agregado: " + nuevoLibro->getIsbn() << std::endl;
         return;
     }
     ListaSimpleEnlazada **libros = nodo->getClaves();
     NodoArbolB **hijos = nodo->getHijos();
-    int i;
-    for (i = 0; i < maxHijosNodo; i++) {
+    for (int i = 0; i <= nodo->getNumeroLibros(); i++) {
         if (libros[i] != nullptr && nuevoLibro->getAño() == libros[i]->getPrimero()->getAño()) {
             libros[i]->agregar(nuevoLibro);
-            return;
+            break;
         }
         if (libros[i] == nullptr || nuevoLibro->getAño() < libros[i]->getPrimero()->getAño()) {
+            agregarElemento(hijos[i], nuevoLibro);
+            if (hijos[i]->getNumeroLibros() > maxElemNodo) {
+                nodo->dividirNodoHijo(i);
+            }
             break;
         }
     }
-    agregarElemento(hijos[i], nuevoLibro);
-    verificarDesborde(nodo, false, i);
 }
 
-void ArbolBFecha::verificarDesborde(NodoArbolB *nodo, bool esRaiz, int posicion) {
-    if (esRaiz) {
-        auto* nuevo = new NodoArbolB(ordenArbol);
-        NodoArbolB **hijos = nuevo->getHijos();
-        ListaSimpleEnlazada **claves = nuevo->getClaves();
-        hijos[0] = this->raiz;
-        hijos[1] = this->raiz->getNuevoDer();
-        claves[0]= this->raiz->getMedio();
-        raiz = nuevo;
-        raiz->setNumeroHijos(2);
-        raiz->setNumeroLibros(1);
-        std::cout << "desborde raiz hecho"<< std::endl;
-        return;
-    }
-    NodoArbolB *hijo = nodo->getHijos()[posicion];
-    if (hijo->getNumeroLibros() > maxElemNodo) {
-        nodo->agregarClaveDelHijo(hijo->getMedio(), hijo->getNuevoDer(), posicion);
-    }
+void ArbolBFecha::DividirRaiz() {
+    auto *nuevo = new NodoArbolB(ordenArbol);
+    NodoArbolB **hijos = nuevo->getHijos();
+    ListaSimpleEnlazada **claves = nuevo->getClaves();
+    hijos[0] = this->raiz;
+    hijos[1] = this->raiz->getNuevoDer();
+    claves[0] = this->raiz->getMedio();
+    raiz = nuevo;
+    raiz->setEsHoja(false);
+    raiz->setNumeroLibros(1);
 }
 
 ArbolBFecha::ArbolBFecha() {
@@ -62,10 +54,15 @@ ArbolBFecha::~ArbolBFecha() {
 void ArbolBFecha::agregarLibro(Libro *nuevoLibro) {
     agregarElemento(raiz, nuevoLibro);
     if (raiz->getNumeroLibros() > maxElemNodo) {
-        verificarDesborde(raiz, true);
+        DividirRaiz();
     }
 }
 
-Libro ** ArbolBFecha::librosPorAño(int año) {
+Libro **ArbolBFecha::librosPorAño(int año) {
     return nullptr;
+}
+
+std::string ArbolBFecha::obtenerDotArbol() {
+    CreadorTextoDot creador;
+    return creador.obtenerDotPorAño(raiz);
 }
