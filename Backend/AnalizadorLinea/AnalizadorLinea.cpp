@@ -34,7 +34,11 @@ void AnalizadorLinea::extraerCampos(const std::string &linea) {
     size_t field = 0;
     bool in_quotes = false;
 
-    titulo.clear(); isbn.clear(); genero.clear(); fecha.clear(); autor.clear();
+    titulo.clear();
+    isbn.clear();
+    genero.clear();
+    fecha.clear();
+    autor.clear();
 
     for (size_t i = 0; i < linea.size() && field < 5; i++) {
         if (linea[i] == '"') {
@@ -43,16 +47,21 @@ void AnalizadorLinea::extraerCampos(const std::string &linea) {
                 size_t field_start = start;
                 while (field_start < i && std::isspace(linea[field_start])) field_start++;
                 size_t field_end = i;
-                while (field_end > field_start && std::isspace(linea[field_end-1])) field_end--;
+                while (field_end > field_start && std::isspace(linea[field_end - 1])) field_end--;
 
                 std::string field_value = linea.substr(field_start, field_end - field_start);
 
                 switch (field) {
-                    case 0: titulo = field_value; break;
-                    case 1: isbn = field_value; break;
-                    case 2: genero = field_value; break;
-                    case 3: fecha = field_value; break;
-                    case 4: autor = field_value; break;
+                    case 0: titulo = field_value;
+                        break;
+                    case 1: isbn = field_value;
+                        break;
+                    case 2: genero = field_value;
+                        break;
+                    case 3: fecha = field_value;
+                        break;
+                    case 4: autor = field_value;
+                        break;
                 }
                 field++;
             }
@@ -79,17 +88,30 @@ void AnalizadorLinea::validarCampos() {
         !std::all_of(fecha.begin(), fecha.end(), ::isdigit) ||
         fecha[0] == '0') {
         throw EntradaUsuarioException("Año invalido: " + fecha);
-        }
+    }
 
     int year = std::stoi(fecha);
     if (year < 1000 || year > 9999) {
         throw EntradaUsuarioException("Año fuera de rango: " + fecha);
     }
+    validarIsbn(isbn);
+}
 
+Libro *AnalizadorLinea::crearLibro() {
+    auto *libro = new Libro();
+    libro->setAutor(autor);
+    libro->setIsbn(isbn);
+    libro->setGenero(genero);
+    libro->setTitulo(titulo);
+    libro->setAño(std::stoi(fecha));
+    return libro;
+}
+
+void AnalizadorLinea::validarIsbn(std::string isbn) {
     std::string isbn_clean;
     int guionesMaximos = 4;
     int guiones = 0;
-    for (char c : isbn) {
+    for (char c: isbn) {
         if (std::isdigit(c)) {
             isbn_clean += c;
         } else if (c == '-') {
@@ -106,15 +128,5 @@ void AnalizadorLinea::validarCampos() {
     if (isbn_clean.size() != 13 ||
         (isbn_clean.substr(0, 3) != "978" && isbn_clean.substr(0, 3) != "979")) {
         throw EntradaUsuarioException("ISBN invalido: " + isbn);
-        }
-}
-
-Libro *AnalizadorLinea::crearLibro() {
-    auto *libro = new Libro();
-    libro->setAutor(autor);
-    libro->setIsbn(isbn);
-    libro->setGenero(genero);
-    libro->setTitulo(titulo);
-    libro->setAño(std::stoi(fecha));
-    return libro;
+    }
 }

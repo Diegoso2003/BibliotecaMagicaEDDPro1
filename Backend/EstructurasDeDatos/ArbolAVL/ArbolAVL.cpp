@@ -6,6 +6,17 @@
 
 #include "../../Excepciones/ElementoDuplicadoException.h"
 
+NodoArbol * ArbolAVL::buscarNodo(NodoArbol *nodo, Libro *libroBuscado) {
+    if (nodo == nullptr) return nullptr;
+    if (visitarSubArbolIzquierdo(nodo, libroBuscado)) {
+        return buscarNodo(nodo->getIzquierda(), libroBuscado);
+    }
+    if (visitarSubArbolDerecho(nodo, libroBuscado)) {
+        return buscarNodo(nodo->getDerecha(), libroBuscado);
+    }
+    return nodo;
+}
+
 void ArbolAVL::reorganizarArbolDerecho(NodoArbol *&nodo) {
     NodoArbol* nodo1 = nodo->getDerecha();
     NodoArbol* nodo2 = nullptr;
@@ -66,7 +77,7 @@ void ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *&nodo) {
 
 NodoArbol* ArbolAVL::agregarNuevoNodo(NodoArbol *nodo,Libro *&nuevoLibro, bool &verificarFeSubArbol) {
     if (nodo != nullptr) {
-        if (agregarSubArbolIzquierdo(nodo, nuevoLibro)) {
+        if (visitarSubArbolIzquierdo(nodo, nuevoLibro)) {
             nodo->setIzquierda(agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, verificarFeSubArbol));
             if (verificarFeSubArbol) {
                 switch (nodo->getFe()) {
@@ -82,7 +93,7 @@ NodoArbol* ArbolAVL::agregarNuevoNodo(NodoArbol *nodo,Libro *&nuevoLibro, bool &
                         verificarFeSubArbol = false;
                 }
             }
-        } else if (agregarSubArbolDerecho(nodo, nuevoLibro)) {
+        } else if (visitarSubArbolDerecho(nodo, nuevoLibro)) {
             nodo->setDerecha(agregarNuevoNodo(nodo->getDerecha(), nuevoLibro, verificarFeSubArbol));
             if (verificarFeSubArbol) {
                 switch (nodo->getFe()) {

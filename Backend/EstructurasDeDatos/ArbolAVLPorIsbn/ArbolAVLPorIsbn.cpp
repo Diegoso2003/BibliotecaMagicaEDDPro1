@@ -4,12 +4,13 @@
 
 #include "ArbolAVLPorIsbn.h"
 
+#include "../../AnalizadorLinea/AnalizadorLinea.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
 #include "../ArbolAVL/NodoArbolIsbn/NodoArbolIsbn.h"
 
-bool ArbolAVLPorIsbn::agregarSubArbolIzquierdo(NodoArbol *&actual,Libro *&libro) {
+bool ArbolAVLPorIsbn::visitarSubArbolIzquierdo(NodoArbol *&actual,Libro *&libro) {
     return libro->getSinGuiones() < actual->getLibro()->getSinGuiones();
 }
 
@@ -30,6 +31,15 @@ std::string ArbolAVLPorIsbn::obtenerDotArbol() {
     return creador.obtenerDotPorIsbn(raiz);
 }
 
-bool ArbolAVLPorIsbn::agregarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) {
+Libro * ArbolAVLPorIsbn::buscarLibro(std::string isbn) {
+    AnalizadorLinea::validarIsbn(isbn);
+    auto *libro = new Libro();
+    libro->setIsbn(isbn);
+    NodoArbol *nodo = buscarNodo(raiz, libro);
+    if (nodo == nullptr) return nullptr;
+    return nodo->getLibro();
+}
+
+bool ArbolAVLPorIsbn::visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) {
     return libro->getSinGuiones() > actual->getLibro()->getSinGuiones();
 }

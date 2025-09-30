@@ -24,6 +24,7 @@ private:
     void validarCampos();
     Libro* crearLibro();
 public:
+    static void validarIsbn(std::string isbn);
     void analizarLinea(const std::string &linea, Biblioteca *biblioteca);
     [[nodiscard]] bool harError() const {return hayError;}
     [[nodiscard]] std::string getMensajeError() const {return mensajeError;}
