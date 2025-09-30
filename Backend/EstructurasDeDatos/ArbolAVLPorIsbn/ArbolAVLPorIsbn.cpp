@@ -20,6 +20,8 @@ NodoArbol * ArbolAVLPorIsbn::crearNuevoNodo(Libro *libro) {
 void ArbolAVLPorIsbn::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     auto *nodoIsbn = dynamic_cast<NodoArbolIsbn *>(nodo);
     duplicado = !nodoIsbn->getLibro()->esLibroIgual(libro);
+    if (!duplicado) nodoIsbn->getLibro()->aumentarCantidad();
+    agregarDemasArboles = false;
 }
 
 std::string ArbolAVLPorIsbn::obtenerDotArbol() {

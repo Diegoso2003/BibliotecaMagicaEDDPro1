@@ -4,17 +4,20 @@
 
 #include "ArbolAVLTitulo.h"
 
+#include "../../Auxiliar/Auxiliar.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
 #include "../ArbolAVL/NodoArbolTitulo/NodoArbolTitulo.h"
 
 bool ArbolAVLTitulo::agregarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) {
-    return libro->getTitulo() > actual->getLibro()->getTitulo();
+    return Auxiliar::textoMinuscula(libro->getTitulo())
+    > Auxiliar::textoMinuscula(actual->getLibro()->getTitulo());
 }
 
 bool ArbolAVLTitulo::agregarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro) {
-    return libro->getTitulo() < actual->getLibro()->getTitulo();
+    return Auxiliar::textoMinuscula(libro->getTitulo()) <
+        Auxiliar::textoMinuscula(actual->getLibro()->getTitulo());
 }
 
 NodoArbol * ArbolAVLTitulo::crearNuevoNodo(Libro *libro) {

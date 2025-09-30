@@ -117,6 +117,8 @@ ArbolAVL::~ArbolAVL() {
 
 void ArbolAVL::agregarLibro(Libro *libro) {
     bool cambioAlturaArbol = false;
+    duplicado = false;
+    agregarDemasArboles = true;
     raiz = agregarNuevoNodo(raiz, libro, cambioAlturaArbol);
     if (duplicado) throw ElementoDuplicadoException("libro con isbn duplicado");
 }

@@ -32,6 +32,7 @@ void Biblioteca::extraerLibrosArchivo(std::string &ruta) {
 
 void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorIsbn->agregarLibro(nuevoLibro);
+    if (!librosPorIsbn->agregarLibro()) return;
     librosPorTitulo->agregarLibro(nuevoLibro);
     librosPorFecha->agregarLibro(nuevoLibro);
     librosPorGenero->agregarLibro(nuevoLibro);

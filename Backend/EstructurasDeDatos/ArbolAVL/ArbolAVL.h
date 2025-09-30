@@ -13,6 +13,7 @@ class ArbolAVL {
 protected:
     NodoArbol *raiz;
     bool duplicado = false;
+    bool agregarDemasArboles = true;
 private:
     int elementos = 0;
     void reorganizarArbolDerecho(NodoArbol *&nodo);
@@ -27,6 +28,7 @@ public:
     virtual ~ArbolAVL();
     virtual std::string obtenerDotArbol() = 0;
     bool estaVacia(){return this->elementos == 0;}
+    bool agregarLibro(){return agregarDemasArboles;}
     int getNumElementos(){return elementos;}
     void agregarLibro(Libro* nuevoLibro);
 };
