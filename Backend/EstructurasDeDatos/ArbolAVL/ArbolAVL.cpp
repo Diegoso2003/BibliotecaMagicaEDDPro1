@@ -6,16 +6,6 @@
 
 #include "../../Excepciones/ElementoDuplicadoException.h"
 
-void ArbolAVL::eliminarArbol(NodoArbol *actual) {
-    if (actual != nullptr) {
-        eliminarArbol(actual->getIzquierda());
-        eliminarArbol(actual->getDerecha());
-        Libro *libro = actual->getLibro();
-        delete libro;
-        delete actual;
-    }
-}
-
 void ArbolAVL::reorganizarArbolDerecho(NodoArbol *&nodo) {
     NodoArbol* nodo1 = nodo->getDerecha();
     NodoArbol* nodo2 = nullptr;
@@ -74,57 +64,59 @@ void ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *&nodo) {
     nodo->setFe(0);
 }
 
-void ArbolAVL::agregarNuevoNodo(NodoArbol *&nodo,Libro *&nuevoLibro, bool &cambioAlturaArbol) {
+NodoArbol* ArbolAVL::agregarNuevoNodo(NodoArbol *nodo,Libro *&nuevoLibro, bool &verificarFeSubArbol) {
     if (nodo != nullptr) {
         if (agregarSubArbolIzquierdo(nodo, nuevoLibro)) {
-            agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, cambioAlturaArbol);
-            if (cambioAlturaArbol) {
+            nodo->setIzquierda(agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, verificarFeSubArbol));
+            if (verificarFeSubArbol) {
                 switch (nodo->getFe()) {
                     case 1:
                         nodo->setFe(0);
-                        cambioAlturaArbol = false;
+                        verificarFeSubArbol = false;
                         break;
                     case 0:
                         nodo->setFe(-1);
                         break;
                     default:
                         reorganizarArbolIzquierdo(nodo);
-                        cambioAlturaArbol = false;
+                        verificarFeSubArbol = false;
                 }
             }
         } else if (agregarSubArbolDerecho(nodo, nuevoLibro)) {
-            agregarNuevoNodo(nodo->getDerecha(), nuevoLibro, cambioAlturaArbol);
-            if (cambioAlturaArbol) {
+            nodo->setDerecha(agregarNuevoNodo(nodo->getDerecha(), nuevoLibro, verificarFeSubArbol));
+            if (verificarFeSubArbol) {
                 switch (nodo->getFe()) {
                     case -1:
                         nodo->setFe(0);
-                        cambioAlturaArbol = false;
+                        verificarFeSubArbol = false;
                         break;
                     case 0:
                         nodo->setFe(1);
                         break;
                     default:
                         reorganizarArbolDerecho(nodo);
-                        cambioAlturaArbol = false;
+                        verificarFeSubArbol = false;
                 }
             }
         } else {
-            throw ElementoDuplicadoException("libro con isbn duplicado");
+            tratarLibroDuplicado(nodo, nuevoLibro);
         }
     } else {
-        nodo = new NodoArbol(nuevoLibro);
-        cambioAlturaArbol = true;
+        nodo = crearNuevoNodo(nuevoLibro);
+        verificarFeSubArbol = true;
+        elementos++;
     }
+    return nodo;
 }
 
 ArbolAVL::ArbolAVL() :  raiz(nullptr) {}
 
 ArbolAVL::~ArbolAVL() {
-    eliminarArbol(raiz);
+    delete raiz;
 }
 
 void ArbolAVL::agregarLibro(Libro *libro) {
     bool cambioAlturaArbol = false;
-    agregarNuevoNodo(raiz, libro, cambioAlturaArbol);
-    elementos++;
+    raiz = agregarNuevoNodo(raiz, libro, cambioAlturaArbol);
+    if (duplicado) throw ElementoDuplicadoException("libro con isbn duplicado");
 }

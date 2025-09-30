@@ -19,6 +19,9 @@ Biblioteca::Biblioteca() {
 
 Biblioteca::~Biblioteca() {
     delete librosPorIsbn;
+    delete librosPorTitulo;
+    delete librosPorFecha;
+    delete librosPorGenero;
 }
 
 void Biblioteca::extraerLibrosArchivo(std::string &ruta) {
@@ -38,13 +41,11 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
 }
 
 std::string Biblioteca::obtenerDotArbolAVLPorISBN() {
-    //return obtenerDotArbolAVL(librosPorIsbn);
-    return "";
+    return librosPorIsbn->obtenerDotArbol();
 }
 
 std::string Biblioteca::obtenerDotArbolAVLPorTitulo() {
-    //return obtenerDotArbolAVL(librosPorTitulo);
-    return "";
+    return librosPorTitulo->obtenerDotArbol();
 }
 
 std::string Biblioteca::obtenerDotArbolBFecha() {

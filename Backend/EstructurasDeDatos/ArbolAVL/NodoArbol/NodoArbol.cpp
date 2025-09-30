@@ -3,12 +3,6 @@
 //
 #include "NodoArbol.h"
 
-NodoArbol::NodoArbol(Libro *libro)  {
-    this->libro = libro;
-    this->izquierda = nullptr;
-    this->derecha = nullptr;
-}
-
 void NodoArbol::setDerecha(NodoArbol *der) {
     this->derecha = der;
 }

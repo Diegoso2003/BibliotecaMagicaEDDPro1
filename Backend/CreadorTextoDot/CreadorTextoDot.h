@@ -7,16 +7,21 @@
 #include <string>
 
 #include "../EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.h"
+#include "../EstructurasDeDatos/ArbolAVL/NodoArbolTitulo/NodoArbolTitulo.h"
 
+class NodoArbolTitulo;
+class NodoArbolIsbn;
 class NodoArbol;
 class NodoArbolBMas;
 class NodoArbolB;
 
 class CreadorTextoDot {
+    void agregarDatosLibroIsbn(std::string &dot, Libro* libro);
+    void agregarDatosLibroTitulo(std::string &dot, NodoArbolTitulo *nodo);
     void agregarDatosRecursivoPorAño(std::string &dot, NodoArbolB *nodo, int &numNodo);
     void agregarDatosRecursivoPorGenero(std::string &dot, NodoArbolBMas *nodo, int &numNodo);
-    void agregarDatosRecursivoPorIsbn(std::string &dot, NodoArbol *nodo);
-    void agregarDatosRecursivoPorTitulo(std::string &dot, NodoArbol *nodo);
+    void agregarDatosRecursivoAVL(std::string &dot, NodoArbol *nodo, bool isbn);
+    std::string obtenerDotArbolAvl(NodoArbol *raiz, bool isbn);
 public:
     std::string obtenerDotPorAño(NodoArbolB *raiz);
     std::string obtenerDotPorGenero(NodoArbolBMas *raiz);

@@ -11,6 +11,10 @@ class ArbolAVLTitulo : public ArbolAVL{
 private:
     bool agregarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) override;
     bool agregarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro) override;
+    NodoArbol *crearNuevoNodo(Libro *libro) override;
+    void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
+public:
+    std::string obtenerDotArbol() override;
 };
 
 
