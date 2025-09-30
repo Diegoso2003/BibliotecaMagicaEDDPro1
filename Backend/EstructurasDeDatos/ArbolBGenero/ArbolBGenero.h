@@ -20,6 +20,7 @@ public:
     ArbolBGenero();
     ~ArbolBGenero();
     void agregarLibro(Libro *libro);
+    std::string getDotArbolGenero();
 };
 
 

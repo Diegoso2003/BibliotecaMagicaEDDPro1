@@ -79,8 +79,8 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorTitulo->agregarLibro(nuevoLibro);
     librosPorFecha->agregarLibro(nuevoLibro);
     librosPorGenero->agregarLibro(nuevoLibro);
-    /**CreadorSvg creeador;
-    creeador.crearSvg(obtenerDotArbolBFecha(), true,
+    /**CreadorSvg creador;
+    creador.crearSvg(obtenerDotArbolBMasGenero(), true,
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
 }
 
@@ -94,4 +94,8 @@ std::string Biblioteca::obtenerDotArbolAVLPorTitulo() {
 
 std::string Biblioteca::obtenerDotArbolBFecha() {
     return librosPorFecha->obtenerDotArbol();
+}
+
+std::string Biblioteca::obtenerDotArbolBMasGenero() {
+    return librosPorGenero->getDotArbolGenero();
 }

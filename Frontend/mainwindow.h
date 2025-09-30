@@ -27,6 +27,8 @@ private slots:
 
     void on_actionGrafico_arbol_B_ordenado_por_a_o_triggered();
 
+    void on_actionGrafico_arbol_B_ordenado_por_genero_triggered();
+
 private:
     Ui::MainWindow *ui;
     Biblioteca *biblioteca;

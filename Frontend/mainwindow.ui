@@ -64,6 +64,7 @@
     <addaction name="actionGrafico_de_arbol_AVL_ordenado_por_ISBN"/>
     <addaction name="actionGrafico_de_arbol_AVl_ordenado_por_titulo"/>
     <addaction name="actionGrafico_arbol_B_ordenado_por_a_o"/>
+    <addaction name="actionGrafico_arbol_B_ordenado_por_genero"/>
    </widget>
    <addaction name="menuhola"/>
    <addaction name="menuLibro"/>
@@ -125,6 +126,11 @@
   <action name="actionGrafico_arbol_B_ordenado_por_a_o">
    <property name="text">
     <string>Grafico arbol B ordenado por año</string>
+   </property>
+  </action>
+  <action name="actionGrafico_arbol_B_ordenado_por_genero">
+   <property name="text">
+    <string>Grafico arbol B+ ordenado por genero</string>
    </property>
   </action>
  </widget>

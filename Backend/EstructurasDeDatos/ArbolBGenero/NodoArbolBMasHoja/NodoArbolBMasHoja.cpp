@@ -44,7 +44,8 @@ void NodoArbolBMasHoja::agregarElemento(Libro *libro) {
                 elementos[i] = new ListaSimpleEnlazada();
                 elementos[i]->agregar(libro);
                 agregado = true;
-            } else if (*claves[i] == Auxiliar::textoMinuscula(libro->getGenero())) {
+            } else if (Auxiliar::textoMinuscula(*claves[i]) ==
+                Auxiliar::textoMinuscula(libro->getGenero())) {
                 elementos[i]->agregar(libro);
                 numeroClaves--;
                 return;
@@ -57,7 +58,7 @@ bool NodoArbolBMasHoja::esNodoHoja() const {
     return true;
 }
 
-std::string * NodoArbolBMasHoja::getClaveMedia() {
+std::string *NodoArbolBMasHoja::getClaveMedia() {
     return claves[ordenArbol];
 }
 

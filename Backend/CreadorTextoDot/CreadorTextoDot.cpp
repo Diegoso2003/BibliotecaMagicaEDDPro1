@@ -8,10 +8,13 @@
 #include <ostream>
 
 #include "../EstructurasDeDatos/ArbolBFecha/NodoArbolB/NodoArbolB.h"
+#include "../EstructurasDeDatos/ArbolBGenero/NodoArbolBMas/NodoArbolBMas.h"
+#include "../EstructurasDeDatos/ArbolBGenero/NodoArbolBMasHoja/NodoArbolBMasHoja.h"
+#include "../EstructurasDeDatos/ArbolBGenero/NodoArbolBMasInterno/NodoArbolBMasInterno.h"
 #include "../Excepciones/EntradaUsuarioException.h"
 #include "../Libro/Libro.h"
 
-void CreadorTextoDot::agregarDatosRecursivo(std::string &dot, NodoArbolB *nodo, int &numNodo) {
+void CreadorTextoDot::agregarDatosRecursivoPorAño(std::string &dot, NodoArbolB *nodo, int &numNodo) {
     dot += "nodo" + std::to_string(numNodo) + R"( [label=")";
     bool esHoja = nodo->esNodoHoja();
     dot += esHoja ? "" : "<f0> | ";
@@ -29,7 +32,37 @@ void CreadorTextoDot::agregarDatosRecursivo(std::string &dot, NodoArbolB *nodo, 
     int numeroPadre = numNodo;
     for (int i = 0; i < numClaves+1; i++) {
         int numeroHijo = ++numNodo;
-        agregarDatosRecursivo(dot, hijos[i], numNodo);
+        agregarDatosRecursivoPorAño(dot, hijos[i], numNodo);
+        dot+= "nodo" + std::to_string(numeroPadre) + ":f" + std::to_string(i) + " -> ";
+        dot+= "nodo" + std::to_string(numeroHijo) + ";\n";
+    }
+}
+
+void CreadorTextoDot::agregarDatosRecursivoPorGenero(std::string &dot, NodoArbolBMas *nodo, int &numNodo) {
+    dot += "nodo" + std::to_string(numNodo) + R"( [label=")";
+    bool esHoja = nodo->esNodoHoja();
+    dot += esHoja ? "" : "<f0> | ";
+    std::string** claves = nodo->getClaves();
+    int numClaves = nodo->getNumeroClaves();
+    ListaSimpleEnlazada **libros = nullptr;
+    if (esHoja) {
+        auto *hoja = dynamic_cast<NodoArbolBMasHoja *>(nodo);
+        libros = hoja->getElementos();
+    }
+    for (int i = 0; i < numClaves; i++) {
+        dot+= *claves[i];
+        if (esHoja)dot+=R"(\nC:)" + std::to_string(libros[i]->getTamaño());
+        dot+= esHoja ? "" : " | <f" + std::to_string(i+1) + ">";
+        dot+= i == numClaves - 1 ? R"("];)" : " | ";
+    }
+    dot+="\n";
+    if (esHoja) return;
+    int numeroPadre = numNodo;
+    auto *nodoInterno = dynamic_cast<NodoArbolBMasInterno *>(nodo);
+    NodoArbolBMas **hijos = nodoInterno->getHijos();
+    for (int i = 0; i <= numClaves; i++) {
+        int numeroHijo = ++numNodo;
+        agregarDatosRecursivoPorGenero(dot, hijos[i], numNodo);
         dot+= "nodo" + std::to_string(numeroPadre) + ":f" + std::to_string(i) + " -> ";
         dot+= "nodo" + std::to_string(numeroHijo) + ";\n";
     }
@@ -43,7 +76,20 @@ std::string CreadorTextoDot::obtenerDotPorAño(NodoArbolB *raiz) {
     node [shape=record, fillcolor=lightblue, style=filled];)";
     dot+="\n";
     int numNodo = 1;
-    agregarDatosRecursivo(dot, raiz, numNodo);
+    agregarDatosRecursivoPorAño(dot, raiz, numNodo);
+    dot += "}";
+    std::cout << dot << std::endl;
+    return dot;
+}
+
+std::string CreadorTextoDot::obtenerDotPorGenero(NodoArbolBMas *raiz) {
+    std::string dot = R"(digraph ArbolBGenero {
+    rankdir=TB;
+    graph [ranksep=3, nodesep=0.5];
+    node [shape=record, fillcolor=lightblue, style=filled];)";
+    dot+="\n";
+    int numNodo = 1;
+    agregarDatosRecursivoPorGenero(dot, raiz, numNodo);
     dot += "}";
     std::cout << dot << std::endl;
     return dot;

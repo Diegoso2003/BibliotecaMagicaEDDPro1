@@ -40,7 +40,7 @@ void MainWindow::crearGrafica(std::string &nombre,const std::string& grafica, bo
         creador.crearSvg(grafica, r, nombre);
         QMessageBox::information(this, "Exito",
             "grafica creada en la carpeta: " + QString::fromStdString(CreadorSvg::carpeta)
-            + "/ con el nombre de: " + QString::fromStdString(nombre));
+            + "/ con el nombre de: " + QString::fromStdString(nombre)+ ".svg");
     } catch (const ElementoDuplicadoException &e) {
         std::string mensaje = e.what();
         QMessageBox::StandardButton respuesta = QMessageBox::question(
@@ -85,6 +85,18 @@ void MainWindow::on_actionGrafico_arbol_B_ordenado_por_a_o_triggered()
     try {
         std::string nombre = "arbol_fecha";
         std::string grafica = biblioteca->obtenerDotArbolBFecha();
+        crearGrafica(nombre, grafica);
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+
+
+void MainWindow::on_actionGrafico_arbol_B_ordenado_por_genero_triggered()
+{
+    try {
+        std::string nombre = "arbol_genero";
+        std::string grafica = biblioteca->obtenerDotArbolBMasGenero();
         crearGrafica(nombre, grafica);
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error", e.what());

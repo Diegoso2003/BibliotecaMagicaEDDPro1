@@ -20,6 +20,7 @@ public:
     ~NodoArbolBMasHoja();
     void agregarElemento(Libro *libro);
     bool esNodoHoja() const override;
+    ListaSimpleEnlazada **getElementos() {return elementos;}
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
 };

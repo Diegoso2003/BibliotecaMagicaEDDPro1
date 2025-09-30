@@ -5,6 +5,8 @@
 #include "ArbolBGenero.h"
 
 #include "../../Auxiliar/Auxiliar.h"
+#include "../../CreadorTextoDot/CreadorTextoDot.h"
+#include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
 #include "NodoArbolBMasHoja/NodoArbolBMasHoja.h"
 #include "NodoArbolBMasInterno/NodoArbolBMasInterno.h"
@@ -20,7 +22,7 @@ void ArbolBGenero::agregarElemento(NodoArbolBMas *nodo, Libro *&nuevoLibro) {
     std::string **claves = nodoInterno->getClaves();
     for (int i = 0; i <= nodoInterno->getNumeroClaves(); i++) {
         if (claves[i] == nullptr || Auxiliar::textoMinuscula(nuevoLibro->getGenero())
-            < *claves[i]) {
+            < Auxiliar::textoMinuscula(*claves[i])) {
             agregarElemento(hijos[i], nuevoLibro);
             if (hijos[i]->getNumeroClaves() > maxElementos) {
                 nodoInterno->dividirNodoHijo(i);
@@ -35,8 +37,8 @@ void ArbolBGenero::dividirRaiz() {
     NodoArbolBMas **hijos = nuevo->getHijos();
     std::string **claves = nuevo->getClaves();
     hijos[0] = raiz;
-    hijos[1] = raiz->getNuevoDer();
     claves[0] = raiz->getClaveMedia();
+    hijos[1] = raiz->getNuevoDer();
     nuevo->setNumeroClaves(1);
     raiz = nuevo;
 }
@@ -54,4 +56,10 @@ void ArbolBGenero::agregarLibro(Libro *libro) {
     if (raiz->getNumeroClaves() > maxElementos) {
         dividirRaiz();
     }
+}
+
+std::string ArbolBGenero::getDotArbolGenero() {
+    if (raiz->getNumeroClaves() == 0) throw EntradaUsuarioException("arbol vacio, ingresar datos");
+    CreadorTextoDot creador;
+    return creador.obtenerDotPorGenero(raiz);
 }

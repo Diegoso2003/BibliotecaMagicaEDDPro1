@@ -50,10 +50,10 @@ NodoArbolBMas * NodoArbolBMasInterno::getNuevoDer() {
 }
 
 void NodoArbolBMasInterno::dividirNodoHijo(int posicion) {
-    NodoArbolBMas *aux = hijos[posicion+1];
-    hijos[posicion+1] = hijos[posicion]->getNuevoDer();
     std::string *claveAux = claves[posicion];
     claves[posicion] = hijos[posicion]->getClaveMedia();
+    NodoArbolBMas *aux = hijos[posicion+1];
+    hijos[posicion+1] = hijos[posicion]->getNuevoDer();
     numeroClaves++;
     for (int i = posicion+1; i < numeroClaves; i++) {
         intercambiarHijos(aux, hijos[i+1]);

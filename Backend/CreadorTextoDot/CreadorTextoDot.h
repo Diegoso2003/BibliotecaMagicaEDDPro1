@@ -6,12 +6,15 @@
 #define BIBLIOTECAMAGICAEDDPRO1_CREADORTEXTODOT_H
 #include <string>
 
+class NodoArbolBMas;
 class NodoArbolB;
 
 class CreadorTextoDot {
-    void agregarDatosRecursivo(std::string &dot, NodoArbolB *nodo, int &numNodo);
+    void agregarDatosRecursivoPorAño(std::string &dot, NodoArbolB *nodo, int &numNodo);
+    void agregarDatosRecursivoPorGenero(std::string &dot, NodoArbolBMas *nodo, int &numNodo);
 public:
     std::string obtenerDotPorAño(NodoArbolB *raiz);
+    std::string obtenerDotPorGenero(NodoArbolBMas *raiz);
 };
 
 

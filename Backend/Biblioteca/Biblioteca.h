@@ -28,6 +28,7 @@ public:
     std::string obtenerDotArbolAVLPorISBN();
     std::string obtenerDotArbolAVLPorTitulo();
     std::string obtenerDotArbolBFecha();
+    std::string obtenerDotArbolBMasGenero();
 };
 
 
