@@ -94,3 +94,11 @@ std::string CreadorTextoDot::obtenerDotPorGenero(NodoArbolBMas *raiz) {
     std::cout << dot << std::endl;
     return dot;
 }
+
+
+
+void CreadorTextoDot::agregarDatosRecursivoPorIsbn(std::string &dot, NodoArbol *nodo) {
+}
+
+std::string CreadorTextoDot::obtenerDotPorIsbn(NodoArbol *raiz) {
+}
