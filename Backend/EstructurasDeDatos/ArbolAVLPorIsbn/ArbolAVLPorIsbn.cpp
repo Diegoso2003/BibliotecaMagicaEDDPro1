@@ -6,6 +6,7 @@
 
 #include "../../AnalizadorLinea/AnalizadorLinea.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
+#include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
 #include "NodoArbolIsbn/NodoArbolIsbn.h"
 
@@ -25,6 +26,7 @@ void ArbolAVLPorIsbn::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
 }
 
 Libro * ArbolAVLPorIsbn::buscarLibro(const std::string &isbn) {
+    if (estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
     AnalizadorLinea::validarIsbn(isbn);
     Libro libro;
     libro.setIsbn(isbn);

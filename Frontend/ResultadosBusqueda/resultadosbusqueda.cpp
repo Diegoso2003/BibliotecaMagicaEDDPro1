@@ -9,7 +9,7 @@ ResultadosBusqueda::ResultadosBusqueda(QWidget *parent)
     , ui(new Ui::ResultadosBusqueda)
 {
     ui->setupUi(this);
-    ui->tableWidget->setRowCount(2);
+    ui->tableWidget->setRowCount(1);
 }
 
 ResultadosBusqueda::~ResultadosBusqueda()

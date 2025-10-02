@@ -1,11 +1,16 @@
 #include "formbusquedalibro.h"
+
+#include <QMessageBox>
+
 #include "ui_formbusquedalibro.h"
+#include "../../Backend/Biblioteca/Biblioteca.h"
 #include "../../Backend/EnumBusqueda/EnumBusqueda.h"
+#include "../../Backend/Excepciones/BusquedaSinResultadoException.h"
+#include "../ResultadosBusqueda/resultadosbusqueda.h"
 
 FormBusquedaLibro::FormBusquedaLibro(Biblioteca *biblioteca, QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::FormBusquedaLibro)
-{
+      , ui(new Ui::FormBusquedaLibro) {
     ui->setupUi(this);
     this->biblioteca = biblioteca;
     QPalette palette = ui->valorBusqueda->palette();
@@ -13,8 +18,7 @@ FormBusquedaLibro::FormBusquedaLibro(Biblioteca *biblioteca, QWidget *parent)
     ui->valorBusqueda->setPalette(palette);
 }
 
-FormBusquedaLibro::~FormBusquedaLibro()
-{
+FormBusquedaLibro::~FormBusquedaLibro() {
     delete ui;
 }
 
@@ -44,8 +48,24 @@ void FormBusquedaLibro::obtenerPlaceHolder() {
     }
 }
 
-void FormBusquedaLibro::on_botonBuscar_clicked()
-{
-
+void FormBusquedaLibro::on_botonBuscar_clicked() {
+    auto *resultados = new ResultadosBusqueda(this->window());
+    std::string texto = ui->valorBusqueda->text().toStdString();
+    try {
+        switch (tipo) {
+            case EnumBusqueda::BUSQUEDA_AÑO: ;
+            case EnumBusqueda::BUSQUEDA_GENERO: ;
+            case EnumBusqueda::BUSQUEDA_ISBN:
+                resultados->agregarLibro(biblioteca->buscarLibroPorIsbn(texto));
+                break;
+            default: ;
+        }
+        resultados->show();
+    } catch (const BusquedaSinResultadoException &e) {
+        delete resultados;
+        QMessageBox::information(this, "Sin resultados", e.what());
+    } catch (const std::exception &e){
+        delete resultados;
+        QMessageBox::critical(this, "Error", e.what());
+    }
 }
-

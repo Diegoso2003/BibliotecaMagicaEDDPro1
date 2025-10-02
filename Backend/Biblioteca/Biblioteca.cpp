@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "../CreadorSVG/CreadorSvg.h"
+#include "../Excepciones/BusquedaSinResultadoException.h"
 #include "../LectorArchivo/LectorArchivo.h"
 
 Biblioteca::Biblioteca() {
@@ -55,4 +56,10 @@ std::string Biblioteca::obtenerDotArbolBFecha() {
 
 std::string Biblioteca::obtenerDotArbolBMasGenero() {
     return librosPorGenero->getDotArbolGenero();
+}
+
+Libro * Biblioteca::buscarLibroPorIsbn(const std::string &isbn) {
+    Libro *libro = librosPorIsbn->buscarLibro(isbn);
+    if (libro == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este isbn");
+    return libro;
 }

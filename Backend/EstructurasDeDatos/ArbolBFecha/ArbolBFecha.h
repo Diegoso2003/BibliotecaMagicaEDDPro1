@@ -21,6 +21,7 @@ public:
     void agregarLibro(Libro *nuevoLibro);
     Libro** librosPorAño(int año);
     std::string obtenerDotArbol();
+    bool estaVacia();
 };
 
 

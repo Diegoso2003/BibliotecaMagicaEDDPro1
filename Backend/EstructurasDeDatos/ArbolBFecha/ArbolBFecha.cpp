@@ -66,3 +66,7 @@ std::string ArbolBFecha::obtenerDotArbol() {
     CreadorTextoDot creador;
     return creador.obtenerDotPorAño(raiz);
 }
+
+bool ArbolBFecha::estaVacia() {
+    return raiz->getNumeroLibros() == 0;
+}

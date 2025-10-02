@@ -26,6 +26,7 @@ public:
     std::string obtenerDotArbolAVLPorTitulo();
     std::string obtenerDotArbolBFecha();
     std::string obtenerDotArbolBMasGenero();
+    Libro *buscarLibroPorIsbn(const std::string& isbn);
 };
 
 
