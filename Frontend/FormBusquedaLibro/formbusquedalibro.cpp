@@ -20,16 +20,18 @@ FormBusquedaLibro::FormBusquedaLibro(Biblioteca *biblioteca, QWidget *parent)
 
 FormBusquedaLibro::~FormBusquedaLibro() {
     delete ui;
+    delete tipo;
 }
 
 void FormBusquedaLibro::limpiarValores(EnumBusqueda tipo) {
     ui->valorBusqueda->setText("");
-    this->tipo = tipo;
+    delete this->tipo;
+    this->tipo = new EnumBusqueda(tipo);
     obtenerPlaceHolder();
 }
 
 void FormBusquedaLibro::obtenerPlaceHolder() {
-    switch (tipo) {
+    switch (*tipo) {
         case EnumBusqueda::BUSQUEDA_ISBN:
             ui->descripcion->setText("Ingrese el ISBN del libro");
             ui->valorBusqueda->setPlaceholderText("ISBN");
@@ -52,13 +54,16 @@ void FormBusquedaLibro::on_botonBuscar_clicked() {
     auto *resultados = new ResultadosBusqueda(this->window());
     std::string texto = ui->valorBusqueda->text().toStdString();
     try {
-        switch (tipo) {
+        switch (*tipo) {
             case EnumBusqueda::BUSQUEDA_AÑO: ;
-            case EnumBusqueda::BUSQUEDA_GENERO: ;
+            case EnumBusqueda::BUSQUEDA_GENERO:
+                resultados->agregarLista(biblioteca->buscarLibroPorGenero(texto));
+                break;
             case EnumBusqueda::BUSQUEDA_ISBN:
                 resultados->agregarLibro(biblioteca->buscarLibroPorIsbn(texto));
                 break;
-            default: ;
+            default:
+                resultados->agregarLista(biblioteca->buscarLibroPorTitulo(texto));
         }
         resultados->show();
     } catch (const BusquedaSinResultadoException &e) {

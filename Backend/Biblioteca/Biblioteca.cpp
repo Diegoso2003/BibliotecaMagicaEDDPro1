@@ -9,7 +9,9 @@
 
 #include "../CreadorSVG/CreadorSvg.h"
 #include "../Excepciones/BusquedaSinResultadoException.h"
+#include "../Excepciones/EntradaUsuarioException.h"
 #include "../LectorArchivo/LectorArchivo.h"
+#include "../EstructurasDeDatos/ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 
 Biblioteca::Biblioteca() {
     librosPorIsbn = new ArbolAVLPorIsbn();
@@ -62,4 +64,21 @@ Libro * Biblioteca::buscarLibroPorIsbn(const std::string &isbn) {
     Libro *libro = librosPorIsbn->buscarLibro(isbn);
     if (libro == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este isbn");
     return libro;
+}
+
+ListaSimpleEnlazada * Biblioteca::buscarLibroPorTitulo(std::string &titulo) {
+    ListaSimpleEnlazada *lista = librosPorTitulo->buscarLibrosPorTitulo(titulo);
+    if (lista == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este titulo");
+    return lista;
+}
+
+ListaSimpleEnlazada * Biblioteca::buscarLibroPorGenero(std::string &genero) {
+    ListaSimpleEnlazada *lista = librosPorGenero->buscarPorGenero(genero);
+    if (lista == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este genero");
+    return lista;
+}
+
+ListaSimpleEnlazada *Biblioteca::obtenerLibrosEnOrdenAlfabetico() {
+    if (librosPorTitulo->estaVacia()) throw EntradaUsuarioException("Ingrese datos para trabajar");
+    return librosPorTitulo->listarLibrosEnOrden();
 }

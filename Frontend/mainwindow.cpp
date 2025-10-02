@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QMessageBox>
+
 #include "ui_mainwindow.h"
 #include "../Backend/CreadorSVG/CreadorSvg.h"
 #include "../Backend/EnumBusqueda/EnumBusqueda.h"
@@ -8,6 +9,7 @@
 #include "carga_archivo/carga_archivo.h"
 #include "FormAgregarLibro/formagregarlibro.h"
 #include "FormBusquedaLibro/formbusquedalibro.h"
+#include "ResultadosBusqueda/resultadosbusqueda.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -134,3 +136,16 @@ void MainWindow::on_actionpor_fecha_triggered()
     this->busquedaLibro->limpiarValores(EnumBusqueda::BUSQUEDA_AÑO);
 }
 
+
+void MainWindow::on_actionListar_por_titulo_triggered()
+{
+    try {
+        ListaSimpleEnlazada *lista = biblioteca->obtenerLibrosEnOrdenAlfabetico();
+        auto *resultado = new ResultadosBusqueda(this);
+        resultado->agregarLista(lista);
+        resultado->show();
+        delete lista;
+    } catch (const std::exception &e) {
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}

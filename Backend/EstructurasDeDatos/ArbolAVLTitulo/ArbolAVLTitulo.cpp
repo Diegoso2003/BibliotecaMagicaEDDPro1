@@ -8,6 +8,8 @@
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
+#include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 #include "NodoArbolTitulo/NodoArbolTitulo.h"
 
 bool ArbolAVLTitulo::visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) {
@@ -29,11 +31,26 @@ void ArbolAVLTitulo::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     nodoTitulo->agregarLibro(libro);
 }
 
-ListaSimpleEnlazada * ArbolAVLTitulo::getLibrosPorTitulo(const std::string &titulo) {
+void ArbolAVLTitulo::agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSinOrdenar *lista) {
+    if (nodo == nullptr) return;
+    agregarOrdenAlfabetico(dynamic_cast<NodoArbolTitulo *>(nodo->getIzquierda()), lista);
+    lista->copiarLista(nodo->getLibros());
+    agregarOrdenAlfabetico(dynamic_cast<NodoArbolTitulo *>(nodo->getDerecha()), lista);
+}
+
+ListaSimpleEnlazada * ArbolAVLTitulo::buscarLibrosPorTitulo(std::string &titulo) {
     if (titulo.empty()) throw EntradaUsuarioException("Ingrese un titulo valido");
+    if (estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
     Libro libro;
+    Auxiliar::eliminarEspaciosIntermedio(titulo);
     libro.setTitulo(titulo);
     auto *nodoTitulo = dynamic_cast<NodoArbolTitulo *>(buscarNodo(raiz, &libro));
     if (nodoTitulo == nullptr) return nullptr;
     return nodoTitulo->getLibros();
+}
+
+ListaSimpleSinOrdenar *ArbolAVLTitulo::listarLibrosEnOrden() {
+    auto *lista = new ListaSimpleSinOrdenar();
+    agregarOrdenAlfabetico(dynamic_cast<NodoArbolTitulo *>(raiz), lista);
+    return lista;
 }

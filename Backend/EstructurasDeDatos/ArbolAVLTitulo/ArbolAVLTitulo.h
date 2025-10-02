@@ -6,7 +6,8 @@
 #define BIBLIOTECAMAGICAEDDPRO1_ARBOLAVLTITULO_H
 #include "../ArbolAVL/ArbolAVL.h"
 
-
+class ListaSimpleSinOrdenar;
+class NodoArbolTitulo;
 class ListaSimpleEnlazada;
 
 class ArbolAVLTitulo : public ArbolAVL{
@@ -15,8 +16,10 @@ private:
     bool visitarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro) override;
     NodoArbol *crearNuevoNodo(Libro *libro) override;
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
+    void agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSinOrdenar *lista);
 public:
-    ListaSimpleEnlazada *getLibrosPorTitulo(const std::string &titulo);
+    ListaSimpleEnlazada *buscarLibrosPorTitulo(std::string &titulo);
+    ListaSimpleSinOrdenar *listarLibrosEnOrden();
 };
 
 

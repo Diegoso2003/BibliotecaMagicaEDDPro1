@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::FormBusquedaLibro *ui;
-    EnumBusqueda tipo;
+    EnumBusqueda *tipo = nullptr;
     Biblioteca *biblioteca;
     void obtenerPlaceHolder();
 };

@@ -37,8 +37,20 @@ void ArbolBGenero::agregarLibro(Libro *libro) {
     }
 }
 
+bool ArbolBGenero::estaVacia() {
+    return raiz->getNumeroClaves() == 0;
+}
+
 std::string ArbolBGenero::getDotArbolGenero() {
     if (raiz->getNumeroClaves() == 0) throw EntradaUsuarioException("arbol vacio, ingresar datos");
     CreadorTextoDot creador;
     return creador.obtenerDotPorGenero(raiz);
+}
+
+ListaSimpleEnlazada * ArbolBGenero::buscarPorGenero(std::string &genero) {
+    if (genero.empty()) throw EntradaUsuarioException("ingrese un genero valido");
+    Auxiliar::eliminarEspaciosIntermedio(genero);
+    genero = Auxiliar::textoMinuscula(genero);
+    if (estaVacia()) throw EntradaUsuarioException("arbol vacio, ingresar datos");
+    return raiz->buscarElemento(genero);
 }

@@ -17,9 +17,12 @@ class ResultadosBusqueda : public QDialog
 public:
     explicit ResultadosBusqueda(QWidget *parent = nullptr);
     ~ResultadosBusqueda() override;
-    void agregarLibro(Libro *libro, int fila = 0);
+    void agregarItemCentrado(int fila, int columna, QString valor);
     void agregarLista(ListaSimpleEnlazada *lista);
+    void ajustarTabla();
+    void agregarLibro(Libro *libro);
 private:
+    void agregarLibro(Libro *libro, int fila);
     Ui::ResultadosBusqueda *ui;
 };
 

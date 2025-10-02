@@ -38,6 +38,8 @@ private slots:
 
     void on_actionpor_fecha_triggered();
 
+    void on_actionListar_por_titulo_triggered();
+
 private:
     Ui::MainWindow *ui;
     FormBusquedaLibro *busquedaLibro;

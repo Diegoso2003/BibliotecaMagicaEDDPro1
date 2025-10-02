@@ -23,6 +23,7 @@ public:
     ListaSimpleEnlazada **getElementos() {return elementos;}
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
+    ListaSimpleEnlazada *buscarElemento(std::string &genero) override;
 };
 
 

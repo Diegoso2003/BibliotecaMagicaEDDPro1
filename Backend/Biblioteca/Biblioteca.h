@@ -27,6 +27,9 @@ public:
     std::string obtenerDotArbolBFecha();
     std::string obtenerDotArbolBMasGenero();
     Libro *buscarLibroPorIsbn(const std::string& isbn);
+    ListaSimpleEnlazada *buscarLibroPorTitulo(std::string& titulo);
+    ListaSimpleEnlazada *buscarLibroPorGenero(std::string& genero);
+    ListaSimpleEnlazada *obtenerLibrosEnOrdenAlfabetico();
 };
 
 

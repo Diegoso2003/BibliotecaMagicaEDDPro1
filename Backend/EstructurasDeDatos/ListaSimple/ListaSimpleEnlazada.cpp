@@ -10,20 +10,13 @@
 ListaSimpleEnlazada::ListaSimpleEnlazada() {
     this->tamaño = 0;
     this->primero = nullptr;
-    this->primero = nullptr;
+    this->ultimo = nullptr;
 }
 
 ListaSimpleEnlazada::~ListaSimpleEnlazada() {
-    if (this->eliminarNodos) {
+    if (eliminarNodos) {
         delete primero;
     }
-}
-
-ListaSimpleEnlazada::ListaSimpleEnlazada(ListaSimpleEnlazada *copia) {
-    eliminarNodos = false;
-    primero = copia->primero;
-    ultimo = copia->ultimo;
-    tamaño = copia->tamaño;
 }
 
 bool ListaSimpleEnlazada::estaVacia() const {
@@ -43,25 +36,18 @@ void ListaSimpleEnlazada::agregar(Libro *libro) {
            aux->getSiguiente()->getLibro()->getSinGuiones() < libro->getSinGuiones()) {
         aux = aux->getSiguiente();
     }
-    actualizarPosicionUltimo();
     tamaño++;
     nuevo->setSiguiente(aux->getSiguiente());
     aux->setSiguiente(nuevo);
-}
-
-void ListaSimpleEnlazada::agregarLista(ListaSimpleEnlazada *copia) {
-    ultimo->setSiguiente(copia->primero);
-    ultimo = copia->ultimo;
-    tamaño += copia->tamaño;
+    actualizarPosicionUltimo();
 }
 
 Libro *ListaSimpleEnlazada::eliminar(const std::string &isbn) {
-    Libro* libro = nullptr;
+    Libro *libro = nullptr;
     primero = eliminarNodo(isbn, libro, primero);
     if (libro != nullptr) tamaño--;
     return libro;
 }
-
 
 void ListaSimpleEnlazada::actualizarPosicionUltimo() {
     while (ultimo->getSiguiente() != nullptr) {

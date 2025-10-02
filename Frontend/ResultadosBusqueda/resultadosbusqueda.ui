@@ -6,56 +6,64 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
+    <width>1037</width>
     <height>300</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1037</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1037</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Resultados</string>
   </property>
-  <widget class="QTableWidget" name="tableWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>601</width>
-     <height>301</height>
-    </rect>
-   </property>
-   <property name="sizeAdjustPolicy">
-    <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
-   </property>
-   <column>
-    <property name="text">
-     <string>ISBN</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Titulo</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Genero</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Año Pub.</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Autor</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Cantidad</string>
-    </property>
-   </column>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTableWidget" name="tablaResultados">
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+     </property>
+     <column>
+      <property name="text">
+       <string>ISBN</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Titulo</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Genero</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Año Pub.</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Autor</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Cantidad</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

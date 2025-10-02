@@ -15,7 +15,7 @@ void NodoArbolBMasHoja::intercambiarElementos(ListaSimpleEnlazada *&nuevo, Lista
 }
 
 NodoArbolBMasHoja::NodoArbolBMasHoja(int ordenArbol)
-    : NodoArbolBMas(ordenArbol){
+    : NodoArbolBMas(ordenArbol) {
     elementos = new ListaSimpleEnlazada *[max];
     for (int i = 0; i < max; i++) {
         elementos[i] = nullptr;
@@ -45,7 +45,7 @@ void NodoArbolBMasHoja::agregarElemento(Libro *libro) {
                 elementos[i]->agregar(libro);
                 agregado = true;
             } else if (Auxiliar::textoMinuscula(*claves[i]) ==
-                Auxiliar::textoMinuscula(libro->getGenero())) {
+                       Auxiliar::textoMinuscula(libro->getGenero())) {
                 elementos[i]->agregar(libro);
                 numeroClaves--;
                 return;
@@ -62,15 +62,24 @@ std::string *NodoArbolBMasHoja::getClaveMedia() {
     return claves[ordenArbol];
 }
 
-NodoArbolBMas * NodoArbolBMasHoja::getNuevoDer() {
+NodoArbolBMas *NodoArbolBMasHoja::getNuevoDer() {
     auto *hoja = new NodoArbolBMasHoja(ordenArbol);
     this->numeroClaves = ordenArbol;
-    hoja->numeroClaves = ordenArbol+1;
+    hoja->numeroClaves = ordenArbol + 1;
     for (int i = 0; i <= ordenArbol; i++) {
-        hoja->claves[i] = this->claves[ordenArbol+i];
-        hoja->elementos[i] = this->elementos[ordenArbol+i];
-        this->claves[ordenArbol+i] = nullptr;
-        this->elementos[ordenArbol+i] = nullptr;
+        hoja->claves[i] = this->claves[ordenArbol + i];
+        hoja->elementos[i] = this->elementos[ordenArbol + i];
+        this->claves[ordenArbol + i] = nullptr;
+        this->elementos[ordenArbol + i] = nullptr;
     }
     return hoja;
+}
+
+ListaSimpleEnlazada *NodoArbolBMasHoja::buscarElemento(std::string &genero) {
+    for (int i = 0; i < numeroClaves; ++i) {
+        if (genero == Auxiliar::textoMinuscula(*claves[i])) {
+            return elementos[i];
+        }
+    }
+    return nullptr;
 }

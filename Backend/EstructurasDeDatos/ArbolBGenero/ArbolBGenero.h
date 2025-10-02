@@ -19,7 +19,9 @@ public:
     ArbolBGenero();
     ~ArbolBGenero();
     void agregarLibro(Libro *libro);
+    bool estaVacia();
     std::string getDotArbolGenero();
+    ListaSimpleEnlazada *buscarPorGenero(std::string &genero);
 };
 
 

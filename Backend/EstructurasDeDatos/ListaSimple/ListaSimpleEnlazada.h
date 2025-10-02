@@ -10,21 +10,21 @@
 class IteradorListaSimple;
 
 class ListaSimpleEnlazada {
-private:
+protected:
     int tamaño;
-    bool eliminarNodos = true;
     NodoSimple* primero;
     NodoSimple* ultimo;
+    bool eliminarNodos = true;
+    friend class ListaSimpleCopia;
+private:
     void actualizarPosicionUltimo();
     NodoSimple* eliminarNodo(const std::string &isbn, Libro *&libro,  NodoSimple* nodo);
 public:
     ListaSimpleEnlazada();
-    ~ListaSimpleEnlazada();
-    explicit ListaSimpleEnlazada(ListaSimpleEnlazada *copia);
+    virtual ~ListaSimpleEnlazada();
     bool estaVacia() const;
-    void agregar(Libro* libro);
-    void agregarLista(ListaSimpleEnlazada *copia);
-    Libro* eliminar(const std::string &isbn);
+    virtual void agregar(Libro* libro);
+    virtual Libro* eliminar(const std::string &isbn);
     Libro* getPrimero(){return !estaVacia() ? primero->getLibro(): nullptr;}
     int getTamaño() const;
     IteradorListaSimple getIterator();
