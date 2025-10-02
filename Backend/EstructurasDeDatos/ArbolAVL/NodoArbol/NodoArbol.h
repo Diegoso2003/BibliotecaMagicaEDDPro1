@@ -5,6 +5,7 @@
 #ifndef BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H
 
+#include <string>
 class Libro;
 
 class NodoArbol {
@@ -20,6 +21,7 @@ public:
     NodoArbol* getDerecha(){return derecha;}
     NodoArbol* getIzquierda(){return izquierda;}
     virtual Libro *getLibro() const = 0;
+    virtual void obtenerDotLibro(std::string &dot) = 0;
     [[nodiscard]] int getFe() const {return Fe;}
     void setFe(int fe){this->Fe = fe;}
 };

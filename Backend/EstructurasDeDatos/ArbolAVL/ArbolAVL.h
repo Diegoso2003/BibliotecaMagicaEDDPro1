@@ -27,7 +27,7 @@ private:
 public:
     ArbolAVL();
     virtual ~ArbolAVL();
-    virtual std::string obtenerDotArbol() = 0;
+    std::string obtenerDotArbol();
     bool estaVacia(){return this->elementos == 0;}
     bool agregarLibro(){return agregarDemasArboles;}
     int getNumElementos(){return elementos;}

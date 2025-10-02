@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "../Backend/Biblioteca/Biblioteca.h"
+#include "FormBusquedaLibro/formbusquedalibro.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,8 +30,17 @@ private slots:
 
     void on_actionGrafico_arbol_B_ordenado_por_genero_triggered();
 
+    void on_actionpor_ISBN_triggered();
+
+    void on_actionpor_titulo_triggered();
+
+    void on_actionpor_genero_triggered();
+
+    void on_actionpor_fecha_triggered();
+
 private:
     Ui::MainWindow *ui;
+    FormBusquedaLibro *busquedaLibro;
     Biblioteca *biblioteca;
     void crearGrafica(std::string &nombre,const std::string& grafica, bool r = false);
 };

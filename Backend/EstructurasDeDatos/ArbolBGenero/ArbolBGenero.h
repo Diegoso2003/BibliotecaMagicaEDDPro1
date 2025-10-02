@@ -14,7 +14,6 @@ private:
     int const ordenArbol = 3;
     int const maxElementos = ordenArbol * 2;
     NodoArbolBMas* raiz;
-    void agregarElemento(NodoArbolBMas *nodo, Libro *&nuevoLibro);
     void dividirRaiz();
 public:
     ArbolBGenero();

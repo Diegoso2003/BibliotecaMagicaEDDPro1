@@ -4,15 +4,26 @@
 #include "ListaSimpleEnlazada.h"
 #include <iostream>
 
+#include "../../Iteradores/IteradorListaSimple.h"
 #include "../../Libro/Libro.h"
 
 ListaSimpleEnlazada::ListaSimpleEnlazada() {
     this->tamaño = 0;
     this->primero = nullptr;
+    this->primero = nullptr;
 }
 
 ListaSimpleEnlazada::~ListaSimpleEnlazada() {
-    delete primero;
+    if (this->eliminarNodos) {
+        delete primero;
+    }
+}
+
+ListaSimpleEnlazada::ListaSimpleEnlazada(ListaSimpleEnlazada *copia) {
+    eliminarNodos = false;
+    primero = copia->primero;
+    ultimo = copia->ultimo;
+    tamaño = copia->tamaño;
 }
 
 bool ListaSimpleEnlazada::estaVacia() const {
@@ -23,6 +34,7 @@ void ListaSimpleEnlazada::agregar(Libro *libro) {
     auto *nuevo = new NodoSimple(libro);
     if (estaVacia()) {
         primero = nuevo;
+        ultimo = nuevo;
         tamaño++;
         return;
     }
@@ -31,40 +43,50 @@ void ListaSimpleEnlazada::agregar(Libro *libro) {
            aux->getSiguiente()->getLibro()->getSinGuiones() < libro->getSinGuiones()) {
         aux = aux->getSiguiente();
     }
+    actualizarPosicionUltimo();
     tamaño++;
     nuevo->setSiguiente(aux->getSiguiente());
     aux->setSiguiente(nuevo);
 }
 
-Libro *ListaSimpleEnlazada::eliminar(const std::string &isbn) {
-    if (estaVacia()) return nullptr;
-    Libro* libro = nullptr;
-    if (primero->getLibro()->getSinGuiones() == isbn) {
-        primero = obtenerLibro(primero, libro);
-        tamaño--;
-        return libro;
-    }
-    NodoSimple *aux = primero;
-    while (aux->getSiguiente() != nullptr &&
-        aux->getSiguiente()->getLibro()->getSinGuiones() < isbn) {
-        aux = aux->getSiguiente();
-    }
-    if (aux->getSiguiente() == nullptr) return nullptr;
-    if (aux->getSiguiente()->getLibro()->getSinGuiones() == isbn) {
-        aux->setSiguiente(obtenerLibro(aux->getSiguiente(), libro));
-        tamaño--;
-        return libro;
-    }
-    return nullptr;
+void ListaSimpleEnlazada::agregarLista(ListaSimpleEnlazada *copia) {
+    ultimo->setSiguiente(copia->primero);
+    ultimo = copia->ultimo;
+    tamaño += copia->tamaño;
 }
 
-NodoSimple *ListaSimpleEnlazada::obtenerLibro(NodoSimple *nodo, Libro *&libro) {
-    libro = nodo->getLibro();
-    NodoSimple *aux = nodo->getSiguiente();
-    delete nodo;
-    return aux;
+Libro *ListaSimpleEnlazada::eliminar(const std::string &isbn) {
+    Libro* libro = nullptr;
+    primero = eliminarNodo(isbn, libro, primero);
+    if (libro != nullptr) tamaño--;
+    return libro;
+}
+
+
+void ListaSimpleEnlazada::actualizarPosicionUltimo() {
+    while (ultimo->getSiguiente() != nullptr) {
+        ultimo = ultimo->getSiguiente();
+    }
+}
+
+NodoSimple *ListaSimpleEnlazada::eliminarNodo(const std::string &isbn, Libro *&libro, NodoSimple *nodo) {
+    if (nodo == nullptr) return nullptr;
+    if (isbn == nodo->getLibro()->getSinGuiones()) {
+        libro = nodo->getLibro();
+        NodoSimple *aux = nodo->getSiguiente();
+        nodo->setSiguiente(nullptr);
+        delete nodo;
+        return aux;
+    }
+    nodo->setSiguiente(eliminarNodo(isbn, libro, nodo->getSiguiente()));
+    if (nodo->getSiguiente() == nullptr) ultimo = nodo;
+    return nodo;
 }
 
 int ListaSimpleEnlazada::getTamaño() const {
     return tamaño;
+}
+
+IteradorListaSimple ListaSimpleEnlazada::getIterator() {
+    return IteradorListaSimple(primero);
 }

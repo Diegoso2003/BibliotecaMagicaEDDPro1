@@ -14,8 +14,7 @@ private:
     NodoArbol *crearNuevoNodo(Libro *libro) override;
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
 public:
-    std::string obtenerDotArbol() override;
-    Libro *buscarLibro(std::string isbn);
+    Libro *buscarLibro(const std::string &isbn);
 };
 
 

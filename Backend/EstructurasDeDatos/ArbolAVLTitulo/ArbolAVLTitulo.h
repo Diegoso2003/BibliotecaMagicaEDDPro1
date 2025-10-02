@@ -7,6 +7,8 @@
 #include "../ArbolAVL/ArbolAVL.h"
 
 
+class ListaSimpleEnlazada;
+
 class ArbolAVLTitulo : public ArbolAVL{
 private:
     bool visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) override;
@@ -14,7 +16,7 @@ private:
     NodoArbol *crearNuevoNodo(Libro *libro) override;
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
 public:
-    std::string obtenerDotArbol() override;
+    ListaSimpleEnlazada *getLibrosPorTitulo(const std::string &titulo);
 };
 
 

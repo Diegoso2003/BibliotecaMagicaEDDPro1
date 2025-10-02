@@ -56,10 +56,17 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasHoja/NodoArbolBMasHoja.h
         Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasInterno/NodoArbolBMasInterno.cpp
         Backend/EstructurasDeDatos/ArbolBGenero/NodoArbolBMasInterno/NodoArbolBMasInterno.h
-        Backend/EstructurasDeDatos/ArbolAVL/NodoArbolIsbn/NodoArbolIsbn.cpp
-        Backend/EstructurasDeDatos/ArbolAVL/NodoArbolIsbn/NodoArbolIsbn.h
-        Backend/EstructurasDeDatos/ArbolAVL/NodoArbolTitulo/NodoArbolTitulo.cpp
-        Backend/EstructurasDeDatos/ArbolAVL/NodoArbolTitulo/NodoArbolTitulo.h
+        Backend/EstructurasDeDatos/ArbolAVLPorIsbn/NodoArbolIsbn/NodoArbolIsbn.cpp
+        Backend/EstructurasDeDatos/ArbolAVLPorIsbn/NodoArbolIsbn/NodoArbolIsbn.h
+        Backend/EstructurasDeDatos/ArbolAVLTitulo/NodoArbolTitulo/NodoArbolTitulo.cpp
+        Backend/EstructurasDeDatos/ArbolAVLTitulo/NodoArbolTitulo/NodoArbolTitulo.h
+        Frontend/FormBusquedaLibro/formbusquedalibro.cpp
+        Backend/EnumBusqueda/EnumBusqueda.cpp
+        Backend/EnumBusqueda/EnumBusqueda.h
+        Backend/Iteradores/IteradorListaSimple.cpp
+        Backend/Iteradores/IteradorListaSimple.h
+        Frontend/ResultadosBusqueda/resultadosbusqueda.h
+        Frontend/ResultadosBusqueda/resultadosbusqueda.cpp
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

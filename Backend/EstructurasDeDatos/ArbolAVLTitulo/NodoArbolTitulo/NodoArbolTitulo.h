@@ -4,7 +4,9 @@
 
 #ifndef BIBLIOTECAMAGICAEDDPRO1_NODOARBOLTITULO_H
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOLTITULO_H
-#include "../NodoArbol/NodoArbol.h"
+#include <string>
+
+#include "../../ArbolAVL/NodoArbol/NodoArbol.h"
 
 
 class ListaSimpleEnlazada;
@@ -15,9 +17,10 @@ public:
     explicit NodoArbolTitulo(Libro *libro);
     ~NodoArbolTitulo() override;
     Libro *getLibro() const override;
+    ListaSimpleEnlazada *getLibros() const {return libros;}
     int getCantidad();
     void agregarLibro(Libro *libro);
+    void obtenerDotLibro(std::string &dot) override;
 };
-
 
 #endif //BIBLIOTECAMAGICAEDDPRO1_NODOARBOLTITULO_H

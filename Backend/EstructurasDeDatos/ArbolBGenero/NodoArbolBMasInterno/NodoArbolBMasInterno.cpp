@@ -4,6 +4,9 @@
 
 #include "NodoArbolBMasInterno.h"
 
+#include "../../../Auxiliar/Auxiliar.h"
+#include "../../../Libro/Libro.h"
+
 void NodoArbolBMasInterno::intercambiarHijos(NodoArbolBMas *&nuevo, NodoArbolBMas *&viejo) {
     NodoArbolBMas *aux = viejo;
     viejo = nuevo;
@@ -47,6 +50,19 @@ NodoArbolBMas * NodoArbolBMasInterno::getNuevoDer() {
         this->hijos[mitad+i] = nullptr;
     }
     return nuevo;
+}
+
+void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
+    for (int i = 0; i <= numeroClaves; i++) {
+        if (claves[i] == nullptr || Auxiliar::textoMinuscula(libro->getGenero())
+            < Auxiliar::textoMinuscula(*claves[i])) {
+            hijos[i]->agregarElemento(libro);
+            if (hijos[i]->getNumeroClaves() == max) {
+                this->dividirNodoHijo(i);
+            }
+            break;
+        }
+    }
 }
 
 void NodoArbolBMasInterno::dividirNodoHijo(int posicion) {

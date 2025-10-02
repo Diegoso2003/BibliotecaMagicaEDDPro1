@@ -4,7 +4,7 @@
 
 #ifndef BIBLIOTECAMAGICAEDDPRO1_NODOARBOLISBN_H
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOLISBN_H
-#include "../NodoArbol/NodoArbol.h"
+#include "../../ArbolAVL/NodoArbol/NodoArbol.h"
 
 
 class Libro;
@@ -16,6 +16,7 @@ public:
     explicit NodoArbolIsbn(Libro *libro);
     ~NodoArbolIsbn() override;
     Libro *getLibro() const override;
+    void obtenerDotLibro(std::string &dot) override;
 };
 
 

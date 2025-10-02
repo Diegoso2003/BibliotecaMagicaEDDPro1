@@ -11,27 +11,6 @@
 #include "NodoArbolBMasHoja/NodoArbolBMasHoja.h"
 #include "NodoArbolBMasInterno/NodoArbolBMasInterno.h"
 
-void ArbolBGenero::agregarElemento(NodoArbolBMas *nodo, Libro *&nuevoLibro) {
-    if (nodo->esNodoHoja()) {
-        auto *nodoHoja = dynamic_cast<NodoArbolBMasHoja*>(nodo);
-        nodoHoja->agregarElemento(nuevoLibro);
-        return;
-    }
-    auto *nodoInterno = dynamic_cast<NodoArbolBMasInterno*>(nodo);
-    NodoArbolBMas **hijos = nodoInterno->getHijos();
-    std::string **claves = nodoInterno->getClaves();
-    for (int i = 0; i <= nodoInterno->getNumeroClaves(); i++) {
-        if (claves[i] == nullptr || Auxiliar::textoMinuscula(nuevoLibro->getGenero())
-            < Auxiliar::textoMinuscula(*claves[i])) {
-            agregarElemento(hijos[i], nuevoLibro);
-            if (hijos[i]->getNumeroClaves() > maxElementos) {
-                nodoInterno->dividirNodoHijo(i);
-            }
-            break;
-        }
-    }
-}
-
 void ArbolBGenero::dividirRaiz() {
     auto *nuevo = new NodoArbolBMasInterno(ordenArbol);
     NodoArbolBMas **hijos = nuevo->getHijos();
@@ -52,7 +31,7 @@ ArbolBGenero::~ArbolBGenero() {
 }
 
 void ArbolBGenero::agregarLibro(Libro *libro) {
-    agregarElemento(raiz, libro);
+    raiz->agregarElemento(libro);
     if (raiz->getNumeroClaves() > maxElementos) {
         dividirRaiz();
     }

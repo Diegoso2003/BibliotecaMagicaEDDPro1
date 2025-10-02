@@ -2,11 +2,14 @@
 // Created by rafael-cayax on 15/9/25.
 //
 #include "ArbolAVL.h"
+
+#include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Libro/Libro.h"
 
 #include "../../Excepciones/ElementoDuplicadoException.h"
+#include "../../Excepciones/EntradaUsuarioException.h"
 
-NodoArbol * ArbolAVL::buscarNodo(NodoArbol *nodo, Libro *libroBuscado) {
+NodoArbol *ArbolAVL::buscarNodo(NodoArbol *nodo, Libro *libroBuscado) {
     if (nodo == nullptr) return nullptr;
     if (visitarSubArbolIzquierdo(nodo, libroBuscado)) {
         return buscarNodo(nodo->getIzquierda(), libroBuscado);
@@ -18,8 +21,8 @@ NodoArbol * ArbolAVL::buscarNodo(NodoArbol *nodo, Libro *libroBuscado) {
 }
 
 void ArbolAVL::reorganizarArbolDerecho(NodoArbol *&nodo) {
-    NodoArbol* nodo1 = nodo->getDerecha();
-    NodoArbol* nodo2 = nullptr;
+    NodoArbol *nodo1 = nodo->getDerecha();
+    NodoArbol *nodo2 = nullptr;
     if (nodo1->getFe() >= 0) {
         nodo->setDerecha(nodo1->getIzquierda());
         nodo1->setIzquierda(nodo);
@@ -47,8 +50,8 @@ void ArbolAVL::reorganizarArbolDerecho(NodoArbol *&nodo) {
 }
 
 void ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *&nodo) {
-    NodoArbol* nodo1 = nodo->getIzquierda();
-    NodoArbol* nodo2 = nullptr;
+    NodoArbol *nodo1 = nodo->getIzquierda();
+    NodoArbol *nodo2 = nullptr;
     if (nodo1->getFe() <= 0) {
         nodo->setIzquierda(nodo1->getDerecha());
         nodo1->setDerecha(nodo);
@@ -75,7 +78,7 @@ void ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *&nodo) {
     nodo->setFe(0);
 }
 
-NodoArbol* ArbolAVL::agregarNuevoNodo(NodoArbol *nodo,Libro *&nuevoLibro, bool &verificarFeSubArbol) {
+NodoArbol *ArbolAVL::agregarNuevoNodo(NodoArbol *nodo, Libro *&nuevoLibro, bool &verificarFeSubArbol) {
     if (nodo != nullptr) {
         if (visitarSubArbolIzquierdo(nodo, nuevoLibro)) {
             nodo->setIzquierda(agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, verificarFeSubArbol));
@@ -120,10 +123,17 @@ NodoArbol* ArbolAVL::agregarNuevoNodo(NodoArbol *nodo,Libro *&nuevoLibro, bool &
     return nodo;
 }
 
-ArbolAVL::ArbolAVL() :  raiz(nullptr) {}
+ArbolAVL::ArbolAVL() : raiz(nullptr) {
+}
 
 ArbolAVL::~ArbolAVL() {
     delete raiz;
+}
+
+std::string ArbolAVL::obtenerDotArbol() {
+    CreadorTextoDot creador;
+    if (estaVacia()) throw EntradaUsuarioException("Arbol vacio, ingresar datos para crear grafica");
+    return creador.obtenerDotArbolAvl(raiz);
 }
 
 void ArbolAVL::agregarLibro(Libro *libro) {

@@ -6,6 +6,8 @@
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOLBMAS_H
 
 #include <string>
+class Libro;
+
 class NodoArbolBMas {
 protected:
     int numeroClaves = 0;
@@ -22,6 +24,7 @@ public:
     virtual std::string *getClaveMedia() = 0;
     virtual NodoArbolBMas *getNuevoDer() = 0;
     virtual bool esNodoHoja() const = 0;
+    virtual void agregarElemento(Libro *libro) = 0;
 };
 
 

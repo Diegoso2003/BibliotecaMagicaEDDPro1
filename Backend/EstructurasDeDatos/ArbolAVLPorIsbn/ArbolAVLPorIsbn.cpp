@@ -6,9 +6,8 @@
 
 #include "../../AnalizadorLinea/AnalizadorLinea.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
-#include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
-#include "../ArbolAVL/NodoArbolIsbn/NodoArbolIsbn.h"
+#include "NodoArbolIsbn/NodoArbolIsbn.h"
 
 bool ArbolAVLPorIsbn::visitarSubArbolIzquierdo(NodoArbol *&actual,Libro *&libro) {
     return libro->getSinGuiones() < actual->getLibro()->getSinGuiones();
@@ -25,17 +24,11 @@ void ArbolAVLPorIsbn::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     agregarDemasArboles = false;
 }
 
-std::string ArbolAVLPorIsbn::obtenerDotArbol() {
-    CreadorTextoDot creador;
-    if (estaVacia()) throw EntradaUsuarioException("Arbol vacio, ingresar datos para crear grafica");
-    return creador.obtenerDotPorIsbn(raiz);
-}
-
-Libro * ArbolAVLPorIsbn::buscarLibro(std::string isbn) {
+Libro * ArbolAVLPorIsbn::buscarLibro(const std::string &isbn) {
     AnalizadorLinea::validarIsbn(isbn);
-    auto *libro = new Libro();
-    libro->setIsbn(isbn);
-    NodoArbol *nodo = buscarNodo(raiz, libro);
+    Libro libro;
+    libro.setIsbn(isbn);
+    NodoArbol *nodo = buscarNodo(raiz, &libro);
     if (nodo == nullptr) return nullptr;
     return nodo->getLibro();
 }

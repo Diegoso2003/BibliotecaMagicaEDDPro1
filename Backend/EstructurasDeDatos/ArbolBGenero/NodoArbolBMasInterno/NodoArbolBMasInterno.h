@@ -18,6 +18,7 @@ public:
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
     NodoArbolBMas **getHijos() {return hijos;}
+    void agregarElemento(Libro *libro) override;
     void dividirNodoHijo(int posicion);
 };
 

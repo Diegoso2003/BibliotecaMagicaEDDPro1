@@ -8,7 +8,7 @@
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
-#include "../ArbolAVL/NodoArbolTitulo/NodoArbolTitulo.h"
+#include "NodoArbolTitulo/NodoArbolTitulo.h"
 
 bool ArbolAVLTitulo::visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) {
     return Auxiliar::textoMinuscula(libro->getTitulo())
@@ -29,8 +29,11 @@ void ArbolAVLTitulo::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     nodoTitulo->agregarLibro(libro);
 }
 
-std::string ArbolAVLTitulo::obtenerDotArbol() {
-    CreadorTextoDot creador;
-    if (estaVacia()) throw EntradaUsuarioException("Arbol vacio, ingresar datos para crear grafica");
-    return creador.obtenerDotPorTitulo(raiz);
+ListaSimpleEnlazada * ArbolAVLTitulo::getLibrosPorTitulo(const std::string &titulo) {
+    if (titulo.empty()) throw EntradaUsuarioException("Ingrese un titulo valido");
+    Libro libro;
+    libro.setTitulo(titulo);
+    auto *nodoTitulo = dynamic_cast<NodoArbolTitulo *>(buscarNodo(raiz, &libro));
+    if (nodoTitulo == nullptr) return nullptr;
+    return nodoTitulo->getLibros();
 }

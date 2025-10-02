@@ -3,9 +3,11 @@
 #include <QMessageBox>
 #include "ui_mainwindow.h"
 #include "../Backend/CreadorSVG/CreadorSvg.h"
+#include "../Backend/EnumBusqueda/EnumBusqueda.h"
 #include "../Backend/Excepciones/ElementoDuplicadoException.h"
 #include "carga_archivo/carga_archivo.h"
 #include "FormAgregarLibro/formagregarlibro.h"
+#include "FormBusquedaLibro/formbusquedalibro.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,8 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     carga->setBiblioteca(biblioteca);
     auto *agregarLibro = new FormAgregarLibro(this);
     agregarLibro->setBiblioteca(biblioteca);
+    busquedaLibro = new FormBusquedaLibro(biblioteca,this);
     ui->stackedWidget->addWidget(carga);
     ui->stackedWidget->addWidget(agregarLibro);
+    ui->stackedWidget->addWidget(busquedaLibro);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -101,5 +105,32 @@ void MainWindow::on_actionGrafico_arbol_B_ordenado_por_genero_triggered()
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error", e.what());
     }
+}
+
+
+void MainWindow::on_actionpor_ISBN_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    this->busquedaLibro->limpiarValores(EnumBusqueda::BUSQUEDA_ISBN);
+}
+
+void MainWindow::on_actionpor_titulo_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    this->busquedaLibro->limpiarValores(EnumBusqueda::BUSQUEDA_TITULO);
+}
+
+
+void MainWindow::on_actionpor_genero_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    this->busquedaLibro->limpiarValores(EnumBusqueda::BUSQUEDA_GENERO);
+}
+
+
+void MainWindow::on_actionpor_fecha_triggered()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    this->busquedaLibro->limpiarValores(EnumBusqueda::BUSQUEDA_AÑO);
 }
 
