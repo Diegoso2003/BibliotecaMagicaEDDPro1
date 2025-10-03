@@ -6,6 +6,10 @@
 
 #include <algorithm>
 #include <cctype>
+#include <iostream>
+#include <ostream>
+
+#include "../Excepciones/EntradaUsuarioException.h"
 
 void Auxiliar::trim(std::string &entrada) {
     if (entrada.empty()) return;
@@ -52,4 +56,50 @@ std::string Auxiliar::textoMinuscula(std::string texto) {
     std::transform(texto.begin(), texto.end(), texto.begin(),
                    [](unsigned char c){ return std::tolower(c); });
     return texto;
+}
+
+void Auxiliar::obtenerFechas(const std::string &texto, int fechas[]) {
+    std::string año1;
+    std::string año2;
+    bool primero = true;
+    int estado = 1;
+    for (char c: texto) {
+        switch (estado) {
+            case 1:
+                if (esNumero(c) && c != '0') {
+                    año1 += c;
+                    estado = 2;
+                } else {
+                    estado = 20;
+                }
+                break;
+            case 2:
+                if (esNumero(c)) año1 += c;
+                else if (c == '-') estado = 3;
+                else estado = 20;
+                break;
+            case 3:
+                if (esNumero(c) && c != '0') {
+                    año2 += c;
+                    estado = 4;
+                } else {
+                    estado = 20;
+                }
+                break;
+            case 4:
+                if (esNumero(c)) año2 += c;
+                else estado = 20;
+                break;
+            default:
+                throw EntradaUsuarioException("Formato de busqueda de año invalido");
+        }
+    }
+    if (estado != 2 && estado != 4) throw EntradaUsuarioException("Formato de busqueda de año invalido");
+    fechas[0] = std::stoi(año1);
+    fechas[1] = año2.empty() ? fechas[0] : std::stoi(año2);
+}
+
+bool Auxiliar::esNumero(char c) {
+    return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'
+    || c == '8' || c == '9' || c == '0';
 }

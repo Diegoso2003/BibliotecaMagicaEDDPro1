@@ -12,6 +12,8 @@ public:
     static void eliminarEspaciosIntermedio(std::string &entrada);
     static std::string obtenerISBNSinGuion(const std::string &isbn);
     static std::string textoMinuscula(std::string texto);
+    static void obtenerFechas(const std::string &texto, int fechas[]);
+    static bool esNumero(char c);
 };
 
 

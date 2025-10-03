@@ -82,3 +82,8 @@ ListaSimpleEnlazada *Biblioteca::obtenerLibrosEnOrdenAlfabetico() {
     if (librosPorTitulo->estaVacia()) throw EntradaUsuarioException("Ingrese datos para trabajar");
     return librosPorTitulo->listarLibrosEnOrden();
 }
+
+ListaSimpleEnlazada * Biblioteca::obtenerLibrosPorFecha(std::string &fechas) {
+    if (librosPorFecha->estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
+    return librosPorFecha->getListaPorRango(fechas);
+}

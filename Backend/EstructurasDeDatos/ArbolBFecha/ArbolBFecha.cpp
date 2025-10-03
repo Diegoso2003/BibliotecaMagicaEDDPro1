@@ -4,10 +4,17 @@
 
 #include "ArbolBFecha.h"
 
+#include <iostream>
+#include <ostream>
 
+
+#include "../../Auxiliar/Auxiliar.h"
+#include "../../AuxiliarBusquedaB/AuxiliarBusquedaB.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
+#include "../../Excepciones/BusquedaSinResultadoException.h"
 #include "../../Libro/Libro.h"
 #include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 
 void ArbolBFecha::agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro) {
     if (nodo->esNodoHoja()) {
@@ -43,6 +50,30 @@ void ArbolBFecha::DividirRaiz() {
     raiz->setNumeroLibros(1);
 }
 
+void ArbolBFecha::agregarListaElementos(AuxiliarBusquedaB *aux, NodoArbolB *nodo) {
+    numeroVeces++;
+    if (nodo == nullptr) return;
+    ListaSimpleEnlazada **claves = nodo->getClaves();
+    NodoArbolB **hijos = nodo->getHijos();
+    for (int i = 0; i <= nodo->getNumeroLibros() && aux->seguirBuscando(); i++) {
+        if (claves[i] != nullptr) {
+            int actual = claves[i]->getPrimero()->getAño();
+            if (actual >= aux->fechaInicio() && actual <= aux->fechaFin()) {
+                if (!aux->esFechaUnica())agregarListaElementos(aux, hijos[i]);
+                aux->getLista()->copiarLista(claves[i]);
+                if (actual == aux->fechaFin()) aux->pararBusqueda();
+                continue;
+            }
+            if (aux->estaFueraDeRango()) aux->pararBusqueda();
+            if (!aux->estaFueraDeRango() && !aux->getLista()->estaVacia()) aux->marcarFueraDeRango();
+        }
+        if (claves[i] == nullptr || aux->fechaInicio() < claves[i]->getPrimero()->getAño()) {
+            agregarListaElementos(aux, hijos[i]);
+            if (aux->esFechaUnica()) break;
+        }
+    }
+}
+
 ArbolBFecha::ArbolBFecha() {
     raiz = new NodoArbolB(ordenArbol);
 }
@@ -69,4 +100,16 @@ std::string ArbolBFecha::obtenerDotArbol() {
 
 bool ArbolBFecha::estaVacia() {
     return raiz->getNumeroLibros() == 0;
+}
+
+ListaSimpleSinOrdenar *ArbolBFecha::getListaPorRango(const std::string &texto) {
+    int fechas[2] = {-1, -1};
+    Auxiliar::obtenerFechas(texto, fechas);
+    auto *lista = new ListaSimpleSinOrdenar();
+    AuxiliarBusquedaB aux(lista, fechas);
+    numeroVeces = 0;
+    agregarListaElementos(&aux, raiz);
+    std::cout << "numero de veces: "<< numeroVeces << std::endl;
+    if (lista->estaVacia()) throw BusquedaSinResultadoException("No se encontro ningun libro en este rango de facha");
+    return lista;
 }

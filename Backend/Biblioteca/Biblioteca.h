@@ -30,6 +30,7 @@ public:
     ListaSimpleEnlazada *buscarLibroPorTitulo(std::string& titulo);
     ListaSimpleEnlazada *buscarLibroPorGenero(std::string& genero);
     ListaSimpleEnlazada *obtenerLibrosEnOrdenAlfabetico();
+    ListaSimpleEnlazada *obtenerLibrosPorFecha(std::string &fechas);
 };
 
 

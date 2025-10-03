@@ -71,6 +71,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/Excepciones/BusquedaSinResultadoException.h
         Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.cpp
         Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h
+        Backend/AuxiliarBusquedaB/AuxiliarBusquedaB.cpp
+        Backend/AuxiliarBusquedaB/AuxiliarBusquedaB.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

@@ -55,7 +55,9 @@ void FormBusquedaLibro::on_botonBuscar_clicked() {
     std::string texto = ui->valorBusqueda->text().toStdString();
     try {
         switch (*tipo) {
-            case EnumBusqueda::BUSQUEDA_AÑO: ;
+            case EnumBusqueda::BUSQUEDA_AÑO:
+                resultados->agregarLista(biblioteca->obtenerLibrosPorFecha(texto));
+                break;
             case EnumBusqueda::BUSQUEDA_GENERO:
                 resultados->agregarLista(biblioteca->buscarLibroPorGenero(texto));
                 break;
