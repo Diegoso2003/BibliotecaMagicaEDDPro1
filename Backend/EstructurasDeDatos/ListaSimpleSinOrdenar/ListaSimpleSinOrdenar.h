@@ -12,7 +12,7 @@ private:
     NodoSimple *primero = nullptr;
     NodoSimple *ultimo = nullptr;
 public:
-    Libro * eliminar(const std::string &isbn) override;
+    void eliminar(const std::string &isbn) override;
     void agregar(Libro *libro) override;
     void copiarLista(ListaOrdenada *lista);
     IteradorListaSimple getIterator() override;

@@ -4,9 +4,6 @@
 
 #include "CreadorTextoDot.h"
 
-#include <iostream>
-#include <ostream>
-
 #include "../EstructurasDeDatos/ArbolAVL/NodoArbol/NodoArbol.h"
 #include "../EstructurasDeDatos/ArbolBFecha/NodoArbolB/NodoArbolB.h"
 #include "../EstructurasDeDatos/ArbolBGenero/NodoArbolBMas/NodoArbolBMas.h"
@@ -80,7 +77,6 @@ std::string CreadorTextoDot::obtenerDotPorAño(NodoArbolB *raiz) {
     int numNodo = 1;
     agregarDatosRecursivoPorAño(dot, raiz, numNodo);
     dot += "}";
-    std::cout << dot << std::endl;
     return dot;
 }
 
@@ -93,7 +89,6 @@ std::string CreadorTextoDot::obtenerDotPorGenero(NodoArbolBMas *raiz) {
     int numNodo = 1;
     agregarDatosRecursivoPorGenero(dot, raiz, numNodo);
     dot += "}";
-    std::cout << dot << std::endl;
     return dot;
 }
 
@@ -122,6 +117,5 @@ std::string CreadorTextoDot::obtenerDotArbolAvl(NodoArbol *raiz) {
     elementos += "\n";
     agregarDatosRecursivoAVL(elementos, raiz);
     elementos += "}";
-    std::cout << elementos << std::endl;
     return elementos;
 }

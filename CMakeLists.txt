@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.10)
 project(BibliotecaMagicaEDDPro1)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -82,3 +82,7 @@ target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Gui
         Qt::Widgets
 )
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_options(BibliotecaMagicaEDDPro1 PRIVATE -Os -s -ffunction-sections -fdata-sections)
+    target_link_options(BibliotecaMagicaEDDPro1 PRIVATE -Wl,--gc-sections)
+endif()

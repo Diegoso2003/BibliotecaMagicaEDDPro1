@@ -53,28 +53,41 @@ void ListaOrdenada::agregar(Libro *libro) {
     tamaño++;
 }
 
-Libro *ListaOrdenada::eliminar(const std::string &isbn) {
-    Libro *libro = nullptr;
-    return libro;
+void ListaOrdenada::eliminar(const std::string &isbn) {
+    if (primero->getLibro()->getSinGuiones() == isbn) {
+        NodoSimple *aux = primero;
+        primero = primero->getSiguiente();
+        primero->setAnterior(nullptr);
+        aux->setSiguiente(nullptr);
+        delete aux;
+        tamaño--;
+        return;
+    }
+
+    if (ultimo->getLibro()->getSinGuiones() == isbn) {
+        NodoSimple *aux = ultimo;
+        ultimo = ultimo->getAnterior();
+        ultimo->setSiguiente(nullptr);
+        delete aux;
+        tamaño--;
+        return;
+    }
+    NodoDoble *posicion = nullptr;
+    if (debeBuscarAlPrincipio(isbn)) {
+        posicion = eliminarDesdePrincipio(isbn);
+    } else {
+        posicion = eliminarDesdeFinal(isbn);
+    }
+    posicion->getSiguiente()->setAnterior(posicion->getAnterior());
+    posicion->getAnterior()->setSiguiente(posicion->getSiguiente());
+    posicion->setSiguiente(nullptr);
+    delete posicion;
+    tamaño--;
 }
 
 Libro * ListaOrdenada::getPrimero() {
     return !estaVacia() ? primero->getLibro(): nullptr;
 }
-
-/**NodoSimple *ListaOrdenada::eliminarNodo(const std::string &isbn, Libro *&libro, NodoSimple *nodo) {
-    if (nodo == nullptr) return nullptr;
-    if (isbn == nodo->getLibro()->getSinGuiones()) {
-        libro = nodo->getLibro();
-        NodoSimple *aux = nodo->getSiguiente();
-        nodo->setSiguiente(nullptr);
-        delete nodo;
-        return aux;
-    }
-    nodo->setSiguiente(eliminarNodo(isbn, libro, nodo->getSiguiente()));
-    if (nodo->getSiguiente() == nullptr) ultimo = nodo;
-    return nodo;
-}**/
 
 int ListaOrdenada::getTamaño() const {
     return tamaño;
@@ -112,4 +125,20 @@ void ListaOrdenada::buscarDesdeFinal(NodoDoble *nuevo) {
     nuevo->setAnterior(actual);
     actual->getSiguiente()->setAnterior(nuevo);
     actual->setSiguiente(nuevo);
+}
+
+NodoDoble* ListaOrdenada::eliminarDesdePrincipio(const std::string &isbn) {
+    NodoDoble *actual = primero;
+    while (isbn != actual->getLibro()->getSinGuiones()) {
+        actual = actual->getSiguiente();
+    }
+    return actual;
+}
+
+NodoDoble * ListaOrdenada::eliminarDesdeFinal(const std::string &isbn) {
+    NodoDoble *actual = ultimo;
+    while (isbn != actual->getLibro()->getSinGuiones()) {
+        actual = actual->getAnterior();
+    }
+    return actual;
 }

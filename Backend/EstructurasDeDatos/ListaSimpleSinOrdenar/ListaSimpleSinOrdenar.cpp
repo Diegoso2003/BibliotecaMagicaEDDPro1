@@ -5,10 +5,28 @@
 #include "ListaSimpleSinOrdenar.h"
 #include "../ListaOrdenada/ListaOrdenada.h"
 #include "../../Iteradores/IteradorListaSimple.h"
+#include "../../Libro/Libro.h"
 #include "NodoSimple/NodoSimple.h"
 
-Libro * ListaSimpleSinOrdenar::eliminar(const std::string &isbn) {
-    return nullptr;
+void ListaSimpleSinOrdenar::eliminar(const std::string &isbn) {
+    NodoSimple *aux = primero;
+    if (primero->getLibro()->getSinGuiones() == isbn) {
+        primero = primero->getSiguiente();
+        aux->setSiguiente(nullptr);
+        delete aux;
+        tamaño--;
+        return;
+    }
+    NodoSimple *anterior = primero;
+    while (aux->getLibro()->getSinGuiones() != isbn) {
+        anterior = aux;
+        aux = aux->getSiguiente();
+    }
+    anterior->setSiguiente(aux->getSiguiente());
+    aux->setSiguiente(nullptr);
+    if (aux == ultimo) ultimo = anterior;
+    delete aux;
+    tamaño--;
 }
 
 void ListaSimpleSinOrdenar::agregar(Libro *libro) {

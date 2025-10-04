@@ -17,16 +17,17 @@ protected:
 private:
     NodoDoble* primero;
     NodoDoble* ultimo;
-    NodoDoble* eliminarNodo(const std::string &isbn, Libro *&libro,  NodoSimple* nodo);
     bool debeBuscarAlPrincipio(const std::string &nuevoDato);
     void buscarDesdePrincipio(NodoDoble *nuevo);
     void buscarDesdeFinal(NodoDoble *nuevo);
+    NodoDoble* eliminarDesdePrincipio(const std::string &isbn);
+    NodoDoble* eliminarDesdeFinal(const std::string &isbn);
 public:
     ListaOrdenada();
     virtual ~ListaOrdenada();
     bool estaVacia() const;
     virtual void agregar(Libro* libro);
-    virtual Libro* eliminar(const std::string &isbn);
+    virtual void eliminar(const std::string &isbn);
     Libro* getPrimero();
     int getTamaño() const;
     virtual IteradorListaSimple getIterator();
