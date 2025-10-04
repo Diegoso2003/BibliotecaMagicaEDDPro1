@@ -4,7 +4,7 @@
 
 #ifndef BIBLIOTECAMAGICAEDDPRO1_ANALIZADORARCHIVO_H
 #define BIBLIOTECAMAGICAEDDPRO1_ANALIZADORARCHIVO_H
-#include "../EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.h"
+#include "../EstructurasDeDatos/ListaOrdenada/ListaOrdenada.h"
 #include <string>
 
 class Biblioteca;
@@ -24,7 +24,7 @@ private:
     void validarCampos();
     Libro* crearLibro();
 public:
-    static void validarIsbn(std::string isbn);
+    static void validarIsbn(const std::string &isbn);
     void analizarLinea(const std::string &linea, Biblioteca *biblioteca);
     [[nodiscard]] bool harError() const {return hayError;}
     [[nodiscard]] std::string getMensajeError() const {return mensajeError;}

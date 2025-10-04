@@ -7,6 +7,7 @@
 #include "../Libro/Libro.h"
 #include <iostream>
 
+#include "../AnalizadorLinea/AnalizadorLinea.h"
 #include "../CreadorSVG/CreadorSvg.h"
 #include "../Excepciones/BusquedaSinResultadoException.h"
 #include "../Excepciones/EntradaUsuarioException.h"
@@ -18,6 +19,7 @@ Biblioteca::Biblioteca() {
     librosPorTitulo = new ArbolAVLTitulo();
     librosPorFecha = new ArbolBFecha();
     librosPorGenero = new ArbolBGenero();
+    listaSinOrdenar = new ListaSimpleSinOrdenar();
 }
 
 Biblioteca::~Biblioteca() {
@@ -25,6 +27,7 @@ Biblioteca::~Biblioteca() {
     delete librosPorTitulo;
     delete librosPorFecha;
     delete librosPorGenero;
+    delete listaSinOrdenar;
 }
 
 void Biblioteca::extraerLibrosArchivo(std::string &ruta) {
@@ -39,9 +42,14 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorTitulo->agregarLibro(nuevoLibro);
     librosPorFecha->agregarLibro(nuevoLibro);
     librosPorGenero->agregarLibro(nuevoLibro);
+    listaSinOrdenar->agregar(nuevoLibro);
     /**CreadorSvg creador;
     creador.crearSvg(obtenerDotArbolBMasGenero(), true,
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
+}
+
+void Biblioteca::eliminarLibro(const std::string &isbn) {
+    AnalizadorLinea::validarIsbn(isbn);
 }
 
 std::string Biblioteca::obtenerDotArbolAVLPorISBN() {
@@ -66,24 +74,24 @@ Libro * Biblioteca::buscarLibroPorIsbn(const std::string &isbn) {
     return libro;
 }
 
-ListaSimpleEnlazada * Biblioteca::buscarLibroPorTitulo(std::string &titulo) {
-    ListaSimpleEnlazada *lista = librosPorTitulo->buscarLibrosPorTitulo(titulo);
+ListaOrdenada * Biblioteca::buscarLibroPorTitulo(std::string &titulo) {
+    ListaOrdenada *lista = librosPorTitulo->buscarLibrosPorTitulo(titulo);
     if (lista == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este titulo");
     return lista;
 }
 
-ListaSimpleEnlazada * Biblioteca::buscarLibroPorGenero(std::string &genero) {
-    ListaSimpleEnlazada *lista = librosPorGenero->buscarPorGenero(genero);
+ListaOrdenada * Biblioteca::buscarLibroPorGenero(std::string &genero) {
+    ListaOrdenada *lista = librosPorGenero->buscarPorGenero(genero);
     if (lista == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este genero");
     return lista;
 }
 
-ListaSimpleEnlazada *Biblioteca::obtenerLibrosEnOrdenAlfabetico() {
+ListaOrdenada *Biblioteca::obtenerLibrosEnOrdenAlfabetico() {
     if (librosPorTitulo->estaVacia()) throw EntradaUsuarioException("Ingrese datos para trabajar");
     return librosPorTitulo->listarLibrosEnOrden();
 }
 
-ListaSimpleEnlazada * Biblioteca::obtenerLibrosPorFecha(std::string &fechas) {
+ListaOrdenada * Biblioteca::obtenerLibrosPorFecha(std::string &fechas) {
     if (librosPorFecha->estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
     return librosPorFecha->getListaPorRango(fechas);
 }

@@ -8,7 +8,7 @@
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/EntradaUsuarioException.h"
 #include "../../Libro/Libro.h"
-#include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaOrdenada/ListaOrdenada.h"
 #include "../ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 #include "NodoArbolTitulo/NodoArbolTitulo.h"
 
@@ -38,7 +38,7 @@ void ArbolAVLTitulo::agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSi
     agregarOrdenAlfabetico(dynamic_cast<NodoArbolTitulo *>(nodo->getDerecha()), lista);
 }
 
-ListaSimpleEnlazada * ArbolAVLTitulo::buscarLibrosPorTitulo(std::string &titulo) {
+ListaOrdenada * ArbolAVLTitulo::buscarLibrosPorTitulo(std::string &titulo) {
     if (titulo.empty()) throw EntradaUsuarioException("Ingrese un titulo valido");
     if (estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
     Libro libro;

@@ -4,14 +4,18 @@
 
 #ifndef BIBLIOTECAMAGICAEDDPRO1_LISTASIMPLESINORDENAR_H
 #define BIBLIOTECAMAGICAEDDPRO1_LISTASIMPLESINORDENAR_H
-#include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaOrdenada/ListaOrdenada.h"
 
 
-class ListaSimpleSinOrdenar : public ListaSimpleEnlazada{
+class ListaSimpleSinOrdenar : public ListaOrdenada{
+private:
+    NodoSimple *primero = nullptr;
+    NodoSimple *ultimo = nullptr;
 public:
     Libro * eliminar(const std::string &isbn) override;
     void agregar(Libro *libro) override;
-    void copiarLista(ListaSimpleEnlazada *lista);
+    void copiarLista(ListaOrdenada *lista);
+    IteradorListaSimple getIterator() override;
 };
 
 

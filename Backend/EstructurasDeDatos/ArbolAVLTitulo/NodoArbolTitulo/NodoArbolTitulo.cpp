@@ -5,10 +5,10 @@
 #include "NodoArbolTitulo.h"
 
 #include "../../../Libro/Libro.h"
-#include "../../ListaSimple/ListaSimpleEnlazada.h"
+#include "../../ListaOrdenada/ListaOrdenada.h"
 
 NodoArbolTitulo::NodoArbolTitulo(Libro *libro) {
-    libros = new ListaSimpleEnlazada();
+    libros = new ListaOrdenada();
     libros->agregar(libro);
 }
 
@@ -31,8 +31,12 @@ void NodoArbolTitulo::agregarLibro(Libro *libro) {
 }
 
 void NodoArbolTitulo::obtenerDotLibro(std::string &dot) {
+    bool esHoja = esNodoHoja();
     Libro *libro = this->getLibro();
-    dot += R"( [label="Titulo: )" + libro->getTitulo() + R"(\n)";
-    dot += "Cantidad: " + std::to_string(this->getCantidad()) + R"(\n)";
+    dot += R"( [label=" )";
+    dot += esHoja ? "" : "<f0> |";
+    dot += "Titulo:" + libro->getTitulo() + R"(\n)";
+    dot += "Cantidad: " + std::to_string(this->getCantidad());
+    dot += esHoja ? "" : "| <f1>";
     dot += R"("];)"; dot += "\n";
 }

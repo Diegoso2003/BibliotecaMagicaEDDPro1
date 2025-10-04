@@ -8,13 +8,14 @@
 class Libro;
 
 class NodoSimple {
+protected:
+    NodoSimple* siguiente;
 private:
     Libro *libro;
-    NodoSimple* siguiente;
 public:
     explicit NodoSimple(Libro* libro);
-    ~NodoSimple();
-    NodoSimple* getSiguiente();
+    virtual ~NodoSimple();
+    virtual NodoSimple* getSiguiente();
     void setSiguiente(NodoSimple* siguiente);
     Libro* getLibro();
 };

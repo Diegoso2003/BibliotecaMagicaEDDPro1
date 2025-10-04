@@ -84,14 +84,16 @@ void AnalizadorLinea::validarCampos() {
         throw EntradaUsuarioException("ingresar campos validos");
     }
 
-    if (fecha.size() != 4 ||
-        !std::all_of(fecha.begin(), fecha.end(), ::isdigit) ||
-        fecha[0] == '0') {
+    if (fecha[0] == '0') {
         throw EntradaUsuarioException("Año invalido: " + fecha);
     }
 
+    for (char c: fecha) {
+        if (c < '0' || c > '9') throw EntradaUsuarioException("Año invalido: " + fecha);
+    }
+
     int year = std::stoi(fecha);
-    if (year < 1000 || year > 9999) {
+    if (year < 0) {
         throw EntradaUsuarioException("Año fuera de rango: " + fecha);
     }
     validarIsbn(isbn);
@@ -107,13 +109,13 @@ Libro *AnalizadorLinea::crearLibro() {
     return libro;
 }
 
-void AnalizadorLinea::validarIsbn(std::string isbn) {
-    std::string isbn_clean;
+void AnalizadorLinea::validarIsbn(const std::string &isbn) {
+    std::string isbnSinGuiones;
     int guionesMaximos = 4;
     int guiones = 0;
     for (char c: isbn) {
         if (std::isdigit(c)) {
-            isbn_clean += c;
+            isbnSinGuiones += c;
         } else if (c == '-') {
             guiones++;
         } else {
@@ -125,8 +127,8 @@ void AnalizadorLinea::validarIsbn(std::string isbn) {
         throw EntradaUsuarioException("ISBN invalido: " + isbn);
     }
 
-    if (isbn_clean.size() != 13 ||
-        (isbn_clean.substr(0, 3) != "978" && isbn_clean.substr(0, 3) != "979")) {
+    if (isbnSinGuiones.size() != 13 ||
+        (isbnSinGuiones.substr(0, 3) != "978" && isbnSinGuiones.substr(0, 3) != "979")) {
         throw EntradaUsuarioException("ISBN invalido: " + isbn);
     }
 }

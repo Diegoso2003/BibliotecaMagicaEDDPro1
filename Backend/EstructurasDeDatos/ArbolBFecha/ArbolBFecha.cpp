@@ -13,7 +13,7 @@
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
 #include "../../Excepciones/BusquedaSinResultadoException.h"
 #include "../../Libro/Libro.h"
-#include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaOrdenada/ListaOrdenada.h"
 #include "../ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 
 void ArbolBFecha::agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro) {
@@ -21,7 +21,7 @@ void ArbolBFecha::agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro) {
         nodo->agregarClave(nuevoLibro);
         return;
     }
-    ListaSimpleEnlazada **libros = nodo->getClaves();
+    ListaOrdenada **libros = nodo->getClaves();
     NodoArbolB **hijos = nodo->getHijos();
     for (int i = 0; i <= nodo->getNumeroLibros(); i++) {
         if (libros[i] != nullptr && nuevoLibro->getAño() == libros[i]->getPrimero()->getAño()) {
@@ -41,7 +41,7 @@ void ArbolBFecha::agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro) {
 void ArbolBFecha::DividirRaiz() {
     auto *nuevo = new NodoArbolB(ordenArbol);
     NodoArbolB **hijos = nuevo->getHijos();
-    ListaSimpleEnlazada **claves = nuevo->getClaves();
+    ListaOrdenada **claves = nuevo->getClaves();
     hijos[0] = this->raiz;
     hijos[1] = this->raiz->getNuevoDer();
     claves[0] = this->raiz->getMedio();
@@ -51,21 +51,20 @@ void ArbolBFecha::DividirRaiz() {
 }
 
 void ArbolBFecha::agregarListaElementos(AuxiliarBusquedaB *aux, NodoArbolB *nodo) {
-    numeroVeces++;
     if (nodo == nullptr) return;
-    ListaSimpleEnlazada **claves = nodo->getClaves();
+    ListaOrdenada **claves = nodo->getClaves();
     NodoArbolB **hijos = nodo->getHijos();
     for (int i = 0; i <= nodo->getNumeroLibros() && aux->seguirBuscando(); i++) {
+    numeroVeces++;
         if (claves[i] != nullptr) {
             int actual = claves[i]->getPrimero()->getAño();
             if (actual >= aux->fechaInicio() && actual <= aux->fechaFin()) {
-                if (!aux->esFechaUnica())agregarListaElementos(aux, hijos[i]);
+                if (actual != aux->fechaInicio()) agregarListaElementos(aux, hijos[i]);
                 aux->getLista()->copiarLista(claves[i]);
                 if (actual == aux->fechaFin()) aux->pararBusqueda();
                 continue;
             }
-            if (aux->estaFueraDeRango()) aux->pararBusqueda();
-            if (!aux->estaFueraDeRango() && !aux->getLista()->estaVacia()) aux->marcarFueraDeRango();
+            if (nodo->esNodoHoja() && actual > aux->fechaFin()) aux->pararBusqueda();
         }
         if (claves[i] == nullptr || aux->fechaInicio() < claves[i]->getPrimero()->getAño()) {
             agregarListaElementos(aux, hijos[i]);
@@ -89,10 +88,6 @@ void ArbolBFecha::agregarLibro(Libro *nuevoLibro) {
     }
 }
 
-Libro **ArbolBFecha::librosPorAño(int año) {
-    return nullptr;
-}
-
 std::string ArbolBFecha::obtenerDotArbol() {
     CreadorTextoDot creador;
     return creador.obtenerDotPorAño(raiz);
@@ -110,6 +105,6 @@ ListaSimpleSinOrdenar *ArbolBFecha::getListaPorRango(const std::string &texto) {
     numeroVeces = 0;
     agregarListaElementos(&aux, raiz);
     std::cout << "numero de veces: "<< numeroVeces << std::endl;
-    if (lista->estaVacia()) throw BusquedaSinResultadoException("No se encontro ningun libro en este rango de facha");
+    if (lista->estaVacia()) throw BusquedaSinResultadoException("No se encontro ningun libro en este rango de fecha");
     return lista;
 }

@@ -21,7 +21,7 @@ public:
     void agregarLibro(Libro *libro);
     bool estaVacia();
     std::string getDotArbolGenero();
-    ListaSimpleEnlazada *buscarPorGenero(std::string &genero);
+    ListaOrdenada *buscarPorGenero(std::string &genero);
 };
 
 

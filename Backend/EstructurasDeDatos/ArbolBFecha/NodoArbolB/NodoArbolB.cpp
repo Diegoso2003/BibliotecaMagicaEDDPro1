@@ -8,7 +8,7 @@
 #include <ostream>
 
 #include "../../../Libro/Libro.h"
-#include "../../ListaSimple/ListaSimpleEnlazada.h"
+#include "../../ListaOrdenada/ListaOrdenada.h"
 
 void NodoArbolB::cambiarHijos(NodoArbolB *&nuevo, NodoArbolB *&viejo) {
     NodoArbolB *auxiliar = viejo;
@@ -16,8 +16,8 @@ void NodoArbolB::cambiarHijos(NodoArbolB *&nuevo, NodoArbolB *&viejo) {
     nuevo = auxiliar;
 }
 
-void NodoArbolB::cambiarClaves(ListaSimpleEnlazada *&nuevo, ListaSimpleEnlazada *&viejo) {
-    ListaSimpleEnlazada *aux = viejo;
+void NodoArbolB::cambiarClaves(ListaOrdenada *&nuevo, ListaOrdenada *&viejo) {
+    ListaOrdenada *aux = viejo;
     viejo = nuevo;
     nuevo = aux;
 }
@@ -25,7 +25,7 @@ void NodoArbolB::cambiarClaves(ListaSimpleEnlazada *&nuevo, ListaSimpleEnlazada 
 NodoArbolB::NodoArbolB(NodoArbolB *otro) {
     this->ordenArbol = otro->ordenArbol;
     this->max = 2*ordenArbol+1;
-    claves = new ListaSimpleEnlazada *[max];
+    claves = new ListaOrdenada *[max];
     hijos = new NodoArbolB *[max+1];
     this->numeroClaves = ordenArbol;
     this->esHoja = otro->esHoja;
@@ -49,7 +49,7 @@ NodoArbolB::NodoArbolB(NodoArbolB *otro) {
 NodoArbolB::NodoArbolB(int ordenArbol) {
     max = 2*ordenArbol+1;
     this->ordenArbol = ordenArbol;
-    claves = new ListaSimpleEnlazada *[max];
+    claves = new ListaOrdenada *[max];
     hijos = new NodoArbolB *[max+1];
     hijos[0] = nullptr;
     for (int i = 0; i < max; i++) {
@@ -69,7 +69,7 @@ NodoArbolB::~NodoArbolB() {
 }
 
 void NodoArbolB::agregarClave(Libro *libro) {
-    ListaSimpleEnlazada *aux = nullptr;
+    ListaOrdenada *aux = nullptr;
     bool agregado = false;
     numeroClaves++;
     for (int i = 0; i < numeroClaves; i++) {
@@ -78,7 +78,7 @@ void NodoArbolB::agregarClave(Libro *libro) {
         } else {
             if (claves[i] == nullptr || claves[i]->getPrimero()->getAño() > libro->getAño()) {
                 aux = claves[i];
-                claves[i] = new ListaSimpleEnlazada();
+                claves[i] = new ListaOrdenada();
                 claves[i]->agregar(libro);
                 agregado = true;
             } else if (claves[i]->getPrimero()->getAño() == libro->getAño()) {
@@ -93,7 +93,7 @@ void NodoArbolB::agregarClave(Libro *libro) {
 void NodoArbolB::dividirNodoHijo(int posicion) {
     NodoArbolB *aux = hijos[posicion+1];
     hijos[posicion+1] = hijos[posicion]->getNuevoDer();
-    ListaSimpleEnlazada *listaAux = claves[posicion];
+    ListaOrdenada *listaAux = claves[posicion];
     claves[posicion] = hijos[posicion]->getMedio();
     numeroClaves++;
     for (int i = posicion+1; i < numeroClaves; i++) {
@@ -102,8 +102,8 @@ void NodoArbolB::dividirNodoHijo(int posicion) {
     }
 }
 
-ListaSimpleEnlazada * NodoArbolB::getMedio() {
-    ListaSimpleEnlazada* mitad = claves[ordenArbol];
+ListaOrdenada * NodoArbolB::getMedio() {
+    ListaOrdenada* mitad = claves[ordenArbol];
     claves[ordenArbol] = nullptr;
     return mitad;
 }

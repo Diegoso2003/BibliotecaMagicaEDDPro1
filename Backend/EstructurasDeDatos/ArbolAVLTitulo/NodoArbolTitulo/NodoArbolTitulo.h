@@ -9,15 +9,15 @@
 #include "../../ArbolAVL/NodoArbol/NodoArbol.h"
 
 
-class ListaSimpleEnlazada;
+class ListaOrdenada;
 
 class NodoArbolTitulo : public NodoArbol {
-    ListaSimpleEnlazada *libros;
+    ListaOrdenada *libros;
 public:
     explicit NodoArbolTitulo(Libro *libro);
     ~NodoArbolTitulo() override;
     Libro *getLibro() const override;
-    ListaSimpleEnlazada *getLibros() const {return libros;}
+    ListaOrdenada *getLibros() const {return libros;}
     int getCantidad();
     void agregarLibro(Libro *libro);
     void obtenerDotLibro(std::string &dot) override;

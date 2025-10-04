@@ -47,7 +47,7 @@ std::string ArbolBGenero::getDotArbolGenero() {
     return creador.obtenerDotPorGenero(raiz);
 }
 
-ListaSimpleEnlazada * ArbolBGenero::buscarPorGenero(std::string &genero) {
+ListaOrdenada * ArbolBGenero::buscarPorGenero(std::string &genero) {
     if (genero.empty()) throw EntradaUsuarioException("ingrese un genero valido");
     Auxiliar::eliminarEspaciosIntermedio(genero);
     genero = Auxiliar::textoMinuscula(genero);

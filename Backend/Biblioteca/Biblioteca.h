@@ -17,20 +17,22 @@ private:
     ArbolAVLTitulo *librosPorTitulo;
     ArbolBFecha *librosPorFecha;
     ArbolBGenero *librosPorGenero;
+    ListaSimpleSinOrdenar *listaSinOrdenar;
 public:
     Biblioteca();
     ~Biblioteca();
     void extraerLibrosArchivo(std::string& ruta);
     void ingresarNuevoLibro(Libro *nuevoLibro);
+    void eliminarLibro(const std::string &isbn);
     std::string obtenerDotArbolAVLPorISBN();
     std::string obtenerDotArbolAVLPorTitulo();
     std::string obtenerDotArbolBFecha();
     std::string obtenerDotArbolBMasGenero();
     Libro *buscarLibroPorIsbn(const std::string& isbn);
-    ListaSimpleEnlazada *buscarLibroPorTitulo(std::string& titulo);
-    ListaSimpleEnlazada *buscarLibroPorGenero(std::string& genero);
-    ListaSimpleEnlazada *obtenerLibrosEnOrdenAlfabetico();
-    ListaSimpleEnlazada *obtenerLibrosPorFecha(std::string &fechas);
+    ListaOrdenada *buscarLibroPorTitulo(std::string& titulo);
+    ListaOrdenada *buscarLibroPorGenero(std::string& genero);
+    ListaOrdenada *obtenerLibrosEnOrdenAlfabetico();
+    ListaOrdenada *obtenerLibrosPorFecha(std::string &fechas);
 };
 
 

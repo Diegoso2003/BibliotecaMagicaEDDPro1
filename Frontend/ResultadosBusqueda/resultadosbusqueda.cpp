@@ -1,6 +1,6 @@
 #include "resultadosbusqueda.h"
 #include "ui_resultadosbusqueda.h"
-#include "../../Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.h"
+#include "../../Backend/EstructurasDeDatos/ListaOrdenada/ListaOrdenada.h"
 #include "../../Backend/Iteradores/IteradorListaSimple.h"
 #include "../../Backend/Libro/Libro.h"
 
@@ -31,7 +31,7 @@ void ResultadosBusqueda::agregarLibro(Libro *libro, int fila) {
     agregarItemCentrado(fila, 5, QString::number(libro->getCantidad()));
 }
 
-void ResultadosBusqueda::agregarLista(ListaSimpleEnlazada *lista) {
+void ResultadosBusqueda::agregarLista(ListaOrdenada *lista) {
     IteradorListaSimple iterador = lista->getIterator();
     int fila = 0;
     ui->tablaResultados->setRowCount(lista->getTamaño());

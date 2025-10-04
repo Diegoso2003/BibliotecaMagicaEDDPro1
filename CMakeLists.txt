@@ -21,8 +21,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Frontend/FormAgregarLibro/formagregarlibro.cpp
         Backend/LectorArchivo/LectorArchivo.cpp
         Backend/Excepciones/EntradaUsuarioException.h
-        Backend/EstructurasDeDatos/ListaSimple/NodoSimple/NodoSimple.cpp
-        Backend/EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.cpp
+        Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/NodoSimple/NodoSimple.cpp
+        Backend/EstructurasDeDatos/ListaOrdenada/ListaOrdenada.cpp
         Backend/Biblioteca/Biblioteca.cpp
         Backend/Biblioteca/Biblioteca.h
         Backend/AnalizadorLinea/AnalizadorLinea.h
@@ -73,6 +73,9 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h
         Backend/AuxiliarBusquedaB/AuxiliarBusquedaB.cpp
         Backend/AuxiliarBusquedaB/AuxiliarBusquedaB.h
+        Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/NodoSimple/NodoSimple.h
+        Backend/EstructurasDeDatos/ListaOrdenada/NodoDoble/NodoDoble.cpp
+        Backend/EstructurasDeDatos/ListaOrdenada/NodoDoble/NodoDoble.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

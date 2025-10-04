@@ -77,7 +77,7 @@ void NodoArbolBMasInterno::dividirNodoHijo(int posicion) {
     }
 }
 
-ListaSimpleEnlazada * NodoArbolBMasInterno::buscarElemento(std::string &genero) {
+ListaOrdenada * NodoArbolBMasInterno::buscarElemento(std::string &genero) {
     for (int i = 0; i < numeroClaves; i++) {
         if (genero < Auxiliar::textoMinuscula(*claves[i])) {
             return hijos[i]->buscarElemento(genero);

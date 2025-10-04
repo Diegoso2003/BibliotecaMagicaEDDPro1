@@ -4,7 +4,7 @@
 
 #include "IteradorListaSimple.h"
 
-#include "../EstructurasDeDatos/ListaSimple/NodoSimple/NodoSimple.h"
+#include "../EstructurasDeDatos/ListaSimpleSinOrdenar/NodoSimple/NodoSimple.h"
 
 IteradorListaSimple::IteradorListaSimple(NodoSimple *nodo) {
     auxiliar = nodo;

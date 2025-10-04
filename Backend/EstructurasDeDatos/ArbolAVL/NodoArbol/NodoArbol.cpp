@@ -3,6 +3,10 @@
 //
 #include "NodoArbol.h"
 
+bool NodoArbol::esNodoHoja() {
+    return derecha == nullptr && izquierda == nullptr;
+}
+
 void NodoArbol::setDerecha(NodoArbol *der) {
     this->derecha = der;
 }

@@ -20,11 +20,11 @@ Libro * NodoArbolIsbn::getLibro() const {
 }
 
 void NodoArbolIsbn::obtenerDotLibro(std::string &dot) {
-    dot += R"( [label="ISBN: )" + libro->getIsbn() + R"(\n)";
-    dot += R"(Titulo: )" + libro->getTitulo() + R"(\n)";
-    dot += "Autor: " + libro->getAutor() + R"(\n)";
-    dot += "Genero: " + libro->getGenero() + R"(\n)";
-    dot += "Año Publicacion: " + std::to_string(libro->getAño()) + R"(\n)";
-    dot += "Cantidad: " + std::to_string(libro->getCantidad()) + R"(\n)";
+    bool esHoja = esNodoHoja();
+    dot += R"( [label=")";
+    dot += esHoja ? "" : "<f0> |";
+    dot += "ISBN:" + libro->getIsbn() + R"(\n)";
+    dot += "Copias: " + std::to_string(libro->getCantidad());
+    dot += esHoja ? "" : "| <f1>";
     dot += R"("];)"; dot += "\n";
 }

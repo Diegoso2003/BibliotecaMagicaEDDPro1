@@ -6,17 +6,17 @@
 
 #include "../../../Auxiliar/Auxiliar.h"
 #include "../../../Libro/Libro.h"
-#include "../../ListaSimple/ListaSimpleEnlazada.h"
+#include "../../ListaOrdenada/ListaOrdenada.h"
 
-void NodoArbolBMasHoja::intercambiarElementos(ListaSimpleEnlazada *&nuevo, ListaSimpleEnlazada *&viejo) {
-    ListaSimpleEnlazada *aux = viejo;
+void NodoArbolBMasHoja::intercambiarElementos(ListaOrdenada *&nuevo, ListaOrdenada *&viejo) {
+    ListaOrdenada *aux = viejo;
     viejo = nuevo;
     nuevo = aux;
 }
 
 NodoArbolBMasHoja::NodoArbolBMasHoja(int ordenArbol)
     : NodoArbolBMas(ordenArbol) {
-    elementos = new ListaSimpleEnlazada *[max];
+    elementos = new ListaOrdenada *[max];
     for (int i = 0; i < max; i++) {
         elementos[i] = nullptr;
         claves[i] = nullptr;
@@ -28,7 +28,7 @@ NodoArbolBMasHoja::~NodoArbolBMasHoja() {
 
 void NodoArbolBMasHoja::agregarElemento(Libro *libro) {
     std::string *aux = nullptr;
-    ListaSimpleEnlazada *auxElemento = nullptr;
+    ListaOrdenada *auxElemento = nullptr;
     bool agregado = false;
     numeroClaves++;
     for (int i = 0; i < numeroClaves; i++) {
@@ -41,7 +41,7 @@ void NodoArbolBMasHoja::agregarElemento(Libro *libro) {
                 aux = claves[i];
                 auxElemento = elementos[i];
                 claves[i] = new std::string(libro->getGenero());
-                elementos[i] = new ListaSimpleEnlazada();
+                elementos[i] = new ListaOrdenada();
                 elementos[i]->agregar(libro);
                 agregado = true;
             } else if (Auxiliar::textoMinuscula(*claves[i]) ==
@@ -75,7 +75,7 @@ NodoArbolBMas *NodoArbolBMasHoja::getNuevoDer() {
     return hoja;
 }
 
-ListaSimpleEnlazada *NodoArbolBMasHoja::buscarElemento(std::string &genero) {
+ListaOrdenada *NodoArbolBMasHoja::buscarElemento(std::string &genero) {
     for (int i = 0; i < numeroClaves; ++i) {
         if (genero == Auxiliar::textoMinuscula(*claves[i])) {
             return elementos[i];

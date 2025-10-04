@@ -140,7 +140,7 @@ void MainWindow::on_actionpor_fecha_triggered()
 void MainWindow::on_actionListar_por_titulo_triggered()
 {
     try {
-        ListaSimpleEnlazada *lista = biblioteca->obtenerLibrosEnOrdenAlfabetico();
+        ListaOrdenada *lista = biblioteca->obtenerLibrosEnOrdenAlfabetico();
         auto *resultado = new ResultadosBusqueda(this);
         resultado->agregarLista(lista);
         resultado->show();

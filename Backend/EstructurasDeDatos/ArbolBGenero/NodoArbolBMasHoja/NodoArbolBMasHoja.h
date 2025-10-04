@@ -4,26 +4,26 @@
 
 #ifndef BIBLIOTECAMAGICAEDDPRO1_NODOARBOLBMASHOJA_H
 #define BIBLIOTECAMAGICAEDDPRO1_NODOARBOLBMASHOJA_H
-#include "../../ListaSimple/ListaSimpleEnlazada.h"
+#include "../../ListaOrdenada/ListaOrdenada.h"
 #include "../NodoArbolBMas/NodoArbolBMas.h"
 
 
 class Libro;
-class ListaSimpleEnlazada;
+class ListaOrdenada;
 
 class NodoArbolBMasHoja : public NodoArbolBMas{
 private:
-    ListaSimpleEnlazada **elementos;
-    void intercambiarElementos(ListaSimpleEnlazada *&nuevo, ListaSimpleEnlazada *&viejo);
+    ListaOrdenada **elementos;
+    void intercambiarElementos(ListaOrdenada *&nuevo, ListaOrdenada *&viejo);
 public:
     explicit NodoArbolBMasHoja(int ordenArbol);
     ~NodoArbolBMasHoja();
     void agregarElemento(Libro *libro);
     bool esNodoHoja() const override;
-    ListaSimpleEnlazada **getElementos() {return elementos;}
+    ListaOrdenada **getElementos() {return elementos;}
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
-    ListaSimpleEnlazada *buscarElemento(std::string &genero) override;
+    ListaOrdenada *buscarElemento(std::string &genero) override;
 };
 
 

@@ -4,7 +4,7 @@
 #include <QDialog>
 
 class Libro;
-class ListaSimpleEnlazada;
+class ListaOrdenada;
 
 namespace Ui {
 class ResultadosBusqueda;
@@ -17,7 +17,7 @@ class ResultadosBusqueda : public QDialog
 public:
     explicit ResultadosBusqueda(QWidget *parent = nullptr);
     ~ResultadosBusqueda() override;
-    void agregarLista(ListaSimpleEnlazada *lista);
+    void agregarLista(ListaOrdenada *lista);
     void ajustarTabla();
     void agregarLibro(Libro *libro);
 private:

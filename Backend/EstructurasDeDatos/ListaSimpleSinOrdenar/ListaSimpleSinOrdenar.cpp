@@ -3,8 +3,9 @@
 //
 
 #include "ListaSimpleSinOrdenar.h"
-#include "../ListaSimple/ListaSimpleEnlazada.h"
+#include "../ListaOrdenada/ListaOrdenada.h"
 #include "../../Iteradores/IteradorListaSimple.h"
+#include "NodoSimple/NodoSimple.h"
 
 Libro * ListaSimpleSinOrdenar::eliminar(const std::string &isbn) {
     return nullptr;
@@ -22,9 +23,13 @@ void ListaSimpleSinOrdenar::agregar(Libro *libro) {
     tamaño++;
 }
 
-void ListaSimpleSinOrdenar::copiarLista(ListaSimpleEnlazada *lista) {
+void ListaSimpleSinOrdenar::copiarLista(ListaOrdenada *lista) {
     IteradorListaSimple iterador = lista->getIterator();
     while (iterador.haySiguiente()) {
         this->agregar(iterador.getActual());
     }
+}
+
+IteradorListaSimple ListaSimpleSinOrdenar::getIterator() {
+    return IteradorListaSimple(primero);
 }

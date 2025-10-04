@@ -12,6 +12,7 @@ class NodoArbol {
 protected:
     NodoArbol* izquierda = nullptr;
     NodoArbol* derecha = nullptr;
+    bool esNodoHoja();
 private:
     int Fe = 0;
 public:

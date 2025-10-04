@@ -20,7 +20,7 @@ public:
     NodoArbolBMas **getHijos() {return hijos;}
     void agregarElemento(Libro *libro) override;
     void dividirNodoHijo(int posicion);
-    ListaSimpleEnlazada *buscarElemento(std::string &genero) override;
+    ListaOrdenada *buscarElemento(std::string &genero) override;
 };
 
 

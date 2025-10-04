@@ -8,7 +8,7 @@
 
 class ListaSimpleSinOrdenar;
 class NodoArbolTitulo;
-class ListaSimpleEnlazada;
+class ListaOrdenada;
 
 class ArbolAVLTitulo : public ArbolAVL{
 private:
@@ -18,8 +18,9 @@ private:
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
     void agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSinOrdenar *lista);
 public:
-    ListaSimpleEnlazada *buscarLibrosPorTitulo(std::string &titulo);
+    ListaOrdenada *buscarLibrosPorTitulo(std::string &titulo);
     ListaSimpleSinOrdenar *listarLibrosEnOrden();
+    void eliminarLibro(Libro *libro);
 };
 
 

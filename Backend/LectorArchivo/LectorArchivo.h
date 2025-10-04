@@ -6,7 +6,7 @@
 #define BIBLIOTECAMAGICAEDDPRO1_LECTORLINEA_H
 #include <string>
 
-#include "../EstructurasDeDatos/ListaSimple/ListaSimpleEnlazada.h"
+#include "../EstructurasDeDatos/ListaOrdenada/ListaOrdenada.h"
 
 
 class Biblioteca;
