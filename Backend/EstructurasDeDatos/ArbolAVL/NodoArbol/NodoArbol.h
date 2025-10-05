@@ -14,7 +14,7 @@ protected:
     NodoArbol* derecha = nullptr;
     bool esNodoHoja();
 private:
-    int Fe = 0;
+    int altura = 1;
 public:
     virtual ~NodoArbol() = default;
     void setDerecha(NodoArbol* der);
@@ -23,8 +23,9 @@ public:
     NodoArbol* getIzquierda(){return izquierda;}
     virtual Libro *getLibro() const = 0;
     virtual void obtenerDotLibro(std::string &dot) = 0;
-    [[nodiscard]] int getFe() const {return Fe;}
-    void setFe(int fe){this->Fe = fe;}
+    int getFe();
+    int getAltura();
+    void recalcularAltura();
 };
 
 #endif //BIBLIOTECAMAGICAEDDPRO1_NODOARBOL_H

@@ -19,47 +19,32 @@ NodoArbol *ArbolAVL::buscarNodo(NodoArbol *nodo, Libro *libroBuscado) {
     return nodo;
 }
 
-NodoArbol *ArbolAVL::reorganizarArbolDerecho(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol) {
+NodoArbol *ArbolAVL::reorganizarArbolDerecho(NodoArbol *nodo) {
     NodoArbol *nodo1 = nodo->getDerecha();
-    if (nodo1->getFe() >= 0) {
-        nodo = rotacionDD(nodo, eliminacion, verificarFeSubArbol);
+    if (nodo1->getFe() >= 1) {
+        nodo = rotacionDD(nodo);
     } else {
         nodo = rotacionDI(nodo);
-        nodo->setFe(0);
     }
     return nodo;
 }
 
-NodoArbol *ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol) {
+NodoArbol *ArbolAVL::reorganizarArbolIzquierdo(NodoArbol *nodo) {
     NodoArbol *nodo1 = nodo->getIzquierda();
-    if (nodo1->getFe() <= 0) {
-        nodo = rotacionII(nodo, eliminacion, verificacionFeSubArbol);
+    if (nodo1->getFe() <= -1) {
+        nodo = rotacionII(nodo);
     } else {
         nodo = rotacionID(nodo);
-        nodo->setFe(0);
     }
     return nodo;
 }
 
-NodoArbol * ArbolAVL::rotacionII(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol) {
+NodoArbol * ArbolAVL::rotacionII(NodoArbol *nodo) {
     NodoArbol *nodo1 = nodo->getIzquierda();
     nodo->setIzquierda(nodo1->getDerecha());
     nodo1->setDerecha(nodo);
-    if (!eliminacion) {
-        nodo->setFe(0);
-        nodo1->setFe(0);
-    } else {
-        switch (nodo1->getFe()) {
-            case 0:
-                nodo->setFe(0);
-                nodo1->setFe(1);
-                verificacionFeSubArbol = false;
-                break;
-            default:
-                nodo->setFe(0);
-                nodo1->setFe(0);
-        }
-    }
+    nodo->recalcularAltura();
+    nodo1->recalcularAltura();
     return nodo1;
 }
 
@@ -70,38 +55,18 @@ NodoArbol * ArbolAVL::rotacionID(NodoArbol *nodo) {
     nodo2->setDerecha(nodo);
     nodo1->setDerecha(nodo2->getIzquierda());
     nodo2->setIzquierda(nodo1);
-    if (nodo2->getFe() == -1) {
-        nodo->setFe(1);
-    } else {
-        nodo->setFe(0);
-    }
-    if (nodo2->getFe() == 1) {
-        nodo1->setFe(-1);
-    } else {
-        nodo1->setFe(0);
-    }
+    nodo->recalcularAltura();
+    nodo1->recalcularAltura();
+    nodo2->recalcularAltura();
     return nodo2;
 }
 
-NodoArbol * ArbolAVL::rotacionDD(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol) {
+NodoArbol * ArbolAVL::rotacionDD(NodoArbol *nodo) {
     NodoArbol *nodo1 = nodo->getDerecha();
     nodo->setDerecha(nodo1->getIzquierda());
     nodo1->setIzquierda(nodo);
-    if (!eliminacion) {
-        nodo->setFe(0);
-        nodo1->setFe(0);
-    } else {
-        switch (nodo1->getFe()) {
-            case 0:
-                nodo->setFe(0);
-                nodo1->setFe(-1);
-                verificarFeSubArbol = false;
-                break;
-            default:
-                nodo->setFe(0);
-                nodo1->setFe(0);
-        }
-    }
+    nodo->recalcularAltura();
+    nodo1->recalcularAltura();
     return nodo1;
 }
 
@@ -112,32 +77,26 @@ NodoArbol * ArbolAVL::rotacionDI(NodoArbol *nodo) {
     nodo2->setIzquierda(nodo);
     nodo1->setIzquierda(nodo2->getDerecha());
     nodo2->setDerecha(nodo1);
-    if (nodo2->getFe() == 1) {
-        nodo->setFe(-1);
-    } else {
-        nodo->setFe(0);
-    }
-    if (nodo2->getFe() == -1) {
-        nodo1->setFe(1);
-    } else {
-        nodo1->setFe(0);
-    }
+    nodo->recalcularAltura();
+    nodo1->recalcularAltura();
+    nodo2->recalcularAltura();
     return nodo2;
 }
 
 NodoArbol * ArbolAVL::eliminarNodo(NodoArbol *nodo, Libro *libro, bool &verificarFeSubArbol) {
     if (visitarSubArbolIzquierdo(nodo, libro)) {
         nodo->setIzquierda(eliminarNodo(nodo->getIzquierda(), libro, verificarFeSubArbol));
-        if (verificarFeSubArbol) nodo = evaluarNodoDerecho(nodo, verificarFeSubArbol, true);
+        if (verificarFeSubArbol) nodo = evaluarNodoDerecho(nodo);
         return nodo;
     }
     if (visitarSubArbolDerecho(nodo, libro)) {
         nodo->setDerecha(eliminarNodo(nodo->getDerecha(), libro, verificarFeSubArbol));
-        if (verificarFeSubArbol) nodo = evaluarNodoIzquierdo(nodo, verificarFeSubArbol, true);
+        if (verificarFeSubArbol) nodo = evaluarNodoIzquierdo(nodo);
         return nodo;
     }
     verificarFeSubArbol = eliminarNodo(nodo, libro);
     if (!verificarFeSubArbol) return nodo;
+    this->elementos--;
     NodoArbol *otro = nodo;
     if (otro->getDerecha() == nullptr) {
         nodo = otro->getIzquierda();
@@ -155,50 +114,30 @@ NodoArbol * ArbolAVL::eliminarNodo(NodoArbol *nodo, Libro *libro, bool &verifica
         verificarFeSubArbol = aux1 != nullptr;
         if (verificarFeSubArbol) {
             aux1->setDerecha(aux->getIzquierda());
+            nodo->setIzquierda(evaluarNodoIzquierdo(nodo->getIzquierda()));
         } else {
             nodo->setIzquierda(aux->getIzquierda());
+            nodo = evaluarNodoDerecho(nodo);
         }
-        if (verificarFeSubArbol) nodo->setIzquierda(evaluarNodoIzquierdo(nodo->getIzquierda(), verificarFeSubArbol, true));
-        if (!verificarFeSubArbol) nodo = evaluarNodoDerecho(nodo, verificarFeSubArbol, true);
     }
     otro->setIzquierda(nullptr);
     otro->setDerecha(nullptr);
-    auto *nodoIsbn = dynamic_cast<NodoArbolIsbn *>(otro);
-    if (nodoIsbn != nullptr) nodoIsbn->setLibro(nullptr);
     delete otro;
     return nodo;
 }
 
-NodoArbol * ArbolAVL::evaluarNodoIzquierdo(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion) {
-    switch (nodo->getFe()) {
-        case 1:
-            nodo->setFe(0);
-            if (!eliminacion) verificarFeSubArbol = false;
-            break;
-        case 0:
-            nodo->setFe(-1);
-            if (eliminacion) verificarFeSubArbol = false;
-            break;
-        default:
-            nodo = reorganizarArbolIzquierdo(nodo, eliminacion, verificarFeSubArbol);
-            verificarFeSubArbol = false;
+NodoArbol * ArbolAVL::evaluarNodoIzquierdo(NodoArbol *nodo) {
+    nodo->recalcularAltura();
+    if (nodo->getFe() <= -2) {
+        nodo = reorganizarArbolIzquierdo(nodo);
     }
     return nodo;
 }
 
-NodoArbol * ArbolAVL::evaluarNodoDerecho(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion) {
-    switch (nodo->getFe()) {
-        case -1:
-            nodo->setFe(0);
-            if (!eliminacion) verificarFeSubArbol = false;
-            break;
-        case 0:
-            nodo->setFe(1);
-            if (eliminacion) verificarFeSubArbol = false;
-            break;
-        default:
-            nodo = reorganizarArbolDerecho(nodo, eliminacion, verificarFeSubArbol);
-            verificarFeSubArbol = false;
+NodoArbol * ArbolAVL::evaluarNodoDerecho(NodoArbol *nodo) {
+    nodo->recalcularAltura();
+    if (nodo->getFe() >= 2) {
+        nodo = reorganizarArbolDerecho(nodo);
     }
     return nodo;
 }
@@ -208,12 +147,12 @@ NodoArbol *ArbolAVL::agregarNuevoNodo(NodoArbol *nodo, Libro *nuevoLibro, bool &
         if (visitarSubArbolIzquierdo(nodo, nuevoLibro)) {
             nodo->setIzquierda(agregarNuevoNodo(nodo->getIzquierda(), nuevoLibro, verificarFeSubArbol));
             if (verificarFeSubArbol) {
-                return evaluarNodoIzquierdo(nodo, verificarFeSubArbol, false);
+                return evaluarNodoIzquierdo(nodo);
             }
         } else if (visitarSubArbolDerecho(nodo, nuevoLibro)) {
             nodo->setDerecha(agregarNuevoNodo(nodo->getDerecha(), nuevoLibro, verificarFeSubArbol));
             if (verificarFeSubArbol) {
-                return evaluarNodoDerecho(nodo, verificarFeSubArbol, false);
+                return evaluarNodoDerecho(nodo);
             }
         } else {
             tratarLibroDuplicado(nodo, nuevoLibro);
@@ -248,7 +187,6 @@ void ArbolAVL::agregarLibro(Libro *libro) {
 }
 
 void ArbolAVL::eliminarLibro(Libro *libro) {
-    this->elementos--;
     bool verificarFeSubArbol = false;
     raiz = eliminarNodo(raiz, libro, verificarFeSubArbol);
 }

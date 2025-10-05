@@ -17,11 +17,11 @@ protected:
     NodoArbol *buscarNodo(NodoArbol *nodo, Libro *libroBuscado);
 private:
     int elementos = 0;
-    NodoArbol *reorganizarArbolDerecho(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol);
-    NodoArbol *reorganizarArbolIzquierdo(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol);
-    NodoArbol *rotacionII(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol);
+    NodoArbol *reorganizarArbolDerecho(NodoArbol *nodo);
+    NodoArbol *reorganizarArbolIzquierdo(NodoArbol *nodo);
+    NodoArbol *rotacionII(NodoArbol *nodo);
     NodoArbol *rotacionID(NodoArbol *nodo);
-    NodoArbol *rotacionDD(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol);
+    NodoArbol *rotacionDD(NodoArbol *nodo);
     NodoArbol *rotacionDI(NodoArbol *nodo);
     NodoArbol *eliminarNodo(NodoArbol *nodo, Libro *libro, bool &verificarFeSubArbol);
     virtual bool visitarSubArbolDerecho(NodoArbol *&actual,Libro *&libro) = 0;
@@ -30,8 +30,8 @@ private:
     virtual void tratarLibroDuplicado(NodoArbol* nodo, Libro *&libro) = 0;
     virtual void cambiarInformacion(NodoArbol* eliminar, NodoArbol* Reemplazo) = 0;
     virtual NodoArbol *crearNuevoNodo(Libro *libro) = 0;
-    NodoArbol *evaluarNodoIzquierdo(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion);
-    NodoArbol *evaluarNodoDerecho(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion);
+    NodoArbol *evaluarNodoIzquierdo(NodoArbol *nodo);
+    NodoArbol *evaluarNodoDerecho(NodoArbol *nodo);
     NodoArbol *agregarNuevoNodo(NodoArbol *nodo,Libro *Libro, bool &verificarFeSubArbol);
 public:
     ArbolAVL();

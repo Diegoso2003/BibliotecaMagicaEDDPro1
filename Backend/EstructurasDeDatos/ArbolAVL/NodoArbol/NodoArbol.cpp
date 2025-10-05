@@ -14,3 +14,19 @@ void NodoArbol::setDerecha(NodoArbol *der) {
 void NodoArbol::setIzquierda(NodoArbol *izq) {
     this->izquierda = izq;
 }
+
+int NodoArbol::getFe() {
+    int alturaDerecha = derecha == nullptr ? 0 : derecha->getAltura();
+    int alturaIzquierda = izquierda == nullptr ? 0 : izquierda->getAltura();
+    return alturaDerecha - alturaIzquierda;
+}
+
+int NodoArbol::getAltura() {
+    return altura;
+}
+
+void NodoArbol::recalcularAltura() {
+    int alturaDerecha = derecha == nullptr ? 0 : derecha->getAltura();
+    int alturaIzquierda = izquierda == nullptr ? 0 : izquierda->getAltura();
+    altura = std::max(alturaDerecha, alturaIzquierda) + 1;
+}

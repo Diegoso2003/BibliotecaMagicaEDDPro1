@@ -34,6 +34,8 @@ void ArbolAVLPorIsbn::cambiarInformacion(NodoArbol *eliminar, NodoArbol *reempla
 }
 
 bool ArbolAVLPorIsbn::eliminarNodo(NodoArbol *nodo, Libro *libro) {
+    auto nodoIsbn = dynamic_cast<NodoArbolIsbn *>(nodo);
+    nodoIsbn->setLibro(nullptr);
     return true;
 }
 

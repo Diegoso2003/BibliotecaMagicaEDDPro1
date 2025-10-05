@@ -39,6 +39,7 @@ void FormEliminacionLibro::on_botonEliminar_clicked()
         if (respuesta == QMessageBox::Yes) {
             biblioteca->eliminarLibro(libro);
             //delete libro;
+            QMessageBox::information(this, "Exito", "Libro eliminado correctamente");
         }
     } catch (const BusquedaSinResultadoException &e) {
         QMessageBox::information(this, "Sin resultados", e.what());
