@@ -48,8 +48,12 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
 }
 
-void Biblioteca::eliminarLibro(const std::string &isbn) {
-    AnalizadorLinea::validarIsbn(isbn);
+void Biblioteca::eliminarLibro(Libro *libro) {
+    listaSinOrdenar->eliminar(libro->getSinGuiones());
+    librosPorIsbn->eliminarLibro(libro);
+    CreadorSvg creador;
+    creador.crearSvg(obtenerDotArbolAVLPorISBN(), true,
+        "prueba"+std::to_string(librosPorIsbn->getNumElementos()));
 }
 
 std::string Biblioteca::obtenerDotArbolAVLPorISBN() {

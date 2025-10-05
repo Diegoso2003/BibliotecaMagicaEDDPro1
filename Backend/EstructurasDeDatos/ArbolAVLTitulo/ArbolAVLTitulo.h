@@ -14,13 +14,14 @@ class ArbolAVLTitulo : public ArbolAVL{
 private:
     bool visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) override;
     bool visitarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro) override;
+    bool eliminarNodo(NodoArbol *nodo, Libro *libro) override;
     NodoArbol *crearNuevoNodo(Libro *libro) override;
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
+    void cambiarInformacion(NodoArbol *eliminar, NodoArbol *reemplazo) override;
     void agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSinOrdenar *lista);
 public:
     ListaOrdenada *buscarLibrosPorTitulo(std::string &titulo);
     ListaSimpleSinOrdenar *listarLibrosEnOrden();
-    void eliminarLibro(Libro *libro);
 };
 
 

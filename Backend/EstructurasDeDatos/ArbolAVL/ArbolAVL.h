@@ -17,13 +17,22 @@ protected:
     NodoArbol *buscarNodo(NodoArbol *nodo, Libro *libroBuscado);
 private:
     int elementos = 0;
-    void reorganizarArbolDerecho(NodoArbol *&nodo);
-    void reorganizarArbolIzquierdo(NodoArbol *&nodo);
+    NodoArbol *reorganizarArbolDerecho(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol);
+    NodoArbol *reorganizarArbolIzquierdo(NodoArbol *nodo, bool eliminacion, bool &verificacionFeSubArbol);
+    NodoArbol *rotacionII(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol);
+    NodoArbol *rotacionID(NodoArbol *nodo);
+    NodoArbol *rotacionDD(NodoArbol *nodo, bool eliminacion, bool &verificarFeSubArbol);
+    NodoArbol *rotacionDI(NodoArbol *nodo);
+    NodoArbol *eliminarNodo(NodoArbol *nodo, Libro *libro, bool &verificarFeSubArbol);
     virtual bool visitarSubArbolDerecho(NodoArbol *&actual,Libro *&libro) = 0;
     virtual bool visitarSubArbolIzquierdo(NodoArbol *&actual,Libro *&libro) = 0;
+    virtual bool eliminarNodo(NodoArbol* nodo, Libro *libro) = 0;
     virtual void tratarLibroDuplicado(NodoArbol* nodo, Libro *&libro) = 0;
+    virtual void cambiarInformacion(NodoArbol* eliminar, NodoArbol* Reemplazo) = 0;
     virtual NodoArbol *crearNuevoNodo(Libro *libro) = 0;
-    NodoArbol* agregarNuevoNodo(NodoArbol* nodo,Libro*& Libro, bool &verificarFeSubArbol);
+    NodoArbol *evaluarNodoIzquierdo(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion);
+    NodoArbol *evaluarNodoDerecho(NodoArbol *nodo, bool &verificarFeSubArbol, bool eliminacion);
+    NodoArbol *agregarNuevoNodo(NodoArbol *nodo,Libro *Libro, bool &verificarFeSubArbol);
 public:
     ArbolAVL();
     virtual ~ArbolAVL();
@@ -32,6 +41,7 @@ public:
     bool agregarLibro(){return agregarDemasArboles;}
     int getNumElementos(){return elementos;}
     void agregarLibro(Libro* nuevoLibro);
+    void eliminarLibro(Libro *libro);
 };
 
 #endif //BIBLIOTECAMAGICAEDDPRO1_ARBOLAVL_H

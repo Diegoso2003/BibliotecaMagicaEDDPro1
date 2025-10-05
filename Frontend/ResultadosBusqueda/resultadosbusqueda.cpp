@@ -42,7 +42,7 @@ void ResultadosBusqueda::agregarLista(ListaOrdenada *lista) {
 }
 
 void ResultadosBusqueda::ajustarTabla() {
-    ui->tablaResultados->verticalHeader()->setDefaultSectionSize(40);
+    ui->tablaResultados->verticalHeader()->setDefaultSectionSize(60);
     ui->tablaResultados->verticalHeader()->setMinimumSectionSize(40);
 
     ui->tablaResultados->setEditTriggers(QAbstractItemView::NoEditTriggers);

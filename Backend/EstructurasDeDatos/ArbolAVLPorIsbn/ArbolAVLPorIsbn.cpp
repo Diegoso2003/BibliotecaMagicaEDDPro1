@@ -25,6 +25,18 @@ void ArbolAVLPorIsbn::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     agregarDemasArboles = false;
 }
 
+void ArbolAVLPorIsbn::cambiarInformacion(NodoArbol *eliminar, NodoArbol *reemplazo) {
+    auto *nodoEliminar = dynamic_cast<NodoArbolIsbn *>(eliminar);
+    auto *nodoReemplazo = dynamic_cast<NodoArbolIsbn *>(reemplazo);
+    Libro *libroAux = nodoEliminar->getLibro();
+    nodoEliminar->setLibro(nodoReemplazo->getLibro());
+    nodoReemplazo->setLibro(libroAux);
+}
+
+bool ArbolAVLPorIsbn::eliminarNodo(NodoArbol *nodo, Libro *libro) {
+    return true;
+}
+
 Libro * ArbolAVLPorIsbn::buscarLibro(const std::string &isbn) {
     if (estaVacia()) throw EntradaUsuarioException("Ingrese datos para realizar busqueda");
     AnalizadorLinea::validarIsbn(isbn);

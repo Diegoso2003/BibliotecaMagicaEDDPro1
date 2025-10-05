@@ -6,6 +6,8 @@
 #include "../Backend/Biblioteca/Biblioteca.h"
 #include "FormBusquedaLibro/formbusquedalibro.h"
 
+class FormEliminacionLibro;
+
 namespace Ui {
 class MainWindow;
 }
@@ -40,9 +42,12 @@ private slots:
 
     void on_actionListar_por_titulo_triggered();
 
+    void on_actionEliminar_libro_triggered();
+
 private:
     Ui::MainWindow *ui;
     FormBusquedaLibro *busquedaLibro;
+    FormEliminacionLibro *eliminacionLibro;
     Biblioteca *biblioteca;
     void crearGrafica(std::string &nombre,const std::string& grafica, bool r = false);
 };

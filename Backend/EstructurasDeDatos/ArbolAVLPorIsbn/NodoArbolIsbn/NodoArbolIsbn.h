@@ -16,6 +16,7 @@ public:
     explicit NodoArbolIsbn(Libro *libro);
     ~NodoArbolIsbn() override;
     Libro *getLibro() const override;
+    void setLibro(Libro *libro);
     void obtenerDotLibro(std::string &dot) override;
 };
 

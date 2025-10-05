@@ -7,6 +7,8 @@
 #include <string>
 
 class Auxiliar {
+private:
+    static std::string quitarTildes(const std::string &entrada);
 public:
     static void trim(std::string &entrada);
     static void eliminarEspaciosIntermedio(std::string &entrada);

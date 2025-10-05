@@ -23,7 +23,7 @@ public:
     ~Biblioteca();
     void extraerLibrosArchivo(std::string& ruta);
     void ingresarNuevoLibro(Libro *nuevoLibro);
-    void eliminarLibro(const std::string &isbn);
+    void eliminarLibro(Libro *libro);
     std::string obtenerDotArbolAVLPorISBN();
     std::string obtenerDotArbolAVLPorTitulo();
     std::string obtenerDotArbolBFecha();

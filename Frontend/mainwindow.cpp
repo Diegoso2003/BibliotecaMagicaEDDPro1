@@ -9,6 +9,7 @@
 #include "carga_archivo/carga_archivo.h"
 #include "FormAgregarLibro/formagregarlibro.h"
 #include "FormBusquedaLibro/formbusquedalibro.h"
+#include "FormEliminacionLibro/formeliminacionlibro.h"
 #include "ResultadosBusqueda/resultadosbusqueda.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,10 +21,12 @@ MainWindow::MainWindow(QWidget *parent)
     carga->setBiblioteca(biblioteca);
     auto *agregarLibro = new FormAgregarLibro(this);
     agregarLibro->setBiblioteca(biblioteca);
+    eliminacionLibro = new FormEliminacionLibro(biblioteca, this);
     busquedaLibro = new FormBusquedaLibro(biblioteca,this);
     ui->stackedWidget->addWidget(carga);
     ui->stackedWidget->addWidget(agregarLibro);
     ui->stackedWidget->addWidget(busquedaLibro);
+    ui->stackedWidget->addWidget(eliminacionLibro);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -148,4 +151,10 @@ void MainWindow::on_actionListar_por_titulo_triggered()
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error", e.what());
     }
+}
+
+void MainWindow::on_actionEliminar_libro_triggered()
+{
+    this->eliminacionLibro->limpiarEntrada();
+    ui->stackedWidget->setCurrentIndex(3);
 }

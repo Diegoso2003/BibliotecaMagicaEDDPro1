@@ -20,6 +20,7 @@ public:
     ListaOrdenada *getLibros() const {return libros;}
     int getCantidad();
     void agregarLibro(Libro *libro);
+    void setLibros(ListaOrdenada *libros);
     void obtenerDotLibro(std::string &dot) override;
 };
 

@@ -12,7 +12,9 @@ private:
     bool visitarSubArbolDerecho(NodoArbol *&actual, Libro *&libro) override;
     bool visitarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro) override;
     NodoArbol *crearNuevoNodo(Libro *libro) override;
+    bool eliminarNodo(NodoArbol *nodo, Libro *libro) override;
     void tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) override;
+    void cambiarInformacion(NodoArbol *eliminar, NodoArbol *reemplazo) override;
 public:
     Libro *buscarLibro(const std::string &isbn);
 };

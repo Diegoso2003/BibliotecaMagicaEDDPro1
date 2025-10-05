@@ -22,6 +22,12 @@ bool ArbolAVLTitulo::visitarSubArbolIzquierdo(NodoArbol *&actual, Libro *&libro)
         Auxiliar::textoMinuscula(actual->getLibro()->getTitulo());
 }
 
+bool ArbolAVLTitulo::eliminarNodo(NodoArbol *nodo, Libro *libro) {
+    auto *nodoTitulo = dynamic_cast<NodoArbolTitulo *>(nodo);
+    nodoTitulo->getLibros()->eliminar(libro->getSinGuiones());
+    return nodoTitulo->getLibros()->estaVacia();
+}
+
 NodoArbol * ArbolAVLTitulo::crearNuevoNodo(Libro *libro) {
     return new NodoArbolTitulo(libro);
 }
@@ -29,6 +35,14 @@ NodoArbol * ArbolAVLTitulo::crearNuevoNodo(Libro *libro) {
 void ArbolAVLTitulo::tratarLibroDuplicado(NodoArbol *nodo, Libro *&libro) {
     auto *nodoTitulo = dynamic_cast<NodoArbolTitulo *>(nodo);
     nodoTitulo->agregarLibro(libro);
+}
+
+void ArbolAVLTitulo::cambiarInformacion(NodoArbol *eliminar, NodoArbol *reemplazo) {
+    auto *nodoEliminar = dynamic_cast<NodoArbolTitulo *>(eliminar);
+    auto *nodoReemplazo = dynamic_cast<NodoArbolTitulo *>(reemplazo);
+    ListaOrdenada *librosAux = nodoEliminar->getLibros();
+    nodoEliminar->setLibros(nodoReemplazo->getLibros());
+    nodoReemplazo->setLibros(librosAux);
 }
 
 void ArbolAVLTitulo::agregarOrdenAlfabetico(NodoArbolTitulo *nodo, ListaSimpleSinOrdenar *lista) {

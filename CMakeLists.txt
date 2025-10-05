@@ -76,6 +76,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ListaSimpleSinOrdenar/NodoSimple/NodoSimple.h
         Backend/EstructurasDeDatos/ListaOrdenada/NodoDoble/NodoDoble.cpp
         Backend/EstructurasDeDatos/ListaOrdenada/NodoDoble/NodoDoble.h
+        Frontend/FormEliminacionLibro/formeliminacionlibro.h
+        Frontend/FormEliminacionLibro/formeliminacionlibro.cpp
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core

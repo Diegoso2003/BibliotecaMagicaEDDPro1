@@ -30,6 +30,10 @@ void NodoArbolTitulo::agregarLibro(Libro *libro) {
     libros->agregar(libro);
 }
 
+void NodoArbolTitulo::setLibros(ListaOrdenada *libros) {
+    this->libros = libros;
+}
+
 void NodoArbolTitulo::obtenerDotLibro(std::string &dot) {
     bool esHoja = esNodoHoja();
     Libro *libro = this->getLibro();
