@@ -19,6 +19,7 @@ public:
     NodoArbolBMas *getNuevoDer() override;
     NodoArbolBMas **getHijos() {return hijos;}
     void agregarElemento(Libro *libro) override;
+    void eliminarLibro(Libro *libro) override;
     void dividirNodoHijo(int posicion);
     ListaOrdenada *buscarElemento(std::string &genero) override;
 };

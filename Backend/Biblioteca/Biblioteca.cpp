@@ -52,6 +52,7 @@ void Biblioteca::eliminarLibro(Libro *libro) {
     listaSinOrdenar->eliminar(libro->getSinGuiones());
     librosPorIsbn->eliminarLibro(libro);
     librosPorTitulo->eliminarLibro(libro);
+    librosPorGenero->eliminarLibro(libro);
     CreadorSvg creador;
     creador.crearSvg(obtenerDotArbolAVLPorISBN(), true,
         "prueba"+std::to_string(librosPorIsbn->getNumElementos()));

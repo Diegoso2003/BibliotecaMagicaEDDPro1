@@ -19,6 +19,7 @@ public:
     ArbolBGenero();
     ~ArbolBGenero();
     void agregarLibro(Libro *libro);
+    void eliminarLibro(Libro *libro);
     bool estaVacia();
     std::string getDotArbolGenero();
     ListaOrdenada *buscarPorGenero(std::string &genero);

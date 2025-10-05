@@ -26,6 +26,7 @@ public:
     virtual NodoArbolBMas *getNuevoDer() = 0;
     virtual bool esNodoHoja() const = 0;
     virtual void agregarElemento(Libro *libro) = 0;
+    virtual void eliminarLibro(Libro *libro) = 0;
     virtual ListaOrdenada *buscarElemento(std::string &genero) = 0;
 };
 

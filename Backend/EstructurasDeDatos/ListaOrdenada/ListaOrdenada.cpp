@@ -57,7 +57,6 @@ void ListaOrdenada::eliminar(const std::string &isbn) {
     if (primero->getLibro()->getSinGuiones() == isbn) {
         NodoSimple *aux = primero;
         primero = primero->getSiguiente();
-        primero->setAnterior(nullptr);
         aux->setSiguiente(nullptr);
         delete aux;
         tamaño--;

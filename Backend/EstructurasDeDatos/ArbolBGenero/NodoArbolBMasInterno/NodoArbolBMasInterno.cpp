@@ -65,6 +65,19 @@ void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
     }
 }
 
+void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
+    std::string genero = Auxiliar::textoMinuscula(libro->getGenero());
+    for (int i = 0; i < numeroClaves; i++) {
+        if (genero < Auxiliar::textoMinuscula(*claves[i])) {
+            hijos[i]->eliminarLibro(libro);
+            if (hijos[i]->getNumeroClaves() < ordenArbol) {
+
+            }
+        }
+    }
+    hijos[numeroClaves]->eliminarLibro(libro);
+}
+
 void NodoArbolBMasInterno::dividirNodoHijo(int posicion) {
     std::string *claveAux = claves[posicion];
     claves[posicion] = hijos[posicion]->getClaveMedia();

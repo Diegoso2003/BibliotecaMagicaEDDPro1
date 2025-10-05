@@ -15,14 +15,16 @@ class NodoArbolBMasHoja : public NodoArbolBMas{
 private:
     ListaOrdenada **elementos;
     void intercambiarElementos(ListaOrdenada *&nuevo, ListaOrdenada *&viejo);
+    void correrElementos(int posicion);
 public:
     explicit NodoArbolBMasHoja(int ordenArbol);
-    ~NodoArbolBMasHoja();
-    void agregarElemento(Libro *libro);
+    ~NodoArbolBMasHoja() override;
+    void agregarElemento(Libro *libro) override;
     bool esNodoHoja() const override;
     ListaOrdenada **getElementos() {return elementos;}
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
+    void eliminarLibro(Libro *libro) override;
     ListaOrdenada *buscarElemento(std::string &genero) override;
 };
 

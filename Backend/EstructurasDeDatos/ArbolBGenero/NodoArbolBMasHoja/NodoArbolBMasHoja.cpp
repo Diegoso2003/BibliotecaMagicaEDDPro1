@@ -7,11 +7,19 @@
 #include "../../../Auxiliar/Auxiliar.h"
 #include "../../../Libro/Libro.h"
 #include "../../ListaOrdenada/ListaOrdenada.h"
+#include "../../ListaSimpleSinOrdenar/ListaSimpleSinOrdenar.h"
 
 void NodoArbolBMasHoja::intercambiarElementos(ListaOrdenada *&nuevo, ListaOrdenada *&viejo) {
     ListaOrdenada *aux = viejo;
     viejo = nuevo;
     nuevo = aux;
+}
+
+void NodoArbolBMasHoja::correrElementos(int posicion) {
+    for (int i = posicion; i < numeroClaves; i++) {
+        intercambiarElementos(elementos[i+1], elementos[i]);
+        intercambiarClaves(claves[i+1], claves[i]);
+    }
 }
 
 NodoArbolBMasHoja::NodoArbolBMasHoja(int ordenArbol)
@@ -73,6 +81,23 @@ NodoArbolBMas *NodoArbolBMasHoja::getNuevoDer() {
         this->elementos[ordenArbol + i] = nullptr;
     }
     return hoja;
+}
+
+void NodoArbolBMasHoja::eliminarLibro(Libro *libro) {
+    std::string genero = Auxiliar::textoMinuscula(libro->getGenero());
+    ListaOrdenada *aux = nullptr;
+    for (int i = 0; i < numeroClaves; ++i) {
+        if (genero == Auxiliar::textoMinuscula(*claves[i])) {
+            elementos[i]->eliminar(libro->getSinGuiones());
+            if (elementos[i]->estaVacia()) {
+                aux = elementos[i];
+                numeroClaves--;
+                correrElementos(i);
+                delete aux;
+            }
+            break;
+        }
+    }
 }
 
 ListaOrdenada *NodoArbolBMasHoja::buscarElemento(std::string &genero) {

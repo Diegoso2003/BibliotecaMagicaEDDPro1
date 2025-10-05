@@ -37,6 +37,10 @@ void ArbolBGenero::agregarLibro(Libro *libro) {
     }
 }
 
+void ArbolBGenero::eliminarLibro(Libro *libro) {
+    raiz->eliminarLibro(libro);
+}
+
 bool ArbolBGenero::estaVacia() {
     return raiz->getNumeroClaves() == 0;
 }
