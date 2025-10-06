@@ -23,6 +23,8 @@ public:
     bool esNodoHoja() const override;
     ListaOrdenada **getElementos() {return elementos;}
     std::string *getClaveMedia() override;
+    std::string * prestarDerecha(NodoArbolBMas *nodo) override;
+    std::string * prestarIzquierda(NodoArbolBMas *nodo) override;
     NodoArbolBMas *getNuevoDer() override;
     void eliminarLibro(Libro *libro) override;
     ListaOrdenada *buscarElemento(std::string &genero) override;

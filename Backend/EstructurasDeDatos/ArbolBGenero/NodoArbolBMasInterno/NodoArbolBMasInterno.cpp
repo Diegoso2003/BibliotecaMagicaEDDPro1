@@ -52,6 +52,14 @@ NodoArbolBMas * NodoArbolBMasInterno::getNuevoDer() {
     return nuevo;
 }
 
+std::string * NodoArbolBMasInterno::prestarDerecha(NodoArbolBMas *nodo) {
+    return nullptr;
+}
+
+std::string * NodoArbolBMasInterno::prestarIzquierda(NodoArbolBMas *nodo) {
+    return nullptr;
+}
+
 void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
     for (int i = 0; i <= numeroClaves; i++) {
         if (claves[i] == nullptr || Auxiliar::textoMinuscula(libro->getGenero())
@@ -67,15 +75,19 @@ void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
 
 void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
     std::string genero = Auxiliar::textoMinuscula(libro->getGenero());
-    for (int i = 0; i < numeroClaves; i++) {
-        if (genero < Auxiliar::textoMinuscula(*claves[i])) {
+    for (int i = 0; i <= numeroClaves; i++) {
+        if (claves[i] == nullptr || genero < Auxiliar::textoMinuscula(*claves[i])) {
             hijos[i]->eliminarLibro(libro);
             if (hijos[i]->getNumeroClaves() < ordenArbol) {
-
+                if (i != numeroClaves && hijos[i+1]->getNumeroClaves() > ordenArbol) {
+                    claves[i] = hijos[i]->prestarDerecha(hijos[i+1]);
+                } else if (i != 0 && hijos[i-1]->getNumeroClaves() > ordenArbol) {
+                    claves[i-1] = hijos[i]->prestarIzquierda(hijos[i-1]);
+                }
             }
+            break;
         }
     }
-    hijos[numeroClaves]->eliminarLibro(libro);
 }
 
 void NodoArbolBMasInterno::dividirNodoHijo(int posicion) {
