@@ -107,7 +107,8 @@ std::string * NodoArbolBMasHoja::prestarIzquierda(NodoArbolBMas *nodo, std::stri
     return new std::string(*aux2Clave);;
 }
 
-void NodoArbolBMasHoja::fusionar(NodoArbolBMas *nodo) {
+void NodoArbolBMasHoja::fusionar(NodoArbolBMas *nodo, std::string *clavePadre) {
+    delete clavePadre;
     auto *nodoHoja = dynamic_cast<NodoArbolBMasHoja *>(nodo);
     int contador = 0;
     for (int i = numeroClaves; i < numeroClaves + nodoHoja->numeroClaves ; i++) {

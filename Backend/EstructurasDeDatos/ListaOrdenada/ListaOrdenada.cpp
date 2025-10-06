@@ -30,7 +30,7 @@ void ListaOrdenada::agregar(Libro *libro) {
         return;
     }
 
-    if (libro->getSinGuiones() < primero->getLibro()->getSinGuiones()) {
+    if (libro->getSinGuiones() <= primero->getLibro()->getSinGuiones()) {
         primero->setAnterior(nuevo);
         nuevo->setSiguiente(primero);
         primero = nuevo;
@@ -38,7 +38,7 @@ void ListaOrdenada::agregar(Libro *libro) {
         return;
     }
 
-    if (libro->getSinGuiones() > ultimo->getLibro()->getSinGuiones()) {
+    if (libro->getSinGuiones() >= ultimo->getLibro()->getSinGuiones()) {
         ultimo->setSiguiente(nuevo);
         nuevo->setAnterior(ultimo);
         ultimo = nuevo;

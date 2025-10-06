@@ -20,7 +20,7 @@ public:
     NodoArbolBMas **getHijos() {return hijos;}
     std::string * prestarDerecha(NodoArbolBMas *nodo, std::string *clavePadre) override;
     std::string * prestarIzquierda(NodoArbolBMas *nodo, std::string *clavePadre) override;
-    void fusionar(NodoArbolBMas *nodo) override;
+    void fusionar(NodoArbolBMas *nodo, std::string *clavePadre) override;
     void correrElementos(int posicion);
     void agregarElemento(Libro *libro) override;
     void eliminarLibro(Libro *libro) override;

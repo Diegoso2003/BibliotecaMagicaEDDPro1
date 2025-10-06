@@ -31,6 +31,7 @@ ArbolBGenero::~ArbolBGenero() {
 }
 
 void ArbolBGenero::agregarLibro(Libro *libro) {
+    numeroElementos++;
     raiz->agregarElemento(libro);
     if (raiz->getNumeroClaves() > maxElementos) {
         dividirRaiz();
@@ -39,10 +40,19 @@ void ArbolBGenero::agregarLibro(Libro *libro) {
 
 void ArbolBGenero::eliminarLibro(Libro *libro) {
     raiz->eliminarLibro(libro);
+    numeroElementos--;
+    if (!estaVacia() && raiz->getNumeroClaves() == 0) {
+        auto *nodoInterno = dynamic_cast<NodoArbolBMasInterno*>(raiz);
+        NodoArbolBMas **hijos = nodoInterno->getHijos();
+        NodoArbolBMas *aux = hijos[0];
+        hijos[0] = nullptr;
+        delete raiz;
+        raiz = aux;
+    }
 }
 
 bool ArbolBGenero::estaVacia() {
-    return raiz->getNumeroClaves() == 0;
+    return numeroElementos == 0;
 }
 
 std::string ArbolBGenero::getDotArbolGenero() {

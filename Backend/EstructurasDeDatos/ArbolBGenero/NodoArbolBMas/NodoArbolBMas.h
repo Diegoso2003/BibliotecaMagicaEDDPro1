@@ -29,7 +29,7 @@ public:
     virtual void eliminarLibro(Libro *libro) = 0;
     virtual std::string *prestarDerecha(NodoArbolBMas *nodo, std::string *clavePadre) = 0;
     virtual std::string *prestarIzquierda(NodoArbolBMas *nodo, std::string *clavePadre) = 0;
-    virtual void fusionar(NodoArbolBMas *nodo) = 0;
+    virtual void fusionar(NodoArbolBMas *nodo, std::string *clavePadre) = 0;
     virtual ListaOrdenada *buscarElemento(std::string &genero) = 0;
 };
 

@@ -13,6 +13,7 @@ class ArbolBGenero {
 private:
     int const ordenArbol = 3;
     int const maxElementos = ordenArbol * 2;
+    int numeroElementos = 0;
     NodoArbolBMas* raiz;
     void dividirRaiz();
 public:
