@@ -45,7 +45,6 @@ std::string Auxiliar::quitarTildes(const std::string &entrada) {
             } else if (next == 0x91) {
                 resultado += "N\x7F";
             } else {
-                // No es un carácter conocido, mantener original
                 resultado += c;
                 resultado += next;
             }
@@ -110,7 +109,6 @@ std::string Auxiliar::textoMinuscula(std::string texto) {
 void Auxiliar::obtenerFechas(const std::string &texto, int fechas[]) {
     std::string año1;
     std::string año2;
-    bool primero = true;
     int estado = 1;
     for (char c: texto) {
         switch (estado) {
