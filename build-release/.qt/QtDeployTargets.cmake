@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_BibliotecaMagicaEDDPro1_FILE /home/rafael-cayax/Documentos/estructuras_de_datos_ss2025/BibliotecaMagicaEDDPro1/build-release/BibliotecaMagicaEDDPro1)
-set(__QT_DEPLOY_TARGET_BibliotecaMagicaEDDPro1_TYPE EXECUTABLE)
