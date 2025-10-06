@@ -4,7 +4,6 @@
 
 #include "NodoArbolBMasHoja.h"
 
-#include <iostream>
 
 #include "../../../Auxiliar/Auxiliar.h"
 #include "../../../Libro/Libro.h"
@@ -80,9 +79,6 @@ std::string * NodoArbolBMasHoja::prestarDerecha(NodoArbolBMas *nodo) {
     nodoHoja->elementos[0] = nullptr;
     nodoHoja->claves[0] = nullptr;
     nodoHoja->correrElementos(0);
-    for (int i = 0; i < numeroClaves; i++) {
-        std::cout << *claves[i] << std::endl;
-     }
     nodoHoja->numeroClaves--;
     return new std::string(*aux);
 }
@@ -100,7 +96,7 @@ std::string * NodoArbolBMasHoja::prestarIzquierda(NodoArbolBMas *nodo) {
         intercambiarClaves(auxClave, claves[i]);
     }
     nodoHoja->claves[ultimoElemento] = nullptr;
-    return aux2Clave;
+    return new std::string(*aux2Clave);;
 }
 
 NodoArbolBMas *NodoArbolBMasHoja::getNuevoDer() {

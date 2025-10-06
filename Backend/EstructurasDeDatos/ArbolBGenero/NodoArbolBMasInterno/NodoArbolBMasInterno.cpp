@@ -80,8 +80,10 @@ void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
             hijos[i]->eliminarLibro(libro);
             if (hijos[i]->getNumeroClaves() < ordenArbol) {
                 if (i != numeroClaves && hijos[i+1]->getNumeroClaves() > ordenArbol) {
+                    delete claves[i];
                     claves[i] = hijos[i]->prestarDerecha(hijos[i+1]);
                 } else if (i != 0 && hijos[i-1]->getNumeroClaves() > ordenArbol) {
+                    delete claves[i-1];
                     claves[i-1] = hijos[i]->prestarIzquierda(hijos[i-1]);
                 }
             }

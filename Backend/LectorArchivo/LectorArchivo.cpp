@@ -6,7 +6,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 
 #include "../AnalizadorLinea/AnalizadorLinea.h"
 #include "../Biblioteca/Biblioteca.h"
@@ -42,7 +41,6 @@ void LectorArchivo::leerArchivo(std::string &ruta, Biblioteca *biblioteca) {
         throw ArchivoInvalidoException("Error al abrir el archivo, intente de nuevo");
     }
     AnalizadorLinea analizador;
-    std::cout<<"analisis del archivo empezando"<<std::endl;
     while (!archivo.eof()) {
         std::string linea;
         std::getline(archivo, linea);
@@ -51,6 +49,5 @@ void LectorArchivo::leerArchivo(std::string &ruta, Biblioteca *biblioteca) {
     if (analizador.harError()) {
         throw EntradaUsuarioException(analizador.getMensajeError());
     }
-    std::cout<<"analisis del archivo final"<<std::endl;
     archivo.close();
 }
