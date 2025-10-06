@@ -9,6 +9,7 @@
 
 #include "../AnalizadorLinea/AnalizadorLinea.h"
 #include "../CreadorSVG/CreadorSvg.h"
+#include "../Cronometro/Cronometro.h"
 #include "../Excepciones/BusquedaSinResultadoException.h"
 #include "../Excepciones/EntradaUsuarioException.h"
 #include "../LectorArchivo/LectorArchivo.h"
@@ -43,9 +44,6 @@ void Biblioteca::ingresarNuevoLibro(Libro *nuevoLibro) {
     librosPorFecha->agregarLibro(nuevoLibro);
     librosPorGenero->agregarLibro(nuevoLibro);
     listaSinOrdenar->agregar(nuevoLibro);
-    /**CreadorSvg creador;
-    creador.crearSvg(obtenerDotArbolBMasGenero(), true,
-        "prueba"+std::to_string(librosPorIsbn->getNumElementos()));**/
 }
 
 void Biblioteca::eliminarLibro(Libro *libro) {
@@ -53,9 +51,6 @@ void Biblioteca::eliminarLibro(Libro *libro) {
     librosPorIsbn->eliminarLibro(libro);
     librosPorTitulo->eliminarLibro(libro);
     librosPorGenero->eliminarLibro(libro);
-    CreadorSvg creador;
-    creador.crearSvg(obtenerDotArbolAVLPorISBN(), true,
-        "prueba"+std::to_string(librosPorIsbn->getNumElementos()));
 }
 
 std::string Biblioteca::obtenerDotArbolAVLPorISBN() {
@@ -75,13 +70,24 @@ std::string Biblioteca::obtenerDotArbolBMasGenero() {
 }
 
 Libro * Biblioteca::buscarLibroPorIsbn(const std::string &isbn) {
+    Cronometro cronometro;
     Libro *libro = librosPorIsbn->buscarLibro(isbn);
+    tiempoArbol = cronometro.tiempoEnMicrosegundos();
+    cronometro.reset();
+    listaSinOrdenar->buscarLibro(isbn);
+    tiempoLista = cronometro.tiempoEnMicrosegundos();
     if (libro == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este isbn");
     return libro;
 }
 
 ListaOrdenada * Biblioteca::buscarLibroPorTitulo(std::string &titulo) {
+    Cronometro cronometro;
     ListaOrdenada *lista = librosPorTitulo->buscarLibrosPorTitulo(titulo);
+    tiempoArbol = cronometro.tiempoEnMicrosegundos();
+    cronometro.reset();
+    ListaSimpleSinOrdenar * lista2 = listaSinOrdenar->getLibrosPorTitulo(titulo);
+    tiempoLista = cronometro.tiempoEnMicrosegundos();
+    delete lista2;
     if (lista == nullptr) throw BusquedaSinResultadoException("No se encontro ningun libro con este titulo");
     return lista;
 }

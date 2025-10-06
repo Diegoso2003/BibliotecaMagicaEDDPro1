@@ -3,6 +3,8 @@
 //
 
 #include "ListaSimpleSinOrdenar.h"
+
+#include "../../Auxiliar/Auxiliar.h"
 #include "../ListaOrdenada/ListaOrdenada.h"
 #include "../../Iteradores/IteradorListaSimple.h"
 #include "../../Libro/Libro.h"
@@ -50,4 +52,28 @@ void ListaSimpleSinOrdenar::copiarLista(ListaOrdenada *lista) {
 
 IteradorListaSimple ListaSimpleSinOrdenar::getIterator() {
     return IteradorListaSimple(primero);
+}
+
+ListaSimpleSinOrdenar *ListaSimpleSinOrdenar::getLibrosPorTitulo(const std::string &busqueda) {
+    auto *lista = new ListaSimpleSinOrdenar();
+    IteradorListaSimple iterador = this->getIterator();
+    std::string titulo = Auxiliar::textoMinuscula(busqueda);
+    while (iterador.haySiguiente()) {
+        if (Auxiliar::textoMinuscula(iterador.getActual()->getTitulo()) == titulo) {
+            lista->agregar(iterador.getActual());
+        }
+    }
+    return lista;
+}
+
+Libro * ListaSimpleSinOrdenar::buscarLibro(const std::string &isbn) {
+    Libro libro;
+    libro.setIsbn(isbn);
+    IteradorListaSimple iterador = this->getIterator();
+    while (iterador.haySiguiente()) {
+        if (libro.getSinGuiones() == iterador.getActual()->getSinGuiones()) {
+            return iterador.getActual();
+        }
+    }
+    return nullptr;
 }

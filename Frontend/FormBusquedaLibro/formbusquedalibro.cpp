@@ -25,6 +25,9 @@ FormBusquedaLibro::~FormBusquedaLibro() {
 
 void FormBusquedaLibro::limpiarValores(EnumBusqueda tipo) {
     ui->valorBusqueda->setText("");
+    ui->etiqueta1->setText("");
+    ui->etiqueta2->setText("");
+    ui->etiqueta3->setText("");
     delete this->tipo;
     this->tipo = new EnumBusqueda(tipo);
     obtenerPlaceHolder();
@@ -56,16 +59,28 @@ void FormBusquedaLibro::on_botonBuscar_clicked() {
     try {
         switch (*tipo) {
             case EnumBusqueda::BUSQUEDA_AÑO:
+                ui->etiqueta1->setText("");
+                ui->etiqueta2->setText("");
+                ui->etiqueta3->setText("");
                 resultados->agregarLista(biblioteca->obtenerLibrosPorFecha(texto));
                 break;
             case EnumBusqueda::BUSQUEDA_GENERO:
+                ui->etiqueta1->setText("");
+                ui->etiqueta2->setText("");
+                ui->etiqueta3->setText("");
                 resultados->agregarLista(biblioteca->buscarLibroPorGenero(texto));
                 break;
             case EnumBusqueda::BUSQUEDA_ISBN:
                 resultados->agregarLibro(biblioteca->buscarLibroPorIsbn(texto));
+                ui->etiqueta1->setText("Comparacion de busqueda");
+                ui->etiqueta2->setText("Tiempo en us del arbol: "+QString::number(biblioteca->getTiempoArbol(), 'f', 3));
+                ui->etiqueta3->setText("Tiempo en us de la lista: "+QString::number(biblioteca->getTiempoLista(), 'f',3));
                 break;
             default:
                 resultados->agregarLista(biblioteca->buscarLibroPorTitulo(texto));
+                ui->etiqueta1->setText("Comparacion de busqueda");
+                ui->etiqueta2->setText("Tiempo en us del arbol: "+QString::number(biblioteca->getTiempoArbol(), 'f', 3));
+                ui->etiqueta3->setText("Tiempo en us de la lista: "+QString::number(biblioteca->getTiempoLista(), 'f',3));
         }
         resultados->show();
     } catch (const BusquedaSinResultadoException &e) {

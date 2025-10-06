@@ -21,29 +21,29 @@ std::string Auxiliar::quitarTildes(const std::string &entrada) {
         if (c == 0xC3 && i + 1 < entrada.length()) {
             unsigned char next = static_cast<unsigned char>(entrada[i + 1]);
             if (next == 0xA1 || next == 0xA0 || next == 0xA4 || next == 0xA2) {
-                resultado += 'a'; // á, à, ä, â
+                resultado += 'a';
             } else if (next == 0x81 || next == 0x80 || next == 0x84 || next == 0x82) {
-                resultado += 'A'; // Á, À, Ä, Â
+                resultado += 'A';
             } else if (next == 0xA9 || next == 0xA8 || next == 0xAB || next == 0xAA) {
-                resultado += 'e'; // é, è, ë, ê
+                resultado += 'e';
             } else if (next == 0x89 || next == 0x88 || next == 0x8B || next == 0x8A) {
-                resultado += 'E'; // É, È, Ë, Ê
+                resultado += 'E';
             } else if (next == 0xAD || next == 0xAC || next == 0xAF || next == 0xAE) {
-                resultado += 'i'; // í, ì, ï, î
+                resultado += 'i';
             } else if (next == 0x8D || next == 0x8C || next == 0x8F || next == 0x8E) {
-                resultado += 'I'; // Í, Ì, Ï, Î
+                resultado += 'I';
             } else if (next == 0xB3 || next == 0xB2 || next == 0xB6 || next == 0xB4) {
-                resultado += 'o'; // ó, ò, ö, ô
+                resultado += 'o';
             } else if (next == 0x93 || next == 0x92 || next == 0x96 || next == 0x94) {
-                resultado += 'O'; // Ó, Ò, Ö, Ô
+                resultado += 'O';
             } else if (next == 0xBA || next == 0xB9 || next == 0xBC || next == 0xBB) {
-                resultado += 'u'; // ú, ù, ü, û
+                resultado += 'u';
             } else if (next == 0x9A || next == 0x99 || next == 0x9C || next == 0x9B) {
-                resultado += 'U'; // Ú, Ù, Ü, Û
+                resultado += 'U';
             } else if (next == 0xB1) {
-                resultado += "n\x7F"; // ñ (con carácter especial para ordenar después de 'n')
+                resultado += "n\x7F";
             } else if (next == 0x91) {
-                resultado += "N\x7F"; // Ñ
+                resultado += "N\x7F";
             } else {
                 // No es un carácter conocido, mantener original
                 resultado += c;

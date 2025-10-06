@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+ba4f3243195eb9498844611726de60a0 BibliotecaMagicaEDDPro1_autogen/timestamp
+1ebbb373616fe1218f8346f2bc52a89f CMakeFiles/BibliotecaMagicaEDDPro1_autogen
+1ebbb373616fe1218f8346f2bc52a89f CMakeFiles/BibliotecaMagicaEDDPro1_autogen_timestamp_deps

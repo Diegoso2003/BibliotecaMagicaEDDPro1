@@ -16,6 +16,9 @@ public:
     void agregar(Libro *libro) override;
     void copiarLista(ListaOrdenada *lista);
     IteradorListaSimple getIterator() override;
+    ListaSimpleSinOrdenar *getLibrosPorTitulo(const std::string & busqueda);
+
+    Libro *buscarLibro(const std::string & isbn);
 };
 
 

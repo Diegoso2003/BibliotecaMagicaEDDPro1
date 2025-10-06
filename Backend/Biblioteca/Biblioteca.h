@@ -18,6 +18,8 @@ private:
     ArbolBFecha *librosPorFecha;
     ArbolBGenero *librosPorGenero;
     ListaSimpleSinOrdenar *listaSinOrdenar;
+    double tiempoArbol = 0;
+    double tiempoLista = 0;
 public:
     Biblioteca();
     ~Biblioteca();
@@ -33,6 +35,8 @@ public:
     ListaOrdenada *buscarLibroPorGenero(std::string& genero);
     ListaOrdenada *obtenerLibrosEnOrdenAlfabetico();
     ListaOrdenada *obtenerLibrosPorFecha(std::string &fechas);
+    double getTiempoArbol(){return tiempoArbol;}
+    double getTiempoLista(){return tiempoLista;}
 };
 
 

@@ -78,6 +78,8 @@ add_executable(BibliotecaMagicaEDDPro1 main.cpp
         Backend/EstructurasDeDatos/ListaOrdenada/NodoDoble/NodoDoble.h
         Frontend/FormEliminacionLibro/formeliminacionlibro.h
         Frontend/FormEliminacionLibro/formeliminacionlibro.cpp
+        Backend/Cronometro/Cronometro.cpp
+        Backend/Cronometro/Cronometro.h
 )
 target_link_libraries(BibliotecaMagicaEDDPro1
         Qt::Core
