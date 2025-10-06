@@ -28,8 +28,6 @@ void NodoArbolIsbn::obtenerDotLibro(std::string &dot) {
     dot += R"( [label=")";
     dot += esHoja ? "" : "<f0> |";
     dot += "ISBN:" + libro->getIsbn() + R"(\n)";
-    dot += "Fe:" + std::to_string(this->getFe()) + R"(\n)";
-    dot += "altura:" + std::to_string(this->getAltura()) + R"(\n)";
     dot += "Copias: " + std::to_string(libro->getCantidad());
     dot += esHoja ? "" : "| <f1>";
     dot += R"("];)"; dot += "\n";

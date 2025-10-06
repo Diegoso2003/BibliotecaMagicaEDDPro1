@@ -32,6 +32,12 @@ NodoArbolBMasHoja::NodoArbolBMasHoja(int ordenArbol)
 }
 
 NodoArbolBMasHoja::~NodoArbolBMasHoja() {
+    for (int i = 0; i< numeroClaves; i++) {
+        delete claves[i];
+        delete elementos[i];
+    }
+    delete[] elementos;
+    delete[] claves;
 }
 
 void NodoArbolBMasHoja::agregarElemento(Libro *libro) {
@@ -97,6 +103,20 @@ std::string * NodoArbolBMasHoja::prestarIzquierda(NodoArbolBMas *nodo) {
     }
     nodoHoja->claves[ultimoElemento] = nullptr;
     return new std::string(*aux2Clave);;
+}
+
+void NodoArbolBMasHoja::fusionar(NodoArbolBMas *nodo) {
+    auto *nodoHoja = dynamic_cast<NodoArbolBMasHoja *>(nodo);
+    int contador = 0;
+    for (int i = numeroClaves; i < numeroClaves + nodoHoja->numeroClaves ; i++) {
+        this->claves[i] = nodoHoja->claves[contador];
+        this->elementos[i] = nodoHoja->elementos[contador];
+        nodoHoja->claves[contador] = nullptr;
+        nodoHoja->elementos[contador] = nullptr;
+        contador++;
+    }
+    this->numeroClaves += nodoHoja->numeroClaves;
+    nodoHoja->numeroClaves = 0;
 }
 
 NodoArbolBMas *NodoArbolBMasHoja::getNuevoDer() {

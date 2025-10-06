@@ -25,6 +25,7 @@ public:
     std::string *getClaveMedia() override;
     std::string * prestarDerecha(NodoArbolBMas *nodo) override;
     std::string * prestarIzquierda(NodoArbolBMas *nodo) override;
+    void fusionar(NodoArbolBMas *nodo) override;
     NodoArbolBMas *getNuevoDer() override;
     void eliminarLibro(Libro *libro) override;
     ListaOrdenada *buscarElemento(std::string &genero) override;

@@ -24,6 +24,13 @@ NodoArbolBMasInterno::NodoArbolBMasInterno(int ordenArbol)
 }
 
 NodoArbolBMasInterno::~NodoArbolBMasInterno() {
+    delete hijos[0];
+    for (int i = 1; i < max; i++) {
+        delete hijos[i+1];
+        delete claves[i];
+    }
+    delete[] hijos;
+    delete[] claves;
 }
 
 bool NodoArbolBMasInterno::esNodoHoja() const {
@@ -60,6 +67,16 @@ std::string * NodoArbolBMasInterno::prestarIzquierda(NodoArbolBMas *nodo) {
     return nullptr;
 }
 
+void NodoArbolBMasInterno::fusionar(NodoArbolBMas *nodo) {
+}
+
+void NodoArbolBMasInterno::correrElementos(int posicion) {
+    for (int i = posicion; i < numeroClaves; i++) {
+        intercambiarHijos(hijos[i+1], hijos[i]);
+        intercambiarClaves(claves[i+1], claves[i]);
+    }
+}
+
 void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
     for (int i = 0; i <= numeroClaves; i++) {
         if (claves[i] == nullptr || Auxiliar::textoMinuscula(libro->getGenero())
@@ -85,6 +102,23 @@ void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
                 } else if (i != 0 && hijos[i-1]->getNumeroClaves() > ordenArbol) {
                     delete claves[i-1];
                     claves[i-1] = hijos[i]->prestarIzquierda(hijos[i-1]);
+                } else if (i != numeroClaves) {
+                    hijos[i]->fusionar(hijos[i+1]);
+                    delete hijos[i+1];
+                    hijos[i+1] = hijos[i];
+                    hijos[i] = nullptr;
+                    delete claves[i];
+                    claves[i] = nullptr;
+                    correrElementos(i);
+                    numeroClaves--;
+                } else {
+                    hijos[i-1]->fusionar(hijos[i]);
+                    delete hijos[i];
+                    hijos[i] = hijos[i-1];
+                    hijos[i-1] = nullptr;
+                    delete claves[i-1];
+                    claves[i-1] = nullptr;
+                    numeroClaves--;
                 }
             }
             break;
