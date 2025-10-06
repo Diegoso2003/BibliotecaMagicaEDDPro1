@@ -24,7 +24,7 @@ void AnalizadorLinea::analizarLinea(const std::string &linea, Biblioteca *biblio
         hayError = true;
         mensajeError += "Error en la linea: "
                 + std::to_string(lineaActual) + "\n"
-                + e.what() + " " + linea + "\n";
+                + e.what() + "\n" + linea + "\n";
     }
 }
 

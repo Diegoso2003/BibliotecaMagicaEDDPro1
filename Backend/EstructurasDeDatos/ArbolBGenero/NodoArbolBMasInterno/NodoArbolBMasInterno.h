@@ -18,8 +18,8 @@ public:
     std::string *getClaveMedia() override;
     NodoArbolBMas *getNuevoDer() override;
     NodoArbolBMas **getHijos() {return hijos;}
-    std::string * prestarDerecha(NodoArbolBMas *nodo) override;
-    std::string * prestarIzquierda(NodoArbolBMas *nodo) override;
+    std::string * prestarDerecha(NodoArbolBMas *nodo, std::string *clavePadre) override;
+    std::string * prestarIzquierda(NodoArbolBMas *nodo, std::string *clavePadre) override;
     void fusionar(NodoArbolBMas *nodo) override;
     void correrElementos(int posicion);
     void agregarElemento(Libro *libro) override;

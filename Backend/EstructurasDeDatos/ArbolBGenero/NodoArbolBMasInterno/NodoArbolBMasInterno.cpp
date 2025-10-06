@@ -59,22 +59,46 @@ NodoArbolBMas * NodoArbolBMasInterno::getNuevoDer() {
     return nuevo;
 }
 
-std::string * NodoArbolBMasInterno::prestarDerecha(NodoArbolBMas *nodo) {
-    return nullptr;
+std::string * NodoArbolBMasInterno::prestarDerecha(NodoArbolBMas *nodo, std::string *clavePadre) {
+    auto *nodoInterno = dynamic_cast<NodoArbolBMasInterno *>(nodo);
+    this->claves[numeroClaves++] = clavePadre;
+    this->hijos[numeroClaves] = nodoInterno->hijos[0];
+    std::string *aux = nodoInterno->claves[0];
+    nodoInterno->claves[0] = nullptr;
+    nodoInterno->hijos[0] = nullptr;
+    nodoInterno->correrElementos(0);
+    nodoInterno->numeroClaves--;
+    return aux;
 }
 
-std::string * NodoArbolBMasInterno::prestarIzquierda(NodoArbolBMas *nodo) {
-    return nullptr;
+std::string * NodoArbolBMasInterno::prestarIzquierda(NodoArbolBMas *nodo, std::string *clavePadre) {
+    auto *nodoInterno = dynamic_cast<NodoArbolBMasInterno *>(nodo);
+    int ultimaClave = nodoInterno->numeroClaves-1;
+    std::string *aux = nodoInterno->claves[ultimaClave];
+    nodoInterno->claves[ultimaClave] = nullptr;
+    nodoInterno->numeroClaves--;
+    this->numeroClaves++;
+    std::string *aux2 = clavePadre;
+    NodoArbolBMas *aux3 = nodoInterno->hijos[ultimaClave+1];
+    nodoInterno->hijos[ultimaClave+1] = nullptr;
+    for (int i = 0; i < numeroClaves; i++) {
+        intercambiarClaves(aux2, claves[i]);
+        intercambiarHijos(aux3, hijos[i]);
+    }
+    intercambiarHijos(aux3, hijos[ultimaClave]);
+    return aux;
 }
 
 void NodoArbolBMasInterno::fusionar(NodoArbolBMas *nodo) {
 }
 
 void NodoArbolBMasInterno::correrElementos(int posicion) {
-    for (int i = posicion; i < numeroClaves; i++) {
+    int i;
+    for (i = posicion; i < numeroClaves; i++) {
         intercambiarHijos(hijos[i+1], hijos[i]);
         intercambiarClaves(claves[i+1], claves[i]);
     }
+    intercambiarHijos(hijos[i+1], hijos[i]);
 }
 
 void NodoArbolBMasInterno::agregarElemento(Libro *libro) {
@@ -97,11 +121,11 @@ void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
             hijos[i]->eliminarLibro(libro);
             if (hijos[i]->getNumeroClaves() < ordenArbol) {
                 if (i != numeroClaves && hijos[i+1]->getNumeroClaves() > ordenArbol) {
-                    delete claves[i];
-                    claves[i] = hijos[i]->prestarDerecha(hijos[i+1]);
+                    std::string *aux = claves[i];
+                    claves[i] = hijos[i]->prestarDerecha(hijos[i+1], aux);
                 } else if (i != 0 && hijos[i-1]->getNumeroClaves() > ordenArbol) {
-                    delete claves[i-1];
-                    claves[i-1] = hijos[i]->prestarIzquierda(hijos[i-1]);
+                    std::string *aux =  claves[i-1];
+                    claves[i-1] = hijos[i]->prestarIzquierda(hijos[i-1], aux);
                 } else if (i != numeroClaves) {
                     hijos[i]->fusionar(hijos[i+1]);
                     delete hijos[i+1];
@@ -114,8 +138,7 @@ void NodoArbolBMasInterno::eliminarLibro(Libro *libro) {
                 } else {
                     hijos[i-1]->fusionar(hijos[i]);
                     delete hijos[i];
-                    hijos[i] = hijos[i-1];
-                    hijos[i-1] = nullptr;
+                    hijos[i] = nullptr;
                     delete claves[i-1];
                     claves[i-1] = nullptr;
                     numeroClaves--;

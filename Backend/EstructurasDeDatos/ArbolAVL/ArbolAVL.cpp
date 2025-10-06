@@ -111,8 +111,8 @@ NodoArbol * ArbolAVL::eliminarNodo(NodoArbol *nodo, Libro *libro, bool &verifica
         }
         this->cambiarInformacion(nodo, aux);
         otro = aux;
-        verificarFeSubArbol = aux1 != nullptr;
-        if (verificarFeSubArbol) {
+        bool borrarIzquierda = aux1 != nullptr;
+        if (borrarIzquierda) {
             aux1->setDerecha(aux->getIzquierda());
             nodo->setIzquierda(evaluarNodoIzquierdo(nodo->getIzquierda()));
         } else {

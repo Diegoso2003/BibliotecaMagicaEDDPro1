@@ -76,7 +76,8 @@ std::string *NodoArbolBMasHoja::getClaveMedia() {
     return new std::string(*claves[ordenArbol]);
 }
 
-std::string * NodoArbolBMasHoja::prestarDerecha(NodoArbolBMas *nodo) {
+std::string * NodoArbolBMasHoja::prestarDerecha(NodoArbolBMas *nodo, std::string *clavePadre) {
+    delete clavePadre;
     auto *nodoHoja = dynamic_cast<NodoArbolBMasHoja *>(nodo);
     this->elementos[numeroClaves] = nodoHoja->elementos[0];
     this->claves[numeroClaves] = nodoHoja->claves[0];
@@ -89,7 +90,8 @@ std::string * NodoArbolBMasHoja::prestarDerecha(NodoArbolBMas *nodo) {
     return new std::string(*aux);
 }
 
-std::string * NodoArbolBMasHoja::prestarIzquierda(NodoArbolBMas *nodo) {
+std::string * NodoArbolBMasHoja::prestarIzquierda(NodoArbolBMas *nodo, std::string *clavePadre) {
+    delete clavePadre;
     auto *nodoHoja = dynamic_cast<NodoArbolBMasHoja *>(nodo);
     int ultimoElemento = nodoHoja->numeroClaves-1;
     nodoHoja->numeroClaves--;

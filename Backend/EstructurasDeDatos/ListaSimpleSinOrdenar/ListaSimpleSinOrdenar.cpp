@@ -11,6 +11,7 @@
 #include "NodoSimple/NodoSimple.h"
 
 void ListaSimpleSinOrdenar::eliminar(const std::string &isbn) {
+    if (estaVacia()) return;
     NodoSimple *aux = primero;
     if (primero->getLibro()->getSinGuiones() == isbn) {
         primero = primero->getSiguiente();
