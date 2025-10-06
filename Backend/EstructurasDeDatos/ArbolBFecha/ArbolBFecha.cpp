@@ -4,10 +4,6 @@
 
 #include "ArbolBFecha.h"
 
-#include <iostream>
-#include <ostream>
-
-
 #include "../../Auxiliar/Auxiliar.h"
 #include "../../AuxiliarBusquedaB/AuxiliarBusquedaB.h"
 #include "../../CreadorTextoDot/CreadorTextoDot.h"
@@ -55,7 +51,6 @@ void ArbolBFecha::agregarListaElementos(AuxiliarBusquedaB *aux, NodoArbolB *nodo
     ListaOrdenada **claves = nodo->getClaves();
     NodoArbolB **hijos = nodo->getHijos();
     for (int i = 0; i <= nodo->getNumeroLibros() && aux->seguirBuscando(); i++) {
-    numeroVeces++;
         if (claves[i] != nullptr) {
             int actual = claves[i]->getPrimero()->getAño();
             if (actual >= aux->fechaInicio() && actual <= aux->fechaFin()) {
@@ -102,9 +97,7 @@ ListaSimpleSinOrdenar *ArbolBFecha::getListaPorRango(const std::string &texto) {
     Auxiliar::obtenerFechas(texto, fechas);
     auto *lista = new ListaSimpleSinOrdenar();
     AuxiliarBusquedaB aux(lista, fechas);
-    numeroVeces = 0;
     agregarListaElementos(&aux, raiz);
-    std::cout << "numero de veces: "<< numeroVeces << std::endl;
     if (lista->estaVacia()) throw BusquedaSinResultadoException("No se encontro ningun libro en este rango de fecha");
     return lista;
 }

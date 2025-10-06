@@ -14,7 +14,6 @@ class ArbolBFecha {
 private:
     NodoArbolB *raiz;
     int const ordenArbol = 3;
-    int numeroVeces = 1;
     int const maxElemNodo = 2 * ordenArbol;
     void agregarElemento(NodoArbolB *nodo, Libro *&nuevoLibro);
     void DividirRaiz();
